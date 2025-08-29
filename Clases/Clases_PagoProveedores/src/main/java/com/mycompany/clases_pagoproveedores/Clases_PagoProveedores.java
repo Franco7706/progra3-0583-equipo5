@@ -11,6 +11,6 @@ package com.mycompany.clases_pagoproveedores;
 public class Clases_PagoProveedores {
 
     public static void main(String[] args) {
-        System.out.println("Hola grupo!");
+        System.out.println("Hola grupo v2 :D");
     }
 }
