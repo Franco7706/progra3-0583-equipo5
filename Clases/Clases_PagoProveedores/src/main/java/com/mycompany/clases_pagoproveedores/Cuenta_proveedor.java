@@ -11,25 +11,26 @@ package com.mycompany.clases_pagoproveedores;
 public class Cuenta_proveedor {
     private String cuenta_proveedor_id;
     private String numero_cuenta;
-    private String divisa;
+    private String moneda_id;
     private String codigo_cuenta_interbancario;
     private String proveedor_id;
     private String entidad_bancaria_id;
-    private char activa;
+    private char activa; //A (Activa) | I (Inactiva)
 
     public Cuenta_proveedor() {
         cuenta_proveedor_id=null;
         numero_cuenta=null;
-        divisa=null;
+        moneda_id=null;
         codigo_cuenta_interbancario=null;
         proveedor_id=null;
         entidad_bancaria_id=null;
+        activa='A';
     }
 
-    public Cuenta_proveedor(String cuenta_proveedor_id, String numero_cuenta, String divisa, String codigo_cuenta_interbancario, String proveedor_id, String entidad_bancaria_id, char activa) {
+    public Cuenta_proveedor(String cuenta_proveedor_id, String numero_cuenta, String moneda_id, String codigo_cuenta_interbancario, String proveedor_id, String entidad_bancaria_id, char activa) {
         this.cuenta_proveedor_id = cuenta_proveedor_id;
         this.numero_cuenta = numero_cuenta;
-        this.divisa = divisa;
+        this.moneda_id = moneda_id;
         this.codigo_cuenta_interbancario = codigo_cuenta_interbancario;
         this.proveedor_id = proveedor_id;
         this.entidad_bancaria_id = entidad_bancaria_id;
@@ -39,7 +40,7 @@ public class Cuenta_proveedor {
     public Cuenta_proveedor(Cuenta_proveedor cuenta_proveedor){
         this.cuenta_proveedor_id = cuenta_proveedor.getCuenta_proveedor_id();
         this.numero_cuenta = cuenta_proveedor.getNumero_cuenta();
-        this.divisa = cuenta_proveedor.getDivisa();
+        this.moneda_id = cuenta_proveedor.getMoneda_id();
         this.codigo_cuenta_interbancario = cuenta_proveedor.getCodigo_cuenta_interbancario();
         this.proveedor_id = cuenta_proveedor.getProveedor_id();
         this.entidad_bancaria_id = cuenta_proveedor.getEntidad_bancaria_id();
@@ -75,17 +76,17 @@ public class Cuenta_proveedor {
     }
 
     /**
-     * @return the divisa
+     * @return the moneda_id
      */
-    public String getDivisa() {
-        return divisa;
+    public String getMoneda_id() {
+        return moneda_id;
     }
 
     /**
-     * @param divisa the divisa to set
+     * @param moneda_id the moneda_id to set
      */
-    public void setDivisa(String divisa) {
-        this.divisa = divisa;
+    public void setMoneda_id(String moneda_id) {
+        this.moneda_id = moneda_id;
     }
 
     /**

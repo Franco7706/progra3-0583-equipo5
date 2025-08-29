@@ -13,13 +13,13 @@ import java.util.Date;
 public class Propuesta_pago {
     private String propuesta_id;
     private Date fecha_hora_creacion;
-    private Double monto_total;
+    private double monto_total;
     private String entidad_bancaria_id;
 
     public Propuesta_pago() {
         propuesta_id=null;
         fecha_hora_creacion=null;
-        monto_total=null;
+        monto_total=0.0;
         entidad_bancaria_id=null;
     }
 

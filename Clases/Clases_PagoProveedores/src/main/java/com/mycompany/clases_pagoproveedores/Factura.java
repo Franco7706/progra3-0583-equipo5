@@ -13,7 +13,7 @@ import java.util.Date;
 public class Factura {
     private String factura_id;
     private double monto_total;
-    private String divisa;
+    private String moneda_id;
     private Date fecha_emision;
     private Date fecha_limite_pago;
     private Date fecha_recepcion;
@@ -23,7 +23,7 @@ public class Factura {
 
     public Factura() {
         factura_id=null;
-        divisa=null;
+        moneda_id=null;
         fecha_emision=null;
         fecha_limite_pago=null;
         fecha_recepcion=null;
@@ -31,10 +31,10 @@ public class Factura {
         proveedor_id=null;
     }
 
-    public Factura(String factura_id, double monto_total, String divisa, Date fecha_emision, Date fecha_limite_pago, Date fecha_recepcion, String motivo, String proveedor_id, double monto_restante) {
+    public Factura(String factura_id, double monto_total, String moneda_id, Date fecha_emision, Date fecha_limite_pago, Date fecha_recepcion, String motivo, String proveedor_id, double monto_restante) {
         this.factura_id = factura_id;
         this.monto_total = monto_total;
-        this.divisa = divisa;
+        this.moneda_id = moneda_id;
         this.fecha_emision = fecha_emision;
         this.fecha_limite_pago = fecha_limite_pago;
         this.fecha_recepcion = fecha_recepcion;
@@ -46,7 +46,7 @@ public class Factura {
     public Factura(Factura factura){
         this.factura_id = factura.getFactura_id();
         this.monto_total = factura.getMonto_total();
-        this.divisa = factura.getDivisa();
+        this.moneda_id = factura.getMoneda_id();
         this.fecha_emision = factura.getFecha_emision();
         this.fecha_limite_pago = factura.getFecha_limite_pago();
         this.fecha_recepcion = factura.getFecha_recepcion();
@@ -84,17 +84,17 @@ public class Factura {
     }
 
     /**
-     * @return the divisa
+     * @return the moneda_id
      */
-    public String getDivisa() {
-        return divisa;
+    public String getMoneda_id() {
+        return moneda_id;
     }
 
     /**
-     * @param divisa the divisa to set
+     * @param moneda_id the moneda_id to set
      */
-    public void setDivisa(String divisa) {
-        this.divisa = divisa;
+    public void setMoneda_id(String moneda_id) {
+        this.moneda_id = moneda_id;
     }
 
     /**

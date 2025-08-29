@@ -11,26 +11,28 @@ package com.mycompany.clases_pagoproveedores;
 public class Cuenta_propia {
     private String cuenta_propia_id;
     private String tipo_cuenta;
-    private String divisa;
+    private String moneda_id;
     private double saldo_disponible;
     private String entidad_bancaria_id;
-    private char activa;
+    private char activa; // A (Activa) | I (Inactiva)
     private String numero_cuenta;
     private String codigo_cuenta_interbancario;
 
     public Cuenta_propia() {
         cuenta_propia_id=null;
         tipo_cuenta=null;
-        divisa=null;
+        moneda_id=null;
         entidad_bancaria_id=null;
         numero_cuenta=null;
         codigo_cuenta_interbancario=null;
+        activa='A';
+        saldo_disponible=0.0;
     }
 
-    public Cuenta_propia(String cuenta_propia_id, String tipo_cuenta, String divisa, double saldo_disponible, String entidad_bancaria_id, char activa, String numero_cuenta, String codigo_cuenta_interbancario) {
+    public Cuenta_propia(String cuenta_propia_id, String tipo_cuenta, String moneda_id, double saldo_disponible, String entidad_bancaria_id, char activa, String numero_cuenta, String codigo_cuenta_interbancario) {
         this.cuenta_propia_id = cuenta_propia_id;
         this.tipo_cuenta = tipo_cuenta;
-        this.divisa = divisa;
+        this.moneda_id = moneda_id;
         this.saldo_disponible = saldo_disponible;
         this.entidad_bancaria_id = entidad_bancaria_id;
         this.activa = activa;
@@ -41,7 +43,7 @@ public class Cuenta_propia {
     public Cuenta_propia(Cuenta_propia cuenta_propia){
         this.cuenta_propia_id = cuenta_propia.getCuenta_propia_id();
         this.tipo_cuenta = cuenta_propia.getTipo_cuenta();
-        this.divisa = cuenta_propia.getDivisa();
+        this.moneda_id = cuenta_propia.getMoneda_id();
         this.saldo_disponible = cuenta_propia.getSaldo_disponible();
         this.entidad_bancaria_id = cuenta_propia.getEntidad_bancaria_id();
         this.activa = cuenta_propia.getActiva();
@@ -78,17 +80,17 @@ public class Cuenta_propia {
     }
 
     /**
-     * @return the divisa
+     * @return the moneda_id
      */
-    public String getDivisa() {
-        return divisa;
+    public String getMoneda_id() {
+        return moneda_id;
     }
 
     /**
-     * @param divisa the divisa to set
+     * @param moneda_id the moneda_id to set
      */
-    public void setDivisa(String divisa) {
-        this.divisa = divisa;
+    public void setMoneda_id(String moneda_id) {
+        this.moneda_id = moneda_id;
     }
 
     /**

@@ -10,7 +10,7 @@ package com.mycompany.clases_pagoproveedores;
  */
 public class Detalle_factura {
     private String detalle_factura_id;
-    private String divisa;
+    private String moneda_id;
     private double subtotal;
     private String descripcion;
     private double monto_descuentos;
@@ -18,14 +18,16 @@ public class Detalle_factura {
 
     public Detalle_factura() {
         detalle_factura_id=null;
-        divisa=null;
+        moneda_id=null;
+        subtotal=0.0;
         descripcion=null;
+        monto_descuentos=0.0;
         factura_id=null;
     }
 
-    public Detalle_factura(String detalle_factura_id, String divisa, double subtotal, String descripcion, double monto_descuentos, String factura_id) {
+    public Detalle_factura(String detalle_factura_id, String moneda_id, double subtotal, String descripcion, double monto_descuentos, String factura_id) {
         this.detalle_factura_id = detalle_factura_id;
-        this.divisa = divisa;
+        this.moneda_id = moneda_id;
         this.subtotal = subtotal;
         this.descripcion = descripcion;
         this.monto_descuentos = monto_descuentos;
@@ -34,7 +36,7 @@ public class Detalle_factura {
     
     public Detalle_factura(Detalle_factura detalle_factura){
         this.detalle_factura_id = detalle_factura.getDetalle_factura_id();
-        this.divisa = detalle_factura.getDivisa();
+        this.moneda_id = detalle_factura.getMoneda_id();
         this.subtotal = detalle_factura.getSubtotal();
         this.descripcion = detalle_factura.getDescripcion();
         this.monto_descuentos = detalle_factura.getMonto_descuentos();
@@ -58,15 +60,15 @@ public class Detalle_factura {
     /**
      * @return the divisa
      */
-    public String getDivisa() {
-        return divisa;
+    public String getMoneda_id() {
+        return moneda_id;
     }
 
     /**
      * @param divisa the divisa to set
      */
-    public void setDivisa(String divisa) {
-        this.divisa = divisa;
+    public void setMoneda_id(String divisa) {
+        this.moneda_id = divisa;
     }
 
     /**
