@@ -21,6 +21,13 @@ public class Moneda {
         simbolo=null;
     }
     
+    public Moneda(Moneda moneda){
+        this.codigo_iso = moneda.codigo_iso;
+        this.moneda_id = moneda.moneda_id;
+        this.nombre = moneda.nombre;
+        this.simbolo = moneda.simbolo;
+    }
+    
     /**
      * @return the moneda_id
      */
