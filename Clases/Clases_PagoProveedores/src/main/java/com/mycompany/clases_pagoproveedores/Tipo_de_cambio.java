@@ -12,8 +12,8 @@ import java.util.Date;
  */
 public class Tipo_de_cambio {
     private Date fecha;
-    private String moneda_origen;
-    private String moneda_destino;
+    private Moneda moneda_origen;
+    private Moneda moneda_destino;
     private double tasa;
     
     public Tipo_de_cambio(){
@@ -21,6 +21,13 @@ public class Tipo_de_cambio {
         moneda_origen=null;
         moneda_destino=null;
         tasa=0.0;
+    }
+    
+    public Tipo_de_cambio(Date fecha, Moneda moneda_origen, Moneda moneda_destino, double tasa){
+        this.fecha = fecha;
+        this.moneda_destino = new Moneda(moneda_destino);
+        this.moneda_origen = new Moneda(moneda_origen);
+        this.tasa = tasa;
     }
 
     /**
@@ -40,28 +47,28 @@ public class Tipo_de_cambio {
     /**
      * @return the moneda_origen
      */
-    public String getMoneda_origen() {
+    public Moneda getMoneda_origen() {
         return moneda_origen;
     }
 
     /**
      * @param moneda_origen the moneda_origen to set
      */
-    public void setMoneda_origen(String moneda_origen) {
+    public void setMoneda_origen(Moneda moneda_origen) {
         this.moneda_origen = moneda_origen;
     }
 
     /**
      * @return the moneda_destino
      */
-    public String getMoneda_destino() {
+    public Moneda getMoneda_destino() {
         return moneda_destino;
     }
 
     /**
      * @param moneda_destino the moneda_destino to set
      */
-    public void setMoneda_destino(String moneda_destino) {
+    public void setMoneda_destino(Moneda moneda_destino) {
         this.moneda_destino = moneda_destino;
     }
 

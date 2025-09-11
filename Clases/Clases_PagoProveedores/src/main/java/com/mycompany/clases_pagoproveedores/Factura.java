@@ -13,46 +13,50 @@ import java.util.Date;
 public class Factura {
     private String factura_id;
     private double monto_total;
-    private String moneda_id;
+    private Moneda moneda;
     private Date fecha_emision;
     private Date fecha_limite_pago;
     private Date fecha_recepcion;
     private String motivo;
-    private String proveedor_id;
+    private Proveedor proveedor;
     private double monto_restante;
+    private double igv;
 
     public Factura() {
         factura_id=null;
-        moneda_id=null;
+        moneda = new Moneda();
         fecha_emision=null;
         fecha_limite_pago=null;
         fecha_recepcion=null;
         motivo=null;
-        proveedor_id=null;
+        proveedor=new Proveedor();
+        igv=0.0;
     }
 
-    public Factura(String factura_id, double monto_total, String moneda_id, Date fecha_emision, Date fecha_limite_pago, Date fecha_recepcion, String motivo, String proveedor_id, double monto_restante) {
+    public Factura(String factura_id, double monto_total, Moneda moneda, Date fecha_emision, Date fecha_limite_pago, Date fecha_recepcion, String motivo, Proveedor proveedor, double monto_restante, double igv) {
         this.factura_id = factura_id;
         this.monto_total = monto_total;
-        this.moneda_id = moneda_id;
+        this.moneda = new Moneda(moneda);
         this.fecha_emision = fecha_emision;
         this.fecha_limite_pago = fecha_limite_pago;
         this.fecha_recepcion = fecha_recepcion;
         this.motivo = motivo;
-        this.proveedor_id = proveedor_id;
+        this.proveedor = proveedor;
         this.monto_restante = monto_restante;
+        this.igv = igv;
     }
     
     public Factura(Factura factura){
         this.factura_id = factura.getFactura_id();
         this.monto_total = factura.getMonto_total();
-        this.moneda_id = factura.getMoneda_id();
+        this.moneda = new Moneda(factura.getMoneda());
         this.fecha_emision = factura.getFecha_emision();
         this.fecha_limite_pago = factura.getFecha_limite_pago();
         this.fecha_recepcion = factura.getFecha_recepcion();
         this.motivo = factura.getMotivo();
-        this.proveedor_id = factura.getProveedor_id();
+        this.proveedor = new Proveedor(factura.getProveedor());
         this.monto_restante = factura.getMonto_restante();
+        this.igv = factura.getIgv();
     }
     
     /**
@@ -84,17 +88,17 @@ public class Factura {
     }
 
     /**
-     * @return the moneda_id
+     * @return moneda
      */
-    public String getMoneda_id() {
-        return moneda_id;
+    public Moneda getMoneda() {
+        return moneda;
     }
 
     /**
-     * @param moneda_id the moneda_id to set
+     * @param moneda the moneda to set
      */
-    public void setMoneda_id(String moneda_id) {
-        this.moneda_id = moneda_id;
+    public void setMoneda(Moneda moneda) {
+        this.moneda = moneda;
     }
 
     /**
@@ -154,17 +158,17 @@ public class Factura {
     }
 
     /**
-     * @return the provedor_id
+     * @return the proveedor
      */
-    public String getProveedor_id() {
-        return proveedor_id;
+    public Proveedor getProveedor() {
+        return proveedor;
     }
 
     /**
-     * @param provedor_id the provedor_id to set
+     * @param proveedor the proveedor to set
      */
-    public void setProveedor_id(String provedor_id) {
-        this.proveedor_id = provedor_id;
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
     /**
@@ -179,6 +183,20 @@ public class Factura {
      */
     public void setMonto_restante(double monto_restante) {
         this.monto_restante = monto_restante;
+    }
+
+    /**
+     * @return the igv
+     */
+    public double getIgv() {
+        return igv;
+    }
+
+    /**
+     * @param igv the igv to set
+     */
+    public void setIgv(double igv) {
+        this.igv = igv;
     }
     
     

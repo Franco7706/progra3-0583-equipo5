@@ -10,37 +10,37 @@ package com.mycompany.clases_pagoproveedores;
  */
 public class Detalle_factura {
     private String detalle_factura_id;
-    private String moneda_id;
+    private Moneda moneda;
     private double subtotal;
     private String descripcion;
     private double monto_descuentos;
-    private String factura_id;
+    private Factura factura;
 
     public Detalle_factura() {
         detalle_factura_id=null;
-        moneda_id=null;
+        moneda=null;
         subtotal=0.0;
         descripcion=null;
         monto_descuentos=0.0;
-        factura_id=null;
+        factura=null;
     }
 
-    public Detalle_factura(String detalle_factura_id, String moneda_id, double subtotal, String descripcion, double monto_descuentos, String factura_id) {
+    public Detalle_factura(String detalle_factura_id, Moneda moneda, double subtotal, String descripcion, double monto_descuentos, Factura factura) {
         this.detalle_factura_id = detalle_factura_id;
-        this.moneda_id = moneda_id;
+        this.moneda = moneda;
         this.subtotal = subtotal;
         this.descripcion = descripcion;
         this.monto_descuentos = monto_descuentos;
-        this.factura_id = factura_id;
+        this.factura = factura;
     }
     
     public Detalle_factura(Detalle_factura detalle_factura){
         this.detalle_factura_id = detalle_factura.getDetalle_factura_id();
-        this.moneda_id = detalle_factura.getMoneda_id();
+        this.moneda = detalle_factura.getMoneda();
         this.subtotal = detalle_factura.getSubtotal();
         this.descripcion = detalle_factura.getDescripcion();
         this.monto_descuentos = detalle_factura.getMonto_descuentos();
-        this.factura_id = detalle_factura.getFactura_id();
+        this.factura = detalle_factura.getFactura();
     }
 
     /**
@@ -55,20 +55,6 @@ public class Detalle_factura {
      */
     public void setDetalle_factura_id(String detalle_factura_id) {
         this.detalle_factura_id = detalle_factura_id;
-    }
-
-    /**
-     * @return the divisa
-     */
-    public String getMoneda_id() {
-        return moneda_id;
-    }
-
-    /**
-     * @param divisa the divisa to set
-     */
-    public void setMoneda_id(String divisa) {
-        this.moneda_id = divisa;
     }
 
     /**
@@ -114,17 +100,32 @@ public class Detalle_factura {
     }
 
     /**
-     * @return the factura_id
+     * @return the moneda
      */
-    public String getFactura_id() {
-        return factura_id;
+    public Moneda getMoneda() {
+        return moneda;
     }
 
     /**
-     * @param factura_id the factura_id to set
+     * @param moneda the moneda to set
      */
-    public void setFactura_id(String factura_id) {
-        this.factura_id = factura_id;
+    public void setMoneda(Moneda moneda) {
+        this.moneda = moneda;
     }
+
+    /**
+     * @return the factura
+     */
+    public Factura getFactura() {
+        return factura;
+    }
+
+    /**
+     * @param factura the factura to set
+     */
+    public void setFactura(Factura factura) {
+        this.factura = factura;
+    }
+
     
 }

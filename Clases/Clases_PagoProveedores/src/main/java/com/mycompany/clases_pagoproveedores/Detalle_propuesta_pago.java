@@ -11,45 +11,48 @@ package com.mycompany.clases_pagoproveedores;
 public class Detalle_propuesta_pago {
     private String detalle_propuesta_pago_id;
     private double monto_pago;
-    private String moneda_id;
+    private Moneda moneda;
     private char estado_pago;
     private char forma_pago;
-    private String cuenta_proveedor_id;
-    private String propuesta_pago_id;
-    private String cuenta_propia_id;
-    private String factura_id;
+    private Cuenta_proveedor cuenta_proveedor;
+    private Propuesta_pago propuesta_pago;
+    private Cuenta_propia cuenta_propia;
+    private Factura factura;
 
     public Detalle_propuesta_pago() {
         detalle_propuesta_pago_id=null;
-        moneda_id=null;
-        cuenta_proveedor_id=null;
-        propuesta_pago_id=null;
-        cuenta_propia_id=null;
-        factura_id=null;
+        moneda=null;
+        cuenta_proveedor=null;
+        propuesta_pago=null;
+        cuenta_propia=null;
+        factura=null;
+        monto_pago=0.0;
+        estado_pago='P';
+        forma_pago='T';
     }
 
-    public Detalle_propuesta_pago(String detalle_propuesta_pago_id, double monto_pago, String moneda_id, char estado_pago, char forma_pago, String cuenta_proveedor_id, String propuesta_pago_id, String cuenta_propia_id, String factura_id) {
+    public Detalle_propuesta_pago(String detalle_propuesta_pago_id, double monto_pago, Moneda moneda, char estado_pago, char forma_pago, Cuenta_proveedor cuenta_proveedor, Propuesta_pago propuesta_pago, Cuenta_propia cuenta_propia, Factura factura) {
         this.detalle_propuesta_pago_id = detalle_propuesta_pago_id;
         this.monto_pago = monto_pago;
-        this.moneda_id = moneda_id;
+        this.moneda = moneda;
         this.estado_pago = estado_pago;
         this.forma_pago = forma_pago;
-        this.cuenta_proveedor_id = cuenta_proveedor_id;
-        this.propuesta_pago_id = propuesta_pago_id;
-        this.cuenta_propia_id = cuenta_propia_id;
-        this.factura_id = factura_id;
+        this.cuenta_proveedor = cuenta_proveedor;
+        this.propuesta_pago = propuesta_pago;
+        this.cuenta_propia = cuenta_propia;
+        this.factura = factura;
     }
 
     public Detalle_propuesta_pago(Detalle_propuesta_pago detalle_propuesta_pago){
         this.detalle_propuesta_pago_id = detalle_propuesta_pago.getDetalle_propuesta_pago_id();
         this.monto_pago = detalle_propuesta_pago.getMonto_pago();
-        this.moneda_id = detalle_propuesta_pago.getMoneda_id();
+        this.moneda = detalle_propuesta_pago.getMoneda();
         this.estado_pago = detalle_propuesta_pago.getEstado_pago();
         this.forma_pago = detalle_propuesta_pago.getForma_pago();
-        this.cuenta_proveedor_id = detalle_propuesta_pago.getCuenta_proveedor_id();
-        this.propuesta_pago_id = detalle_propuesta_pago.getPropuesta_pago_id();
-        this.cuenta_propia_id = detalle_propuesta_pago.getCuenta_propia_id();
-        this.factura_id = detalle_propuesta_pago.getFactura_id();
+        this.cuenta_proveedor = detalle_propuesta_pago.getCuenta_proveedor();
+        this.propuesta_pago = detalle_propuesta_pago.getPropuesta_pago();
+        this.cuenta_propia = detalle_propuesta_pago.getCuenta_propia();
+        this.factura = detalle_propuesta_pago.getFactura();
     }
     /**
      * @return the detalle_propuesta_pago_id
@@ -77,20 +80,6 @@ public class Detalle_propuesta_pago {
      */
     public void setMonto_pago(double monto_pago) {
         this.monto_pago = monto_pago;
-    }
-
-    /**
-     * @return the moneda_id
-     */
-    public String getMoneda_id() {
-        return moneda_id;
-    }
-
-    /**
-     * @param moneda_id the moneda_id to set
-     */
-    public void setMoneda_id(String moneda_id) {
-        this.moneda_id = moneda_id;
     }
 
     /**
@@ -122,60 +111,74 @@ public class Detalle_propuesta_pago {
     }
 
     /**
-     * @return the cuenta_proveedor_id
+     * @return the moneda
      */
-    public String getCuenta_proveedor_id() {
-        return cuenta_proveedor_id;
+    public Moneda getMoneda() {
+        return moneda;
     }
 
     /**
-     * @param cuenta_proveedor_id the cuenta_proveedor_id to set
+     * @param moneda the moneda to set
      */
-    public void setCuenta_proveedor_id(String cuenta_proveedor_id) {
-        this.cuenta_proveedor_id = cuenta_proveedor_id;
+    public void setMoneda(Moneda moneda) {
+        this.moneda = moneda;
     }
 
     /**
-     * @return the propuesta_pago_id
+     * @return the cuenta_proveedor
      */
-    public String getPropuesta_pago_id() {
-        return propuesta_pago_id;
+    public Cuenta_proveedor getCuenta_proveedor() {
+        return cuenta_proveedor;
     }
 
     /**
-     * @param propuesta_pago_id the propuesta_pago_id to set
+     * @param cuenta_proveedor the cuenta_proveedor to set
      */
-    public void setPropuesta_pago_id(String propuesta_pago_id) {
-        this.propuesta_pago_id = propuesta_pago_id;
+    public void setCuenta_proveedor(Cuenta_proveedor cuenta_proveedor) {
+        this.cuenta_proveedor = cuenta_proveedor;
     }
 
     /**
-     * @return the cuenta_propia_id
+     * @return the propuesta_pago
      */
-    public String getCuenta_propia_id() {
-        return cuenta_propia_id;
+    public Propuesta_pago getPropuesta_pago() {
+        return propuesta_pago;
     }
 
     /**
-     * @param cuenta_propia_id the cuenta_propia_id to set
+     * @param propuesta_pago the propuesta_pago to set
      */
-    public void setCuenta_propia_id(String cuenta_propia_id) {
-        this.cuenta_propia_id = cuenta_propia_id;
+    public void setPropuesta_pago(Propuesta_pago propuesta_pago) {
+        this.propuesta_pago = propuesta_pago;
     }
 
     /**
-     * @return the factura_id
+     * @return the cuenta_propia
      */
-    public String getFactura_id() {
-        return factura_id;
+    public Cuenta_propia getCuenta_propia() {
+        return cuenta_propia;
     }
 
     /**
-     * @param factura_id the factura_id to set
+     * @param cuenta_propia the cuenta_propia to set
      */
-    public void setFactura_id(String factura_id) {
-        this.factura_id = factura_id;
+    public void setCuenta_propia(Cuenta_propia cuenta_propia) {
+        this.cuenta_propia = cuenta_propia;
     }
-    
+
+    /**
+     * @return the factura
+     */
+    public Factura getFactura() {
+        return factura;
+    }
+
+    /**
+     * @param factura the factura to set
+     */
+    public void setFactura(Factura factura) {
+        this.factura = factura;
+    }
+
     
 }

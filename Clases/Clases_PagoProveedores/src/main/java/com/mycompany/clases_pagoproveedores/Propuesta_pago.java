@@ -14,27 +14,32 @@ public class Propuesta_pago {
     private String propuesta_id;
     private Date fecha_hora_creacion;
     private double monto_total;
-    private String entidad_bancaria_id;
+    private Moneda moneda;
+    private Entidad_bancaria entidad_bancaria;
 
     public Propuesta_pago() {
         propuesta_id=null;
         fecha_hora_creacion=null;
         monto_total=0.0;
-        entidad_bancaria_id=null;
+        entidad_bancaria=new Entidad_bancaria();
+        moneda=new Moneda();
+        
     }
 
-    public Propuesta_pago(String propuesta_id, Date fecha_hora_creacion, Double monto_total, String entidad_bancaria_id) {
+    public Propuesta_pago(String propuesta_id, Date fecha_hora_creacion, Double monto_total, Entidad_bancaria entidad_bancaria, Moneda moneda) {
         this.propuesta_id = propuesta_id;
         this.fecha_hora_creacion = fecha_hora_creacion;
         this.monto_total = monto_total;
-        this.entidad_bancaria_id = entidad_bancaria_id;
+        this.entidad_bancaria = new Entidad_bancaria(entidad_bancaria);
+        this.moneda = moneda;
     }
     
     public Propuesta_pago(Propuesta_pago propuesta_pago){
         this.propuesta_id = propuesta_pago.getPropuesta_id();
         this.fecha_hora_creacion = propuesta_pago.getFecha_hora_creacion();
         this.monto_total = propuesta_pago.getMonto_total();
-        this.entidad_bancaria_id = propuesta_pago.getEntidad_bancaria_id();
+        this.entidad_bancaria = new Entidad_bancaria(propuesta_pago.getEntidad_bancaria());
+        this.moneda = propuesta_pago.getMoneda();
     }
     /**
      * @return the propuesta_id
@@ -81,15 +86,29 @@ public class Propuesta_pago {
     /**
      * @return the entidad_bancaria_id
      */
-    public String getEntidad_bancaria_id() {
-        return entidad_bancaria_id;
+    public Entidad_bancaria getEntidad_bancaria() {
+        return entidad_bancaria;
     }
 
     /**
-     * @param entidad_bancaria_id the entidad_bancaria_id to set
+     * @param entidad_bancaria the entidad_bancaria_id to set
      */
-    public void setEntidad_bancaria_id(String entidad_bancaria_id) {
-        this.entidad_bancaria_id = entidad_bancaria_id;
+    public void setEntidad_bancaria(Entidad_bancaria entidad_bancaria) {
+        this.entidad_bancaria = entidad_bancaria;
+    }
+
+    /**
+     * @return the moneda
+     */
+    public Moneda getMoneda() {
+        return moneda;
+    }
+
+    /**
+     * @param moneda the moneda to set
+     */
+    public void setMoneda(Moneda moneda) {
+        this.moneda = moneda;
     }
     
     
