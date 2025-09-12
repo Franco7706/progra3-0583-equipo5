@@ -9,11 +9,15 @@ public class CuentasPropiasDTO extends CuentasBancariasDTO{
         saldo_disponible=new BigDecimal("0.0");
     }
     
-    public CuentasPropiasDTO(String cuenta_bancaria_id, String tipo_cuenta, String cci, char activa, String numero_cuenta, MonedasDTO moneda, EntidadesBancariasDTO entidad_bancaria, BigDecimal saldo_disponible){
+    public CuentasPropiasDTO(String cuenta_bancaria_id, String tipo_cuenta, String cci, Boolean activa, String numero_cuenta, MonedasDTO moneda, EntidadesBancariasDTO entidad_bancaria, BigDecimal saldo_disponible){
         super(cuenta_bancaria_id,tipo_cuenta,cci,activa,numero_cuenta,moneda,entidad_bancaria);
         this.saldo_disponible=saldo_disponible;
     }
 
+    public CuentasPropiasDTO(CuentasPropiasDTO cuentaPropia){
+        super(cuentaPropia);
+        this.saldo_disponible=cuentaPropia.getSaldo_disponible();
+    }
     /**
      * @return the saldo_disponible
      */

@@ -3,8 +3,9 @@ package pe.edu.pucp.softpac.model;
 public class EntidadesBancariasDTO {
     private String entidad_bancaria_id;
     private String nombre;
-    private String pais;
     private String formato_aceptado;
+    private String codigo_swift;
+    private PaisesDTO pais;
 
     public EntidadesBancariasDTO() {
         entidad_bancaria_id=null;
@@ -13,17 +14,17 @@ public class EntidadesBancariasDTO {
         formato_aceptado=null;
     }
 
-    public EntidadesBancariasDTO(String entidad_bancaria_id, String nombre, String pais, String formato_aceptado) {
+    public EntidadesBancariasDTO(String entidad_bancaria_id, String nombre, PaisesDTO pais, String formato_aceptado) {
         this.entidad_bancaria_id = entidad_bancaria_id;
         this.nombre = nombre;
-        this.pais = pais;
+        this.pais = new PaisesDTO(pais);
         this.formato_aceptado = formato_aceptado;
     }
     
     public EntidadesBancariasDTO(EntidadesBancariasDTO entidad_bancaria){
         this.entidad_bancaria_id = entidad_bancaria.getEntidad_bancaria_id();
         this.nombre = entidad_bancaria.getNombre();
-        this.pais = entidad_bancaria.getPais();
+        this.pais = new PaisesDTO(entidad_bancaria.getPais());
         this.formato_aceptado = entidad_bancaria.getFormato_aceptado();
     }
 
@@ -58,14 +59,14 @@ public class EntidadesBancariasDTO {
     /**
      * @return the pais
      */
-    public String getPais() {
+    public PaisesDTO getPais() {
         return pais;
     }
 
     /**
      * @param pais the pais to set
      */
-    public void setPais(String pais) {
+    public void setPais(PaisesDTO pais) {
         this.pais = pais;
     }
 
@@ -82,6 +83,13 @@ public class EntidadesBancariasDTO {
     public void setFormato_aceptado(String formato_aceptado) {
         this.formato_aceptado = formato_aceptado;
     }
-    
-    
+
+
+    public String getCodigo_swift() {
+        return codigo_swift;
+    }
+
+    public void setCodigo_swift(String codigo_swift) {
+        this.codigo_swift = codigo_swift;
+    }
 }

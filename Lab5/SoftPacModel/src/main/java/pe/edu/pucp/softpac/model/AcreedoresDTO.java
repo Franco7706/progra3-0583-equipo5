@@ -5,10 +5,10 @@ public class AcreedoresDTO {
     private String razon_social;
     private String ruc;
     private String direccion_fiscal;
-    private String pais; // hacer clase y hacer clase moneda
     private String condicion;
     private Integer plazo_de_pago;
-    private char activo;
+    private Boolean activo;
+    private PaisesDTO pais;
 
     public AcreedoresDTO() {
         acreedor_id=null;
@@ -20,12 +20,12 @@ public class AcreedoresDTO {
         plazo_de_pago=0;
     }
 
-    public AcreedoresDTO(String acreedor_id, String razon_social, String ruc, String direccion_fiscal, String pais, String condicion, Integer plazo_de_pago, char activo) {
+    public AcreedoresDTO(String acreedor_id, String razon_social, String ruc, String direccion_fiscal, PaisesDTO pais, String condicion, Integer plazo_de_pago, Boolean activo) {
         this.acreedor_id = acreedor_id;
         this.razon_social = razon_social;
         this.ruc = ruc;
         this.direccion_fiscal = direccion_fiscal;
-        this.pais = pais;
+        this.pais = new PaisesDTO(pais);
         this.condicion = condicion;
         this.plazo_de_pago = plazo_de_pago;
         this.activo = activo;
@@ -101,14 +101,14 @@ public class AcreedoresDTO {
     /**
      * @return the pais
      */
-    public String getPais() {
+    public PaisesDTO getPais() {
         return pais;
     }
 
     /**
      * @param pais the pais to set
      */
-    public void setPais(String pais) {
+    public void setPais(PaisesDTO pais) {
         this.pais = pais;
     }
 
@@ -143,14 +143,14 @@ public class AcreedoresDTO {
     /**
      * @return the activo
      */
-    public char getActivo() {
+    public Boolean getActivo() {
         return activo;
     }
 
     /**
      * @param activo the activo to set
      */
-    public void setActivo(char activo) {
+    public void setActivo(Boolean activo) {
         this.activo = activo;
     }
 }
