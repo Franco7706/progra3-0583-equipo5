@@ -1,89 +1,93 @@
 package pe.edu.pucp.softpac.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class PropuestasPagoDTO {
-    private String propuesta_id;
-    private Date fecha_hora_creacion;
-    private MonedasDTO moneda;
+    private Integer propuesta_id;
+    private LocalDateTime fecha_hora_creacion;
+    private String estado;
     private EntidadesBancariasDTO entidad_bancaria;
+    private ArrayList<DetallesPropuestaDTO> detalles_propuesta;
 
     public PropuestasPagoDTO() {
-        propuesta_id=null;
+        propuesta_id=0;
         fecha_hora_creacion=null;
+        estado="I";
         entidad_bancaria=new EntidadesBancariasDTO();
-        moneda=new MonedasDTO();
-        
+        detalles_propuesta=new ArrayList<>();
     }
-
-    public PropuestasPagoDTO(String propuesta_id, Date fecha_hora_creacion, EntidadesBancariasDTO entidad_bancaria, MonedasDTO moneda) {
-        this.propuesta_id = propuesta_id;
-        this.fecha_hora_creacion = fecha_hora_creacion;
-        this.entidad_bancaria = new EntidadesBancariasDTO(entidad_bancaria);
-        this.moneda = moneda;
+    public PropuestasPagoDTO(Integer propuesta_id, LocalDateTime fecha_hora_creacion, String estado,
+                             EntidadesBancariasDTO entidad_bancaria) {
+        this.propuesta_id=propuesta_id;
+        this.fecha_hora_creacion=fecha_hora_creacion;
+        this.estado=estado;
+        this.entidad_bancaria=entidad_bancaria;
+        this.detalles_propuesta=new ArrayList<>();
     }
-    
-    public PropuestasPagoDTO(PropuestasPagoDTO propuesta_pago){
-        this.propuesta_id = propuesta_pago.getPropuesta_id();
-        this.fecha_hora_creacion = propuesta_pago.getFecha_hora_creacion();
-        this.entidad_bancaria = new EntidadesBancariasDTO(propuesta_pago.getEntidad_bancaria());
-        this.moneda = propuesta_pago.getMoneda();
+    public PropuestasPagoDTO(Integer propuesta_id, LocalDateTime fecha_hora_creacion, String estado,
+                             EntidadesBancariasDTO entidad_bancaria, ArrayList<DetallesPropuestaDTO> detalles_propuesta) {
+        this.propuesta_id=propuesta_id;
+        this.fecha_hora_creacion=fecha_hora_creacion;
+        this.estado=estado;
+        this.entidad_bancaria=entidad_bancaria;
+        this.detalles_propuesta=detalles_propuesta;
     }
-    /**
-     * @return the propuesta_id
-     */
-    public String getPropuesta_id() {
+    public PropuestasPagoDTO(PropuestasPagoDTO propuestaPago) {
+        this.propuesta_id=propuestaPago.getPropuesta_id();
+        this.fecha_hora_creacion=propuestaPago.getFecha_hora_creacion();
+        this.estado=propuestaPago.getEstado();
+        this.entidad_bancaria=new EntidadesBancariasDTO(entidad_bancaria);
+        this.detalles_propuesta=propuestaPago.getDetalles_propuesta();
+    }
+    public Integer getPropuesta_id() {
         return propuesta_id;
     }
 
-    /**
-     * @param propuesta_id the propuesta_id to set
-     */
-    public void setPropuesta_id(String propuesta_id) {
+    public void setPropuesta_id(Integer propuesta_id) {
         this.propuesta_id = propuesta_id;
     }
 
-    /**
-     * @return the fecha_hora_creacion
-     */
-    public Date getFecha_hora_creacion() {
+    public LocalDateTime getFecha_hora_creacion() {
         return fecha_hora_creacion;
     }
 
-    /**
-     * @param fecha_hora_creacion the fecha_hora_creacion to set
-     */
-    public void setFecha_hora_creacion(Date fecha_hora_creacion) {
+    public void setFecha_hora_creacion(LocalDateTime fecha_hora_creacion) {
         this.fecha_hora_creacion = fecha_hora_creacion;
     }
-    
-    /**
-     * @return the entidad_bancaria_id
-     */
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public EntidadesBancariasDTO getEntidad_bancaria() {
         return entidad_bancaria;
     }
 
-    /**
-     * @param entidad_bancaria the entidad_bancaria_id to set
-     */
     public void setEntidad_bancaria(EntidadesBancariasDTO entidad_bancaria) {
         this.entidad_bancaria = entidad_bancaria;
     }
 
-    /**
-     * @return the moneda
-     */
-    public MonedasDTO getMoneda() {
-        return moneda;
+    public DetallesPropuestaDTO getDetalle_Propuesta(Integer index) {
+        return detalles_propuesta.get(index);
     }
 
-    /**
-     * @param moneda the moneda to set
-     */
-    public void setMoneda(MonedasDTO moneda) {
-        this.moneda = moneda;
+    public void addDetalle_Propuesta(DetallesPropuestaDTO tipo){
+        if(detalles_propuesta==null){
+            detalles_propuesta=new ArrayList<>();
+        }
+        this.detalles_propuesta.add(tipo);
     }
-    
-    
+
+    public ArrayList<DetallesPropuestaDTO> getDetalles_propuesta() {
+        return detalles_propuesta;
+    }
+
+    public void setDetalles_propuesta(ArrayList<DetallesPropuestaDTO> detalles_propuesta) {
+        this.detalles_propuesta = detalles_propuesta;
+    }
 }

@@ -1,198 +1,228 @@
 package pe.edu.pucp.softpac.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class FacturasDTO {
-    private String factura_id;
+    private Integer factura_id;
+    private String numero_factura;
+    private LocalDateTime fecha_emision;
+    private LocalDateTime fecha_recepcion;
+    private LocalDateTime fecha_limite_pago;
+    private String estado;
     private BigDecimal monto_total;
-    private MonedasDTO moneda;
-    private Date fecha_emision;
-    private Date fecha_limite_pago;
-    private Date fecha_recepcion;
-    private String motivo;
-    private AcreedoresDTO acreedor;
+    private BigDecimal monto_igv;
     private BigDecimal monto_restante;
-    private BigDecimal igv;
+    private String regimen_fiscal;
+    private BigDecimal tasa_iva;
+    private BigDecimal otros_tributos;
+    private AcreedoresDTO acreedor;
+    private MonedasDTO moneda;
+    private ArrayList<DetallesFacturaDTO> detalles_factura;
 
     public FacturasDTO() {
-        factura_id=null;
-        moneda = new MonedasDTO();
+        factura_id=0;
+        numero_factura=null;
         fecha_emision=null;
-        fecha_limite_pago=null;
         fecha_recepcion=null;
-        motivo=null;
-        acreedor=new AcreedoresDTO();
-        igv=new BigDecimal("0.0");
+        fecha_limite_pago=null;
+        estado="I";
         monto_total=new BigDecimal("0.0");
+        monto_igv=new BigDecimal("0.0");
         monto_restante=new BigDecimal("0.0");
+        detalles_factura = new ArrayList<>();
     }
 
-    public FacturasDTO(String factura_id, BigDecimal monto_total, MonedasDTO moneda, Date fecha_emision, Date fecha_limite_pago, Date fecha_recepcion, String motivo, AcreedoresDTO acreedor, BigDecimal monto_restante, BigDecimal igv) {
-        this.factura_id = factura_id;
-        this.monto_total = monto_total;
-        this.moneda = new MonedasDTO(moneda);
+    public FacturasDTO(Integer factura_id, String numero_factura, LocalDateTime fecha_emision,
+                       LocalDateTime fecha_recepcion, LocalDateTime fecha_limite_pago, String estado,
+                       BigDecimal monto_total, BigDecimal monto_igv, BigDecimal monto_restante,
+                       String regimen_fiscal, BigDecimal tasa_iva, BigDecimal otros_tributos,
+                       AcreedoresDTO acreedor, MonedasDTO moneda) {
+        this.factura_id=factura_id;
+        this.numero_factura = numero_factura;
         this.fecha_emision = fecha_emision;
-        this.fecha_limite_pago = fecha_limite_pago;
         this.fecha_recepcion = fecha_recepcion;
-        this.motivo = motivo;
-        this.acreedor = acreedor;
+        this.fecha_limite_pago = fecha_limite_pago;
+        this.estado = estado;
+        this.monto_total = monto_total;
+        this.monto_igv = monto_igv;
         this.monto_restante = monto_restante;
-        this.igv = igv;
+        this.regimen_fiscal = regimen_fiscal;
+        this.tasa_iva = tasa_iva;
+        this.otros_tributos = otros_tributos;
+        this.acreedor = acreedor;
+        this.moneda = moneda;
+        this.detalles_factura = new ArrayList<>();
     }
-    
-    public FacturasDTO(FacturasDTO factura){
-        this.factura_id = factura.getFactura_id();
-        this.monto_total = factura.getMonto_total();
-        this.moneda = new MonedasDTO(factura.getMoneda());
-        this.fecha_emision = factura.getFecha_emision();
-        this.fecha_limite_pago = factura.getFecha_limite_pago();
-        this.fecha_recepcion = factura.getFecha_recepcion();
-        this.motivo = factura.getMotivo();
-        this.acreedor = new AcreedoresDTO(factura.getProveedor());
-        this.monto_restante = factura.getMonto_restante();
-        this.igv = factura.getIgv();
+
+    public FacturasDTO(Integer factura_id, String numero_factura, LocalDateTime fecha_emision,
+                       LocalDateTime fecha_recepcion, LocalDateTime fecha_limite_pago, String estado,
+                       BigDecimal monto_total, BigDecimal monto_igv, BigDecimal monto_restante,
+                       String regimen_fiscal, BigDecimal tasa_iva, BigDecimal otros_tributos,
+                       AcreedoresDTO acreedor, MonedasDTO moneda,  ArrayList<DetallesFacturaDTO> detalles_factura) {
+        this.factura_id=factura_id;
+        this.numero_factura = numero_factura;
+        this.fecha_emision = fecha_emision;
+        this.fecha_recepcion = fecha_recepcion;
+        this.fecha_limite_pago = fecha_limite_pago;
+        this.estado = estado;
+        this.monto_total = monto_total;
+        this.monto_igv = monto_igv;
+        this.monto_restante = monto_restante;
+        this.regimen_fiscal = regimen_fiscal;
+        this.tasa_iva = tasa_iva;
+        this.otros_tributos = otros_tributos;
+        this.acreedor = acreedor;
+        this.moneda = moneda;
+        this.detalles_factura = detalles_factura;
     }
-    
-    /**
-     * @return the factura_id
-     */
-    public String getFactura_id() {
+
+    public FacturasDTO(FacturasDTO factura) {
+        this.factura_id=factura.getFactura_id();
+        this.numero_factura=factura.getNumero_factura();
+        this.fecha_emision=factura.getFecha_emision();
+        this.fecha_recepcion=factura.getFecha_recepcion();
+        this.fecha_limite_pago=factura.getFecha_limite_pago();
+        this.estado = factura.getEstado();
+        this.monto_total=factura.getMonto_total();
+        this.monto_igv=factura.getMonto_igv();
+        this.monto_restante=factura.getMonto_restante();
+        this.regimen_fiscal=factura.getRegimen_fiscal();
+        this.tasa_iva=factura.getTasa_iva();
+        this.otros_tributos=factura.getOtros_tributos();
+        this.acreedor=factura.getAcreedor();
+        this.moneda=factura.getMoneda();
+        this.detalles_factura=factura.getDetalles_Factura();
+    }
+
+    public Integer getFactura_id() {
         return factura_id;
     }
 
-    /**
-     * @param factura_id the factura_id to set
-     */
-    public void setFactura_id(String factura_id) {
+    public void setFactura_id(Integer factura_id) {
         this.factura_id = factura_id;
     }
 
-    /**
-     * @return the monto_total
-     */
+    public String getNumero_factura() {
+        return numero_factura;
+    }
+
+    public void setNumero_factura(String numero_factura) {
+        this.numero_factura = numero_factura;
+    }
+
+    public LocalDateTime getFecha_emision() {
+        return fecha_emision;
+    }
+
+    public void setFecha_emision(LocalDateTime fecha_emision) {
+        this.fecha_emision = fecha_emision;
+    }
+
+    public LocalDateTime getFecha_recepcion() {
+        return fecha_recepcion;
+    }
+
+    public void setFecha_recepcion(LocalDateTime fecha_recepcion) {
+        this.fecha_recepcion = fecha_recepcion;
+    }
+
+    public LocalDateTime getFecha_limite_pago() {
+        return fecha_limite_pago;
+    }
+
+    public void setFecha_limite_pago(LocalDateTime fecha_limite_pago) {
+        this.fecha_limite_pago = fecha_limite_pago;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public BigDecimal getMonto_total() {
         return monto_total;
     }
 
-    /**
-     * @param monto_total the monto_total to set
-     */
     public void setMonto_total(BigDecimal monto_total) {
         this.monto_total = monto_total;
     }
 
-    /**
-     * @return moneda
-     */
-    public MonedasDTO getMoneda() {
-        return moneda;
+    public BigDecimal getMonto_igv() {
+        return monto_igv;
     }
 
-    /**
-     * @param moneda the moneda to set
-     */
-    public void setMoneda(MonedasDTO moneda) {
-        this.moneda = moneda;
+    public void setMonto_igv(BigDecimal monto_igv) {
+        this.monto_igv = monto_igv;
     }
 
-    /**
-     * @return the fecha_emision
-     */
-    public Date getFecha_emision() {
-        return fecha_emision;
-    }
-
-    /**
-     * @param fecha_emision the fecha_emision to set
-     */
-    public void setFecha_emision(Date fecha_emision) {
-        this.fecha_emision = fecha_emision;
-    }
-
-    /**
-     * @return the fecha_limite_pago
-     */
-    public Date getFecha_limite_pago() {
-        return fecha_limite_pago;
-    }
-
-    /**
-     * @param fecha_limite_pago the fecha_limite_pago to set
-     */
-    public void setFecha_limite_pago(Date fecha_limite_pago) {
-        this.fecha_limite_pago = fecha_limite_pago;
-    }
-
-    /**
-     * @return the fecha_recepcion
-     */
-    public Date getFecha_recepcion() {
-        return fecha_recepcion;
-    }
-
-    /**
-     * @param fecha_recepcion the fecha_recepcion to set
-     */
-    public void setFecha_recepcion(Date fecha_recepcion) {
-        this.fecha_recepcion = fecha_recepcion;
-    }
-
-    /**
-     * @return the motivo
-     */
-    public String getMotivo() {
-        return motivo;
-    }
-
-    /**
-     * @param motivo the motivo to set
-     */
-    public void setMotivo(String motivo) {
-        this.motivo = motivo;
-    }
-
-    /**
-     * @return the acreedor
-     */
-    public AcreedoresDTO getProveedor() {
-        return acreedor;
-    }
-
-    /**
-     * @param acreedor the acreedor to set
-     */
-    public void setProveedor(AcreedoresDTO acreedor) {
-        this.acreedor = acreedor;
-    }
-
-    /**
-     * @return the monto_restante
-     */
     public BigDecimal getMonto_restante() {
         return monto_restante;
     }
 
-    /**
-     * @param monto_restante the monto_restante to set
-     */
     public void setMonto_restante(BigDecimal monto_restante) {
         this.monto_restante = monto_restante;
     }
 
-    /**
-     * @return the igv
-     */
-    public BigDecimal getIgv() {
-        return igv;
+    public String getRegimen_fiscal() {
+        return regimen_fiscal;
     }
 
-    /**
-     * @param igv the igv to set
-     */
-    public void setIgv(BigDecimal igv) {
-        this.igv = igv;
+    public void setRegimen_fiscal(String regimen_fiscal) {
+        this.regimen_fiscal = regimen_fiscal;
+    }
+
+    public BigDecimal getTasa_iva() {
+        return tasa_iva;
+    }
+
+    public void setTasa_iva(BigDecimal tasa_iva) {
+        this.tasa_iva = tasa_iva;
+    }
+
+    public BigDecimal getOtros_tributos() {
+        return otros_tributos;
+    }
+
+    public void setOtros_tributos(BigDecimal otros_tributos) {
+        this.otros_tributos = otros_tributos;
+    }
+
+    public AcreedoresDTO getAcreedor() {
+        return acreedor;
+    }
+
+    public void setAcreedor(AcreedoresDTO acreedor) {
+        this.acreedor = acreedor;
+    }
+
+    public MonedasDTO getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(MonedasDTO moneda) {
+        this.moneda = moneda;
     }
     
-    
+    public DetallesFacturaDTO getDetalle_Factura(Integer index) {
+        return detalles_factura.get(index);
+    }
+
+    public void addDetalle_Factura(DetallesFacturaDTO tipo){
+        if(detalles_factura==null){
+            detalles_factura=new ArrayList<>();
+        }
+        this.detalles_factura.add(tipo);
+    }
+
+    public ArrayList<DetallesFacturaDTO> getDetalles_Factura(){
+        return detalles_factura;
+    }
+    public void setDetalles_Factura(ArrayList<DetallesFacturaDTO> detalles_factura){
+        this.detalles_factura=detalles_factura;
+    }
 }

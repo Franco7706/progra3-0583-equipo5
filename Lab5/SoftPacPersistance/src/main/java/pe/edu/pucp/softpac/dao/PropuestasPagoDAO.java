@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import pe.edu.pucp.softpac.model.PropuestasPagoDTO;
 
 public interface PropuestasPagoDAO {
-    public Integer insertar(PropuestasPagoDTO almacen);
+    public Integer insertar(PropuestasPagoDTO propuestaPago);
     
-    public PropuestasPagoDTO obtenerPorId(Integer almacenId);
+    public PropuestasPagoDTO obtenerPorId(Integer propuestaPagoId);
     
     public ArrayList<PropuestasPagoDTO> listarTodos();
     
-    public Integer modificar(PropuestasPagoDTO almacen);
+    public Integer modificar(PropuestasPagoDTO propuestaPago);
     
-    public Integer eliminar(PropuestasPagoDTO almacen);
+    public Integer eliminar(PropuestasPagoDTO propuestaPago);
 }

@@ -5,13 +5,13 @@ import pe.edu.pucp.softpac.model.DetallesFacturaDTO;
 
 public interface DetallesFacturaDAO {
     
-    public Integer insertar(DetallesFacturaDTO almacen);
+    public Integer insertar(DetallesFacturaDTO detalleFactura);
     
-    public DetallesFacturaDTO obtenerPorId(Integer almacenId);
+    public DetallesFacturaDTO obtenerPorId(Integer detalleFacturaId);
     
     public ArrayList<DetallesFacturaDTO> listarTodos();
     
-    public Integer modificar(DetallesFacturaDTO almacen);
+    public Integer modificar(DetallesFacturaDTO detalleFactura);
     
-    public Integer eliminar(DetallesFacturaDTO almacen);
+    public Integer eliminar(DetallesFacturaDTO detalleFactura);
 }

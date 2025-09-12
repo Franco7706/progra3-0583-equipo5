@@ -7,12 +7,12 @@ import pe.edu.pucp.softpac.model.MonedasDTO;
 public class MonedasDAOImpl implements MonedasDAO {
 
     @Override
-    public Integer insertar(MonedasDTO almacen) {
+    public Integer insertar(MonedasDTO moneda) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public MonedasDTO obtenerPorId(Integer almacenId) {
+    public MonedasDTO obtenerPorId(Integer monedaId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -22,12 +22,12 @@ public class MonedasDAOImpl implements MonedasDAO {
     }
 
     @Override
-    public Integer modificar(MonedasDTO almacen) {
+    public Integer modificar(MonedasDTO moneda) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Integer eliminar(MonedasDTO almacen) {
+    public Integer eliminar(MonedasDTO moneda) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
