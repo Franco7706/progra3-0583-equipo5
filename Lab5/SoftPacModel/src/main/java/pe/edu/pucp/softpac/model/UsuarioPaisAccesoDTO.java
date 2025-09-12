@@ -1,15 +1,18 @@
 package pe.edu.pucp.softpac.model;
 
 public class UsuarioPaisAccesoDTO {
+    private UsuariosDTO usuario;
     private PaisesDTO pais;
     private Boolean acceso;
 
     public UsuarioPaisAccesoDTO(){
+        setUsuario(null);
         setPais(null);
         setAcceso(false);
     }
-    public UsuarioPaisAccesoDTO(PaisesDTO pais){
-        this.setPais(pais);
+    public UsuarioPaisAccesoDTO(UsuariosDTO usuario, PaisesDTO pais){
+        setUsuario(usuario);
+        setPais(pais);
         setAcceso(true);
     }
 
@@ -27,5 +30,13 @@ public class UsuarioPaisAccesoDTO {
 
     public void setAcceso(Boolean acceso) {
         this.acceso = acceso;
+    }
+
+    public UsuariosDTO getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuariosDTO usuario) {
+        this.usuario = usuario;
     }
 }
