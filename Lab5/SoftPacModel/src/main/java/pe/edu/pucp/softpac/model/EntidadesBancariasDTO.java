@@ -1,7 +1,7 @@
 package pe.edu.pucp.softpac.model;
 
 public class EntidadesBancariasDTO {
-    private String entidad_bancaria_id;
+    private Integer entidad_bancaria_id;
     private String nombre;
     private String formato_aceptado;
     private String codigo_swift;
@@ -14,7 +14,7 @@ public class EntidadesBancariasDTO {
         formato_aceptado=null;
     }
 
-    public EntidadesBancariasDTO(String entidad_bancaria_id, String nombre, PaisesDTO pais, String formato_aceptado) {
+    public EntidadesBancariasDTO(Integer entidad_bancaria_id, String nombre, PaisesDTO pais, String formato_aceptado) {
         this.entidad_bancaria_id = entidad_bancaria_id;
         this.nombre = nombre;
         this.pais = new PaisesDTO(pais);
@@ -31,14 +31,14 @@ public class EntidadesBancariasDTO {
     /**
      * @return the entidad_bancaria_id
      */
-    public String getEntidad_bancaria_id() {
+    public Integer getEntidad_bancaria_id() {
         return entidad_bancaria_id;
     }
 
     /**
      * @param entidad_bancaria_id the entidad_bancaria_id to set
      */
-    public void setEntidad_bancaria_id(String entidad_bancaria_id) {
+    public void setEntidad_bancaria_id(Integer entidad_bancaria_id) {
         this.entidad_bancaria_id = entidad_bancaria_id;
     }
 

@@ -7,12 +7,12 @@ import pe.edu.pucp.softpac.model.CuentasPropiasDTO;
 public class CuentasPropiasDAOImpl implements CuentasPropiasDAO {
 
     @Override
-    public Integer insertar(CuentasPropiasDTO almacen) {
+    public Integer insertar(CuentasPropiasDTO cuentaPropia) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public CuentasPropiasDTO obtenerPorId(Integer almacenId) {
+    public CuentasPropiasDTO obtenerPorId(Integer cuentaPropiaId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -22,12 +22,12 @@ public class CuentasPropiasDAOImpl implements CuentasPropiasDAO {
     }
 
     @Override
-    public Integer modificar(CuentasPropiasDTO almacen) {
+    public Integer modificar(CuentasPropiasDTO cuentaPropia) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Integer eliminar(CuentasPropiasDTO almacen) {
+    public Integer eliminar(CuentasPropiasDTO cuentaPropia) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

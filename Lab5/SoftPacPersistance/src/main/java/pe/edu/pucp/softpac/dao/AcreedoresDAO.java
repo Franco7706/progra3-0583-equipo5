@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import pe.edu.pucp.softpac.model.AcreedoresDTO;
 
 public interface AcreedoresDAO {
-    public Integer insertar(AcreedoresDTO almacen);
+    public Integer insertar(AcreedoresDTO acreedor);
     
-    public AcreedoresDTO obtenerPorId(Integer almacenId);
+    public AcreedoresDTO obtenerPorId(Integer acreedorId);
     
     public ArrayList<AcreedoresDTO> listarTodos();
     
-    public Integer modificar(AcreedoresDTO almacen);
+    public Integer modificar(AcreedoresDTO acreedor);
     
-    public Integer eliminar(AcreedoresDTO almacen);
+    public Integer eliminar(AcreedoresDTO acreedor);
 }

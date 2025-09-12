@@ -7,12 +7,12 @@ import pe.edu.pucp.softpac.model.AcreedoresDTO;
 public class AcreedoresDAOImpl implements AcreedoresDAO {
 
     @Override
-    public Integer insertar(AcreedoresDTO almacen) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Integer insertar(AcreedoresDTO acreedor) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public AcreedoresDTO obtenerPorId(Integer almacenId) {
+    public AcreedoresDTO obtenerPorId(Integer acreedorId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -22,12 +22,12 @@ public class AcreedoresDAOImpl implements AcreedoresDAO {
     }
 
     @Override
-    public Integer modificar(AcreedoresDTO almacen) {
+    public Integer modificar(AcreedoresDTO acreedor) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Integer eliminar(AcreedoresDTO almacen) {
+    public Integer eliminar(AcreedoresDTO acreedor) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

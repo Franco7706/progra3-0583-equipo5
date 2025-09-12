@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import pe.edu.pucp.softpac.model.MonedasDTO;
 
 public interface MonedasDAO {
-    public Integer insertar(MonedasDTO almacen);
+    public Integer insertar(MonedasDTO moneda);
     
-    public MonedasDTO obtenerPorId(Integer almacenId);
+    public MonedasDTO obtenerPorId(Integer monedaId);
     
     public ArrayList<MonedasDTO> listarTodos();
     
-    public Integer modificar(MonedasDTO almacen);
+    public Integer modificar(MonedasDTO moneda);
     
-    public Integer eliminar(MonedasDTO almacen);
+    public Integer eliminar(MonedasDTO moneda);
 }

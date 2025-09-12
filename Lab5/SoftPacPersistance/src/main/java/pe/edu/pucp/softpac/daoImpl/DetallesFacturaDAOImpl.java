@@ -7,12 +7,12 @@ import pe.edu.pucp.softpac.model.DetallesFacturaDTO;
 public class DetallesFacturaDAOImpl implements DetallesFacturaDAO {
 
     @Override
-    public Integer insertar(DetallesFacturaDTO almacen) {
+    public Integer insertar(DetallesFacturaDTO detalleFactura) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public DetallesFacturaDTO obtenerPorId(Integer almacenId) {
+    public DetallesFacturaDTO obtenerPorId(Integer detalleFacturaId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -22,12 +22,12 @@ public class DetallesFacturaDAOImpl implements DetallesFacturaDAO {
     }
 
     @Override
-    public Integer modificar(DetallesFacturaDTO almacen) {
+    public Integer modificar(DetallesFacturaDTO detalleFactura) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Integer eliminar(DetallesFacturaDTO almacen) {
+    public Integer eliminar(DetallesFacturaDTO detalleFactura) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

@@ -7,7 +7,7 @@ public class CuentasAcreedorDTO extends CuentasBancariasDTO {
         acreedor=null;
     }
     
-    public CuentasAcreedorDTO(String cuenta_bancaria_id, String tipo_cuenta, String cci, Boolean activa, String numero_cuenta, MonedasDTO moneda, EntidadesBancariasDTO entidad_bancaria, AcreedoresDTO acreedor){
+    public CuentasAcreedorDTO(Integer cuenta_bancaria_id, String tipo_cuenta, String cci, Boolean activa, String numero_cuenta, MonedasDTO moneda, EntidadesBancariasDTO entidad_bancaria, AcreedoresDTO acreedor){
         super(cuenta_bancaria_id,tipo_cuenta,cci,activa,numero_cuenta,moneda,entidad_bancaria);
         this.acreedor=new AcreedoresDTO(acreedor);
     }

@@ -1,7 +1,7 @@
 package pe.edu.pucp.softpac.model;
 
 public abstract class CuentasBancariasDTO {
-    private String cuenta_bancaria_id;
+    private Integer cuenta_bancaria_id;
     private String tipo_cuenta;
     private String numero_cuenta;
     private String cci;
@@ -19,7 +19,7 @@ public abstract class CuentasBancariasDTO {
         entidad_bancaria=null;
     }
     
-    public CuentasBancariasDTO(String cuenta_bancaria_id, String tipo_cuenta, String cci, Boolean activa, String numero_cuenta, MonedasDTO moneda, EntidadesBancariasDTO entidad_bancaria){
+    public CuentasBancariasDTO(Integer cuenta_bancaria_id, String tipo_cuenta, String cci, Boolean activa, String numero_cuenta, MonedasDTO moneda, EntidadesBancariasDTO entidad_bancaria){
         this.cuenta_bancaria_id=cuenta_bancaria_id;
         this.tipo_cuenta=tipo_cuenta;
         this.cci=cci;
@@ -42,14 +42,14 @@ public abstract class CuentasBancariasDTO {
     /**
      * @return the cuenta_bancaria_id
      */
-    public String getCuenta_bancaria_id() {
+    public Integer getCuenta_bancaria_id() {
         return cuenta_bancaria_id;
     }
 
     /**
      * @param cuenta_bancaria_id the cuenta_bancaria_id to set
      */
-    public void setCuenta_bancaria_id(String cuenta_bancaria_id) {
+    public void setCuenta_bancaria_id(Integer cuenta_bancaria_id) {
         this.cuenta_bancaria_id = cuenta_bancaria_id;
     }
 

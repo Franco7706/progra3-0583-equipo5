@@ -7,12 +7,12 @@ import pe.edu.pucp.softpac.model.PropuestasPagoDTO;
 public class PropuestasPagoDAOImpl implements PropuestasPagoDAO {
 
     @Override
-    public Integer insertar(PropuestasPagoDTO almacen) {
+    public Integer insertar(PropuestasPagoDTO propuestaPago) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public PropuestasPagoDTO obtenerPorId(Integer almacenId) {
+    public PropuestasPagoDTO obtenerPorId(Integer propuestaPagoId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -22,12 +22,12 @@ public class PropuestasPagoDAOImpl implements PropuestasPagoDAO {
     }
 
     @Override
-    public Integer modificar(PropuestasPagoDTO almacen) {
+    public Integer modificar(PropuestasPagoDTO propuestaPago) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Integer eliminar(PropuestasPagoDTO almacen) {
+    public Integer eliminar(PropuestasPagoDTO propuestaPago) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
