@@ -4,7 +4,18 @@ import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.EntidadesBancariasDAO;
 import pe.edu.pucp.softpac.model.EntidadesBancariasDTO;
 
-public class EntidadesBancariasDAOImpl implements EntidadesBancariasDAO {
+public class EntidadesBancariasDAOImpl extends DAOImplBase implements EntidadesBancariasDAO {
+
+    private EntidadesBancariasDTO entidadBancaria;
+
+    public EntidadesBancariasDAOImpl() {
+        super("");
+    }
+
+    @Override
+    protected void configurarListaDeColumnas() {
+
+    }
 
     @Override
     public Integer insertar(EntidadesBancariasDTO entidadBancaria) {

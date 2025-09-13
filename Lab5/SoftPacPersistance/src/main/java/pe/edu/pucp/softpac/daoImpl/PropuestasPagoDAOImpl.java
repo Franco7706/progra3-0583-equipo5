@@ -4,8 +4,18 @@ import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.PropuestasPagoDAO;
 import pe.edu.pucp.softpac.model.PropuestasPagoDTO;
 
-public class PropuestasPagoDAOImpl implements PropuestasPagoDAO {
+public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPagoDAO {
 
+    private PropuestasPagoDTO propuestaPago;
+
+    public PropuestasPagoDAOImpl() {
+        super("");
+    }
+
+    @Override
+    protected void configurarListaDeColumnas() {
+
+    }
 
     @Override
     public Integer insertar(PropuestasPagoDTO propuestaPago) {

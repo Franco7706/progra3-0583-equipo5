@@ -4,7 +4,18 @@ import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.FacturasDAO;
 import pe.edu.pucp.softpac.model.FacturasDTO;
 
-public class FacturasDAOImpl implements FacturasDAO {
+public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
+
+    private FacturasDTO factura;
+
+    public FacturasDAOImpl() {
+        super("");
+    }
+
+    @Override
+    protected void configurarListaDeColumnas() {
+
+    }
 
     @Override
     public Integer insertar(FacturasDTO factura) {

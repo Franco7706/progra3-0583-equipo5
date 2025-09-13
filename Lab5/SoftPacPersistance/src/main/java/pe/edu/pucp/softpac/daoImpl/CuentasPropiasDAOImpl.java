@@ -4,7 +4,18 @@ import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.CuentasPropiasDAO;
 import pe.edu.pucp.softpac.model.CuentasPropiasDTO;
 
-public class CuentasPropiasDAOImpl implements CuentasPropiasDAO {
+public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropiasDAO {
+
+    private CuentasPropiasDTO cuentaPropia;
+
+    public CuentasPropiasDAOImpl() {
+        super("");
+    }
+
+    @Override
+    protected void configurarListaDeColumnas() {
+
+    }
 
     @Override
     public Integer insertar(CuentasPropiasDTO cuentaPropia) {

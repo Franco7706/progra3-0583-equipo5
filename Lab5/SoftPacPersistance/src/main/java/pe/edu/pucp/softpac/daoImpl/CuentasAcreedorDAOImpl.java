@@ -4,7 +4,18 @@ import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.CuentasAcreedorDAO;
 import pe.edu.pucp.softpac.model.CuentasAcreedorDTO;
 
-public class CuentasAcreedorDAOImpl implements CuentasAcreedorDAO {
+public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreedorDAO {
+
+    private CuentasAcreedorDTO cuentaAcreedor;
+
+    public CuentasAcreedorDAOImpl() {
+        super("");
+    }
+
+    @Override
+    protected void configurarListaDeColumnas() {
+
+    }
 
     @Override
     public Integer insertar(CuentasAcreedorDTO cuentaAcreedor) {

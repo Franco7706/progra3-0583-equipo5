@@ -5,7 +5,18 @@ import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 import java.util.ArrayList;
 
-public class UsuariosDAOImpl implements UsuariosDAO {
+public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
+
+    private UsuariosDTO usuario;
+
+    public UsuariosDAOImpl() {
+        super("");
+    }
+
+    @Override
+    protected void configurarListaDeColumnas() {
+
+    }
 
     @Override
     public Integer insertar(UsuariosDTO usuario) {

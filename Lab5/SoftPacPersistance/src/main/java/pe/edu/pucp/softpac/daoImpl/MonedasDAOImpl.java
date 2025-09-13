@@ -4,8 +4,18 @@ import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.MonedasDAO;
 import pe.edu.pucp.softpac.model.MonedasDTO;
 
-public class MonedasDAOImpl implements MonedasDAO {
+public class MonedasDAOImpl extends DAOImplBase implements MonedasDAO {
 
+    private MonedasDTO moneda;
+
+    public MonedasDAOImpl() {
+        super("");
+    }
+
+    @Override
+    protected void configurarListaDeColumnas() {
+
+    }
 
     @Override
     public Integer insertar(MonedasDTO moneda) {

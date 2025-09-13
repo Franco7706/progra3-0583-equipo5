@@ -5,7 +5,18 @@ import pe.edu.pucp.softpac.model.PaisesDTO;
 
 import java.util.ArrayList;
 
-public class PaisesDAOImpl implements PaisesDAO {
+public class PaisesDAOImpl extends DAOImplBase implements PaisesDAO {
+
+    private PaisesDTO pais;
+
+    public PaisesDAOImpl() {
+        super("");
+    }
+
+    @Override
+    protected void configurarListaDeColumnas() {
+
+    }
 
     @Override
     public Integer insertar(PaisesDTO pais) {
