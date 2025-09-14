@@ -2,6 +2,7 @@ package pe.edu.pucp.softpac.daoImpl;
 
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.daoImpl.util.Tipo_Operacion;
+import pe.edu.pucp.softpac.daoImpl.util.Tipo_Query;
 import pe.edu.pucp.softpac.db.DBManager;
 
 import java.sql.CallableStatement;
@@ -44,6 +45,16 @@ public abstract class DAOImplBase {
         return this.ejecuta_DML(Tipo_Operacion.ELIMINAR);
     }
 
+    protected void obtenerPorId() { this.ejecuta_Query(Tipo_Query.OBTENER_POR_ID);}
+
+    protected void listarTodosQuery() { this.ejecuta_Query(Tipo_Query.LISTAR_TODOS);}
+
+    protected void queryCustom1() { this.ejecuta_Query(Tipo_Query.CUSTOM1);}
+
+    protected void queryCustom2() { this.ejecuta_Query(Tipo_Query.CUSTOM3);}
+
+    protected void queryCustom3() { this.ejecuta_Query(Tipo_Query.CUSTOM3);}
+
     private Integer ejecuta_DML(Tipo_Operacion tipo_operacion) {
         Integer resultado = 0;
         try {
@@ -81,7 +92,7 @@ public abstract class DAOImplBase {
             }
             this.conexion.commit();
         } catch (SQLException ex) {
-            System.err.println("Error al intentar insertar - " + ex);
+            System.err.println("Error al intentar ejecutar DML - " + ex);
             try {
                 if (this.conexion != null) {
                     this.conexion.rollback();
@@ -99,6 +110,82 @@ public abstract class DAOImplBase {
             }
         }
         return resultado;
+    }
+
+    private void ejecuta_Query(Tipo_Query tipo_query) {
+        try {
+            this.conexion = DBManager.getInstance().getConnection();
+            String sql = null;
+            switch (tipo_query) {
+                case Tipo_Query.LISTAR_TODOS:
+                    sql = this.generarSQLParaListarTodos();
+                    break;
+                case Tipo_Query.OBTENER_POR_ID:
+                    sql = this.generarSQLParaObtenerPorId();
+                    break;
+                case Tipo_Query.CUSTOM1:
+                    sql = this.generarSQLCustom1();
+                    break;
+                case Tipo_Query.CUSTOM2:
+                    sql = this.generarSQLCustom2();
+                    break;
+                case Tipo_Query.CUSTOM3:
+                    sql = this.generarSQLCustom3();
+                    break;
+            }
+            this.statement = this.conexion.prepareCall(sql);
+            switch (tipo_query) {
+                case Tipo_Query.LISTAR_TODOS:
+                    break;
+                case Tipo_Query.OBTENER_POR_ID:
+                    this.incluirValorDeParametrosParaObtenerPorId();
+                    break;
+                case Tipo_Query.CUSTOM1:
+                    this.incluirValorDeParametrosCustom1();
+                    break;
+                case Tipo_Query.CUSTOM2:
+                    this.incluirValorDeParametrosCustom2();
+                    break;
+                case Tipo_Query.CUSTOM3:
+                    this.incluirValorDeParametrosCustom3();
+                    break;
+            }
+            this.resultSet = this.statement.executeQuery();
+            switch (tipo_query) {
+                case Tipo_Query.LISTAR_TODOS:
+                    this.extraerResultSetParaListarTodos();
+                    break;
+                case Tipo_Query.OBTENER_POR_ID:
+                    this.extraerResultSetParaObtenerPorId();
+                    break;
+                case Tipo_Query.CUSTOM1:
+                    this.extraerResultSetCustom1();
+                    break;
+                case Tipo_Query.CUSTOM2:
+                    this.extraerResultSetCustom2();
+                    break;
+                case Tipo_Query.CUSTOM3:
+                    this.extraerResultSetCustom3();
+                    break;
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error al intentar query - " + ex);
+            try {
+                if (this.conexion != null) {
+                    this.conexion.rollback();
+                }
+            } catch (SQLException ex1) {
+                System.err.println("Error al hacer rollback - " + ex1);
+            }
+        } finally {
+            try {
+                if (this.conexion != null) {
+                    this.conexion.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión - " + ex);
+            }
+        }
     }
 
     protected String generarSQLParaInsercion() {
@@ -229,6 +316,55 @@ public abstract class DAOImplBase {
 
     protected void incluirValorDeParametrosParaEliminacion() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    protected String generarSQLCustom1() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected String generarSQLCustom2() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected String generarSQLCustom3() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected void incluirValorDeParametrosCustom3() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected void incluirValorDeParametrosCustom2() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected void incluirValorDeParametrosCustom1() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected void incluirValorDeParametrosParaObtenerPorId() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
+    protected void extraerResultSetCustom3() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected void extraerResultSetCustom2() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected void extraerResultSetCustom1() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected void extraerResultSetParaObtenerPorId() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected void extraerResultSetParaListarTodos() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public Integer retornarUltimoAutoGenerado() {

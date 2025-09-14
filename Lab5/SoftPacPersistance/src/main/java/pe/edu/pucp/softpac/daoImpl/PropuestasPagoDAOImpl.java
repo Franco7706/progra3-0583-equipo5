@@ -2,6 +2,7 @@ package pe.edu.pucp.softpac.daoImpl;
 
 import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.PropuestasPagoDAO;
+import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.model.PropuestasPagoDTO;
 
 public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPagoDAO {
@@ -9,12 +10,15 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
     private PropuestasPagoDTO propuestaPago;
 
     public PropuestasPagoDAOImpl() {
-        super("");
+        super("PA_PROPUESTAS_DE_PAGO");
     }
 
     @Override
     protected void configurarListaDeColumnas() {
-
+        this.listaColumnas.add(new Columna("PROPUESTA_PAGO_ID", true, true ));
+        this.listaColumnas.add(new Columna("FECHA_HORA_CREACION", false, false));
+        this.listaColumnas.add(new Columna("ESTADO", false, false));
+        this.listaColumnas.add(new Columna("ENTIDAD_BANCARIA_ID", false, false));
     }
 
     @Override
