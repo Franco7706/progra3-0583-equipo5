@@ -59,6 +59,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
     @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException {
+        usuario=null;
         if (this.resultSet.next()) {
             usuario = new UsuariosDTO();
             usuario.setUsuario_id(this.resultSet.getInt("USUARIO_ID"));
@@ -67,7 +68,6 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
             usuario.setPassword_hash(this.resultSet.getString("PASSWORD_HASH"));
             usuario.setSuperusuario(this.resultSet.getString("SUPERUSUARIO").equals("S"));
         }
-        else usuario=null;
     }
 
     @Override

@@ -1,0 +1,2 @@
+insert into pa_paises (nombre,codigo_iso,codigo_telefono) values ("Peru","PE","+51");
+insert into pa_entidades_bancarias (nombre,formato_aceptado,codigo_swift,pais_id) values("BCP","XML","102030123",1);

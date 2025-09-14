@@ -14,20 +14,20 @@ public class CuentasAcreedorDTO extends CuentasBancariasDTO {
     
     public CuentasAcreedorDTO(CuentasAcreedorDTO cuenta_acreedor){
         super(cuenta_acreedor);
-        this.acreedor=new AcreedoresDTO(cuenta_acreedor.getProveedor());
+        this.acreedor=new AcreedoresDTO(cuenta_acreedor.getAcreedor());
     }
 
     /**
      * @return the acreedor
      */
-    public AcreedoresDTO getProveedor() {
+    public AcreedoresDTO getAcreedor() {
         return acreedor;
     }
 
     /**
      * @param acreedor the acreedor to set
      */
-    public void setProveedor(AcreedoresDTO acreedor) {
+    public void setAcreedor(AcreedoresDTO acreedor) {
         this.acreedor = acreedor;
     }
 

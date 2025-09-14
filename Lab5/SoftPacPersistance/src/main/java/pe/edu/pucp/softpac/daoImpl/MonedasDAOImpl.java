@@ -56,15 +56,13 @@ public class MonedasDAOImpl extends DAOImplBase implements MonedasDAO {
     }
     @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException {
+        this.moneda=null;
         if (this.resultSet.next()) {
             this.moneda = new MonedasDTO();
             this.moneda.setMoneda_id(this.resultSet.getInt("MONEDA_ID"));
             this.moneda.setNombre(this.resultSet.getString("NOMBRE"));
             this.moneda.setCodigo_iso(this.resultSet.getString("CODIGO_ISO"));
             this.moneda.setSimbolo(this.resultSet.getString("SIMBOLO"));
-        }
-        else{
-            this.moneda = null;
         }
     }
 
