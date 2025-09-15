@@ -12,5 +12,5 @@ public interface CuentasAcreedorDAO {
     
     public Integer modificar(CuentasAcreedorDTO cuentaAcreedor);
     
-    public Integer eliminar(CuentasAcreedorDTO cuentaAcreedor);
+//    public Integer eliminar(CuentasAcreedorDTO cuentaAcreedor);
 }

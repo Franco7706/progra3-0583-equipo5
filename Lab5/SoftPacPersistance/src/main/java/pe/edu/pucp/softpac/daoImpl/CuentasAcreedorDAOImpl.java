@@ -1,44 +1,169 @@
 package pe.edu.pucp.softpac.daoImpl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.CuentasAcreedorDAO;
+import pe.edu.pucp.softpac.daoImpl.util.Columna;
+import pe.edu.pucp.softpac.model.AcreedoresDTO;
 import pe.edu.pucp.softpac.model.CuentasAcreedorDTO;
+import pe.edu.pucp.softpac.model.EntidadesBancariasDTO;
+import pe.edu.pucp.softpac.model.MonedasDTO;
 
 public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreedorDAO {
 
     private CuentasAcreedorDTO cuentaAcreedor;
+    private ArrayList<CuentasAcreedorDTO> cuentasAcreedores;
 
     public CuentasAcreedorDAOImpl() {
-        super("");
+        super("PA_CUENTAS_ACREEDOR");
+        this.cuentaAcreedor=null;
+        this.retornarLlavePrimaria=null;
     }
 
     @Override
     protected void configurarListaDeColumnas() {
-
+        this.listaColumnas.add(new Columna("CUENTA_ACREEDOR_ID", true,true));
+        this.listaColumnas.add(new Columna("TIPO_CUENTA", false,false));
+        this.listaColumnas.add(new Columna("NUMERO_CUENTA", false,false));
+        this.listaColumnas.add(new Columna("CCI", false,false));
+        this.listaColumnas.add(new Columna("ACTIVO", false,false));
+        this.listaColumnas.add(new Columna("ACREEDOR_ID", false,false));
+        this.listaColumnas.add(new Columna("ENTIDAD_BANCARIA_ID", false,false));
+        this.listaColumnas.add(new Columna("MONEDA_ID", false,false));
     }
 
     @Override
-    public Integer insertar(CuentasAcreedorDTO cuentaAcreedor) {
-        return 0;
+    protected void incluirValorDeParametrosParaInsercion() throws SQLException {
+        this.statement.setString(1, this.cuentaAcreedor.getTipo_cuenta());
+        this.statement.setString(2, this.cuentaAcreedor.getNumero_cuenta());
+        this.statement.setString(3, this.cuentaAcreedor.getCci());
+        this.statement.setInt(4, this.cuentaAcreedor.getActiva() ? 1:0);
+        this.statement.setObject(5, this.cuentaAcreedor.getAcreedor());
+        this.statement.setObject(6, this.cuentaAcreedor.getEntidad_bancaria());
+        this.statement.setObject(7, this.cuentaAcreedor.getMoneda());
     }
+    
+    @Override
+    protected void incluirValorDeParametrosParaModificacion() throws SQLException {
+        this.statement.setString(1, this.cuentaAcreedor.getTipo_cuenta());
+        this.statement.setString(2, this.cuentaAcreedor.getNumero_cuenta());
+        this.statement.setString(3, this.cuentaAcreedor.getCci());
+        this.statement.setInt(4, this.cuentaAcreedor.getActiva() ? 1:0);
+        this.statement.setObject(5, this.cuentaAcreedor.getAcreedor());
+        this.statement.setObject(6, this.cuentaAcreedor.getEntidad_bancaria());
+        this.statement.setObject(7, this.cuentaAcreedor.getMoneda());
+        this.statement.setInt(8,this.cuentaAcreedor.getCuenta_bancaria_id());
+    }
+    
+    @Override
+    protected void incluirValorDeParametrosParaObtenerPorId() throws SQLException {
+        this.statement.setInt(1, this.cuentaAcreedor.getCuenta_bancaria_id());
+        this.cuentaAcreedor = null;
+    }
+
+    @Override
+    protected void extraerResultSetParaObtenerPorId() throws SQLException {
+        this.cuentaAcreedor = null;
+        MonedasDTO moneda = null;
+        EntidadesBancariasDTO entidadBancaria = null;
+        AcreedoresDTO acreedor = null;
+        if(this.resultSet.next()){
+            this.cuentaAcreedor = new CuentasAcreedorDTO();
+            this.cuentaAcreedor.setCuenta_bancaria_id(this.resultSet.getInt(1));
+            this.cuentaAcreedor.setTipo_cuenta(this.resultSet.getString(2));
+            this.cuentaAcreedor.setNumero_cuenta(this.resultSet.getString(3));
+            this.cuentaAcreedor.setCci(this.resultSet.getString(4));
+            this.cuentaAcreedor.setActiva(this.resultSet.getBoolean(5));
+            acreedor = new AcreedoresDTO();
+            acreedor.setAcreedor_id(this.resultSet.getInt(6));
+            acreedor.setRazon_social(this.resultSet.getString(7));
+            acreedor.setRazon_social(this.resultSet.getString(8));
+            acreedor.setRuc(this.resultSet.getString(9));
+            acreedor.setDireccion_fiscal(this.resultSet.getString(10));
+            acreedor.setCondicion(this.resultSet.getString(11));
+            acreedor.setPlazo_de_pago(this.resultSet.getInt(12));
+            acreedor.setActivo(this.resultSet.getBoolean(13));
+            
+            entidadBancaria = new EntidadesBancariasDTO();
+            entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(14));
+            entidadBancaria.setNombre(this.resultSet.getString(15));
+            entidadBancaria.setFormato_aceptado(this.resultSet.getString(16));
+            entidadBancaria.setCodigo_swift(this.resultSet.getString(17));
+            
+            moneda = new MonedasDTO();
+            moneda.setMoneda_id(this.resultSet.getInt(18));
+            moneda.setNombre(this.resultSet.getString(19));
+            moneda.setCodigo_iso(this.resultSet.getString(20));
+            moneda.setSimbolo(this.resultSet.getString(21));
+            
+            this.cuentaAcreedor.setAcreedor(acreedor);
+            this.cuentaAcreedor.setEntidad_bancaria(entidadBancaria);
+            this.cuentaAcreedor.setMoneda(moneda);
+        }
+    }
+    
+    @Override
+    protected void extraerResultSetParaListarTodos() throws SQLException {
+        cuentasAcreedores = new ArrayList<>();
+        MonedasDTO moneda = null;
+        EntidadesBancariasDTO entidadBancaria = null;
+        AcreedoresDTO acreedor = null;
+        while(this.resultSet.next()){
+            CuentasAcreedorDTO cuenta = new CuentasAcreedorDTO();
+            cuenta = new CuentasAcreedorDTO();
+            cuenta.setCuenta_bancaria_id(this.resultSet.getInt(1));
+            cuenta.setTipo_cuenta(this.resultSet.getString(2));
+            cuenta.setNumero_cuenta(this.resultSet.getString(3));
+            cuenta.setCci(this.resultSet.getString(4));
+            cuenta.setActiva(this.resultSet.getBoolean(5));
+            
+            acreedor = new AcreedoresDTO();
+            acreedor.setAcreedor_id(this.resultSet.getInt(6));
+
+            entidadBancaria = new EntidadesBancariasDTO();
+            entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(7));
+            
+            moneda = new MonedasDTO();
+            moneda.setMoneda_id(this.resultSet.getInt(8));
+            
+            cuenta.setAcreedor(acreedor);
+            cuenta.setEntidad_bancaria(entidadBancaria);
+            cuenta.setMoneda(moneda);
+            cuentasAcreedores.add(cuenta);
+        }
+    }
+    
+    @Override
+    public Integer insertar(CuentasAcreedorDTO cuentaAcreedor) {
+        this.cuentaAcreedor = cuentaAcreedor;
+        return super.insertar();
+    }
+    
 
     @Override
     public CuentasAcreedorDTO obtenerPorId(Integer cuentaAcreedorId) {
-        return null;
+        this.cuentaAcreedor = new CuentasAcreedorDTO();
+        this.cuentaAcreedor.setCuenta_bancaria_id(cuentaAcreedorId);
+        super.obtenerPorId();
+        return this.cuentaAcreedor;
     }
 
     @Override
     public ArrayList<CuentasAcreedorDTO> listarTodos() {
-        return null;
+        super.listarTodosQuery();
+        return this.cuentasAcreedores;
     }
 
     @Override
     public Integer modificar(CuentasAcreedorDTO cuentaAcreedor) {
-        return 0;
+        this.cuentaAcreedor = cuentaAcreedor;
+        return super.modificar();
     }
 
-    @Override
-    public Integer eliminar(CuentasAcreedorDTO cuentaAcreedor) {
-        return 0;
-    }
+//    @Override
+//    public Integer eliminar(CuentasAcreedorDTO cuentaAcreedor) {
+////        this.cuentaAcreedor = cuentaAcreedor;
+////        return super.eliminar();
+//        return null;
+//    }
 }
