@@ -7,6 +7,7 @@ C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\s
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\MonedasDAO.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\PaisesDAO.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\PropuestasPagoDAO.java
+C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\TiposDeCambioDAO.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\UsuariosDAO.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\AcreedoresDAOImpl.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\CuentasAcreedorDAOImpl.java
@@ -18,6 +19,7 @@ C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\s
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\MonedasDAOImpl.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\PaisesDAOImpl.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\PropuestasPagoDAOImpl.java
+C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\TiposDeCambioDAOImpl.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\UsuariosDAOImpl.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\util\Columna.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\util\Tipo_Operacion.java

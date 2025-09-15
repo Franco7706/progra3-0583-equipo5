@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: pe.edu.pucp.softpac.dao.MonedasDAOTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.185 s -- in pe.edu.pucp.softpac.dao.MonedasDAOTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.221 s -- in pe.edu.pucp.softpac.dao.MonedasDAOTest

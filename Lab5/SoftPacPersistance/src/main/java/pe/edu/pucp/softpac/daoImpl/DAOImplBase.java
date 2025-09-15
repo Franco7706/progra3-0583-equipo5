@@ -170,13 +170,6 @@ public abstract class DAOImplBase {
             }
         } catch (SQLException ex) {
             System.err.println("Error al intentar query - " + ex);
-            try {
-                if (this.conexion != null) {
-                    this.conexion.rollback();
-                }
-            } catch (SQLException ex1) {
-                System.err.println("Error al hacer rollback - " + ex1);
-            }
         } finally {
             try {
                 if (this.conexion != null) {
