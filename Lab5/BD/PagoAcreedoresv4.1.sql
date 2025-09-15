@@ -4,17 +4,7 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- begin attached script 'script'
-CREATE TABLE PA_PAISES (
-    PAIS_ID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    NOMBRE VARCHAR(100) NOT NULL UNIQUE,
-    CODIGO_ISO CHAR(2) NOT NULL UNIQUE,
-    CODIGO_TELEFONO VARCHAR(5)
-);
--- end attached script 'script'
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
+
 
 -- -----------------------------------------------------
 -- Schema mydb
