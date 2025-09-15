@@ -54,7 +54,6 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     @Override
     protected void incluirValorDeParametrosParaObtenerPorId() throws SQLException {
         this.statement.setInt(1, this.usuario.getUsuario_id());
-        this.usuario=null;
     }
 
     @Override

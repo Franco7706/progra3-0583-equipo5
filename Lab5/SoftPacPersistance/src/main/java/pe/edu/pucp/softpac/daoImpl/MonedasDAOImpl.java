@@ -52,7 +52,6 @@ public class MonedasDAOImpl extends DAOImplBase implements MonedasDAO {
     @Override
     protected void incluirValorDeParametrosParaObtenerPorId() throws SQLException {
         this.statement.setInt(1, this.moneda.getMoneda_id());
-        this.moneda=null;
     }
     @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException {
