@@ -2,6 +2,7 @@ package pe.edu.pucp.softpac.dao;
 
 import org.junit.jupiter.api.*;
 import pe.edu.pucp.softpac.daoImpl.EntidadesBancariasDAOImpl;
+import pe.edu.pucp.softpac.daoImpl.PaisesDAOImpl;
 import pe.edu.pucp.softpac.model.EntidadesBancariasDTO;
 import pe.edu.pucp.softpac.model.PaisesDTO;
 
@@ -16,20 +17,29 @@ public class EntidadesBancariasDAOTest {
     protected static EntidadesBancariasDTO testEntidad;
     private static int generatedId;
 
+    protected static PaisesDTO testPais;
+    protected static PaisesDAO paisesDAO;
+    @BeforeAll
+    static void init(){
+        paisesDAO = new PaisesDAOImpl();
+        testPais = new PaisesDTO(0,"PaisPruebaEntidad","XE","+");
+        Integer idPais = paisesDAO.insertar(testPais);
+        testPais.setPais_id(idPais);
+    }
+    @AfterAll
+    static void deleteDependencies(){
+        paisesDAO.eliminar(testPais);
+    }
     @BeforeEach
     void setUp() {
         dao = new EntidadesBancariasDAOImpl();
-
-        // ⚠️ Ajusta el ID según un país válido en tu BD de pruebas
-        PaisesDTO pais = new PaisesDTO();
-        pais.setPais_id(1);  
-
         testEntidad = new EntidadesBancariasDTO();
         testEntidad.setEntidad_bancaria_id(0); // autogenerado
         testEntidad.setNombre("Banco de Prueba");
         testEntidad.setFormato_aceptado("XML");
         testEntidad.setCodigo_swift("BPRUEBA1");
-        testEntidad.setPais(pais);
+
+        testEntidad.setPais(testPais);
     }
 
     @AfterEach

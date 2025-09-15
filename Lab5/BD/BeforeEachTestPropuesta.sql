@@ -11,8 +11,10 @@ select * from pa_entidades_bancarias;
 select * from pa_paises;
 
 select * from vw_propuesta_completa;
+
 select * from pa_acreedores;
 delete from pa_acreedores;
+delete from pa_entidades_bancarias;
 
 INSERT INTO PA_ACREEDORES (RAZON_SOCIAL,RUC,DIRECCION_FISCAL,CONDICION,PLAZO_DE_PAGO,ACTIVO,PAIS_ID)
 VALUES ("franco","franco","franco","franco",30,"S",1);
@@ -20,5 +22,7 @@ VALUES ("franco","franco","franco","franco",30,"S",1);
 SELECT a.ACREEDOR_ID, a.RAZON_SOCIAL, a.RUC, a.DIRECCION_FISCAL, a.CONDICION,
                 a.PLAZO_DE_PAGO, a.ACTIVO, a.PAIS_ID, p.NOMBRE, p.CODIGO_ISO, p.CODIGO_TELEFONICO 
                 FROM PA_ACREEDORES a JOIN PA_PAISES p ON a.PAIS_ID=p.PAIS_ID WHERE a.ACREEDOR_ID=1;
-                
+delete from pa_paises;
+delete from pa_entidades_bancarias;
+delete from pa_propuestas_de_pago;
                 

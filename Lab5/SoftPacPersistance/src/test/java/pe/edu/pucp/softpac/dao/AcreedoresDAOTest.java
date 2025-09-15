@@ -2,6 +2,7 @@ package pe.edu.pucp.softpac.dao;
 
 import org.junit.jupiter.api.*;
 import pe.edu.pucp.softpac.daoImpl.AcreedoresDAOImpl;
+import pe.edu.pucp.softpac.daoImpl.PaisesDAOImpl;
 import pe.edu.pucp.softpac.model.AcreedoresDTO;
 import pe.edu.pucp.softpac.model.PaisesDTO;
 
@@ -16,6 +17,20 @@ public class AcreedoresDAOTest {
     protected static AcreedoresDTO testAcreedor;
     private static int generatedId;
 
+    protected static PaisesDTO testPais;
+    protected static PaisesDAO paisesDAO;
+
+    @BeforeAll
+    static void init(){
+        paisesDAO = new PaisesDAOImpl();
+        testPais = new PaisesDTO(0,"PaisPruebaAcreedor","XA","+");
+        Integer idPais = paisesDAO.insertar(testPais);
+        testPais.setPais_id(idPais);
+    }
+    @AfterAll
+    static void deleteDependencies(){
+        paisesDAO.eliminar(testPais);
+    }
     @BeforeEach
     void setUp() {
         dao = new AcreedoresDAOImpl();
@@ -28,10 +43,7 @@ public class AcreedoresDAOTest {
         testAcreedor.setPlazo_de_pago(30);
         testAcreedor.setActivo(true);
 
-        // ⚠️ IMPORTANTE: asegúrate que exista un país con ID=1 en la BD
-        PaisesDTO pais = new PaisesDTO();
-        pais.setPais_id(1);
-        testAcreedor.setPais(pais);
+        testAcreedor.setPais(testPais);
     }
 
     @AfterEach
@@ -52,7 +64,6 @@ public class AcreedoresDAOTest {
     @DisplayName("Contrato: debe insertar un acreedor y devolver su ID")
     void testInsertar() {
         Integer nuevoId = dao.insertar(testAcreedor);
-        System.out.println("nuevoId: "+nuevoId);
         assertNotNull(nuevoId, "El ID insertado no debe ser null");
         assertTrue(nuevoId > 0, "El ID insertado debe ser mayor que 0");
         generatedId = nuevoId;

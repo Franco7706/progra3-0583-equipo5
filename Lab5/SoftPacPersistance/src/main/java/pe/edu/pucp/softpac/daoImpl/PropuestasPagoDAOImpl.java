@@ -2,6 +2,8 @@ package pe.edu.pucp.softpac.daoImpl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import pe.edu.pucp.softpac.dao.DetallesPropuestaDAO;
 import pe.edu.pucp.softpac.dao.PropuestasPagoDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.model.*;
@@ -10,10 +12,12 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
 
     private PropuestasPagoDTO propuestaPago;
     private ArrayList<PropuestasPagoDTO> propuestasPago;
+    private DetallesPropuestaDAO daoDetalle;
 
     public PropuestasPagoDAOImpl() {
         super("PA_PROPUESTAS_DE_PAGO");
         this.retornarLlavePrimaria=true;
+        daoDetalle = new DetallesPropuestaDAOImpl();
     }
 
     @Override
@@ -187,7 +191,11 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
     @Override
     public Integer insertar(PropuestasPagoDTO propuestaPago) {
         this.propuestaPago = propuestaPago;
-        return super.insertar();
+        Integer resultado = super.insertar();
+        for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
+            daoDetalle.insertar(detalle);
+        }
+        return resultado;
     }
 
     @Override
@@ -207,12 +215,16 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
     @Override
     public Integer modificar(PropuestasPagoDTO propuestaPago) {
         this.propuestaPago=propuestaPago;
-        return super.modificar();
+        Integer resultado = super.modificar();
+        return resultado;
     }
 
     @Override
     public Integer eliminar(PropuestasPagoDTO propuestaPago) {
         this.propuestaPago=propuestaPago;
+        for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
+            daoDetalle.eliminar(detalle);
+        }
         return super.eliminar();
     }
 }
