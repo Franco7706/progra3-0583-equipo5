@@ -65,6 +65,12 @@ public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropias
     }
 
     @Override
+    protected String generarSQLParaObtenerPorId() {
+        return "SELECT * FROM VW_CUENTA_PROPIA_DETALLADA WHERE P1_CUENTA_PROPIA_ID = ?";
+    }
+
+    
+    @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException {
         this.cuentaPropia = null;
         MonedasDTO moneda = null;
@@ -140,10 +146,10 @@ public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropias
         this.cuentaPropia = cuentaPropia;
         return super.modificar();
     }
-
-    @Override
-    public Integer eliminar(CuentasPropiasDTO cuentaPropia) {
-        this.cuentaPropia = cuentaPropia;
-        return super.eliminar();
-    }
+//    No es posible eliminar cuentas bancarias, solo pueden ser activadas o desactivadas
+//    @Override
+//    public Integer eliminar(CuentasPropiasDTO cuentaPropia) {
+//        this.cuentaPropia = cuentaPropia;
+//        return super.eliminar();
+//    }
 }

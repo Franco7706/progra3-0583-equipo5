@@ -75,6 +75,11 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     protected void incluirValorDeParametrosParaEliminacion() throws SQLException {
         this.statement.setInt(1, this.factura.getFactura_id());
     }
+    
+    @Override
+    protected String generarSQLParaObtenerPorId() {
+        return "SELECT * FROM VW_FACTURA_COMPLETA WHERE P1_FACTURA_ID = ?";
+    }
 
     @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException {

@@ -12,5 +12,5 @@ public interface CuentasPropiasDAO {
     
     public Integer modificar(CuentasPropiasDTO cuentaPropia);
     
-    public Integer eliminar(CuentasPropiasDTO cuentaPropia);
+//    public Integer eliminar(CuentasPropiasDTO cuentaPropia);
 }
