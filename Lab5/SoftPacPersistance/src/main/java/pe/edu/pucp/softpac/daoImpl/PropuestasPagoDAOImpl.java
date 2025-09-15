@@ -89,6 +89,7 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
                 i++;
             }
             detallePropuesta = new DetallesPropuestaDTO();
+            detallePropuesta.setPropuesta_pago(propuestaPago);
             detallePropuesta.setDetalle_propuesta_id(this.resultSet.getInt(10));
             if(this.resultSet.wasNull()) break;
             detallePropuesta.setMonto_pago(this.resultSet.getBigDecimal(11));
