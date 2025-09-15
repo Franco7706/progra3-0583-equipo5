@@ -3,7 +3,6 @@ package pe.edu.pucp.softpac.daoImpl;
 import pe.edu.pucp.softpac.dao.UsuariosDAO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
-import pe.edu.pucp.softpac.db.DBManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
