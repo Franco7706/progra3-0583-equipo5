@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="pe.edu.pucp.softpac.dao.AcreedoresDAOTest" time="1.277" tests="5" errors="0" skipped="0" failures="5">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="pe.edu.pucp.softpac.dao.AcreedoresDAOTest" time="1.122" tests="5" errors="0" skipped="0" failures="5">
   <properties>
     <property name="java.specification.version" value="24"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="user.country" value="MX"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-24\bin"/>
-    <property name="sun.java.command" value="C:\Users\angel\AppData\Local\Temp\surefire14879528395411950601\surefirebooter-20250915163652404_3.jar C:\Users\angel\AppData\Local\Temp\surefire14879528395411950601 2025-09-15T16-36-52_276-jvmRun1 surefire-20250915163652404_1tmp surefire_0-20250915163652404_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\angel\AppData\Local\Temp\surefire6758170956221286150\surefirebooter-20250915211130792_3.jar C:\Users\angel\AppData\Local\Temp\surefire6758170956221286150 2025-09-15T21-11-30_675-jvmRun1 surefire-20250915211130792_1tmp surefire_0-20250915211130792_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\target\test-classes;C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\target\classes;C:\Users\angel\.m2\repository\pe\edu\pucp\softpac\SoftPacDBManager\1.0-SNAPSHOT\SoftPacDBManager-1.0-SNAPSHOT.jar;C:\Users\angel\.m2\repository\com\mysql\mysql-connector-j\9.2.0\mysql-connector-j-9.2.0.jar;C:\Users\angel\.m2\repository\com\google\protobuf\protobuf-java\4.29.0\protobuf-java-4.29.0.jar;C:\Users\angel\.m2\repository\commons-codec\commons-codec\1.18.0\commons-codec-1.18.0.jar;C:\Users\angel\.m2\repository\pe\edu\pucp\softpac\SoftPacModel\1.0-SNAPSHOT\SoftPacModel-1.0-SNAPSHOT.jar;C:\Users\angel\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.3\junit-jupiter-api-5.10.3.jar;C:\Users\angel\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\angel\.m2\repository\org\junit\platform\junit-platform-commons\1.10.3\junit-platform-commons-1.10.3.jar;C:\Users\angel\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\angel\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.3\junit-jupiter-params-5.10.3.jar;C:\Users\angel\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.3\junit-jupiter-engine-5.10.3.jar;C:\Users\angel\.m2\repository\org\junit\platform\junit-platform-engine\1.10.3\junit-platform-engine-1.10.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\angel\AppData\Local\Temp\surefire14879528395411950601\surefirebooter-20250915163652404_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\angel\AppData\Local\Temp\surefire6758170956221286150\surefirebooter-20250915211130792_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="24.0.1+9-30"/>
@@ -59,87 +59,79 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="68.0"/>
   </properties>
-  <testcase name="testInsertar" classname="pe.edu.pucp.softpac.dao.AcreedoresDAOTest" time="1.079">
+  <testcase name="testInsertar" classname="pe.edu.pucp.softpac.dao.AcreedoresDAOTest" time="0.91">
     <failure message="El ID insertado debe ser mayor que 0 ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: El ID insertado debe ser mayor que 0 ==> expected: <true> but was: <false>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
 	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
 	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
 	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
-	at pe.edu.pucp.softpac.dao.AcreedoresDAOTest.testInsertar(AcreedoresDAOTest.java:57)
+	at pe.edu.pucp.softpac.dao.AcreedoresDAOTest.testInsertar(AcreedoresDAOTest.java:68)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 ]]></failure>
-    <system-out><![CDATA[nuevoId: 0
-]]></system-out>
-    <system-err><![CDATA[Error al intentar ejecutar DML - java.sql.SQLSyntaxErrorException: Table 'sys.pa_acreedores' doesn't exist
+    <system-err><![CDATA[Error al intentar ejecutar DML - java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`mydb`.`pa_acreedores`, CONSTRAINT `FK_PA_ACREEDORES_PA_PAISES1` FOREIGN KEY (`PAIS_ID`) REFERENCES `pa_paises` (`PAIS_ID`))
 ]]></system-err>
   </testcase>
-  <testcase name="testObtenerPorId" classname="pe.edu.pucp.softpac.dao.AcreedoresDAOTest" time="0.048">
-    <failure message="La Razon Social no coincide ==&gt; expected: &lt;Proveedor de Prueba S.A.&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: La Razon Social no coincide ==> expected: <Proveedor de Prueba S.A.> but was: <null>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+  <testcase name="testObtenerPorId" classname="pe.edu.pucp.softpac.dao.AcreedoresDAOTest" time="0.046">
+    <failure message="El acreedor obtenido no debe ser null ==&gt; expected: not &lt;null&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: El acreedor obtenido no debe ser null ==> expected: not <null>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
-	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1156)
-	at pe.edu.pucp.softpac.dao.AcreedoresDAOTest.testObtenerPorId(AcreedoresDAOTest.java:70)
+	at org.junit.jupiter.api.AssertNotNull.failNull(AssertNotNull.java:49)
+	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
+	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:312)
+	at pe.edu.pucp.softpac.dao.AcreedoresDAOTest.testObtenerPorId(AcreedoresDAOTest.java:79)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 ]]></failure>
-    <system-err><![CDATA[Error al intentar ejecutar DML - java.sql.SQLSyntaxErrorException: Table 'sys.pa_acreedores' doesn't exist
-Error al intentar query - java.sql.SQLSyntaxErrorException: Table 'sys.pa_acreedores' doesn't exist
-Error al hacer rollback - java.sql.SQLNonTransientConnectionException: Can't call rollback when autocommit=true
+    <system-err><![CDATA[Error al intentar ejecutar DML - java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`mydb`.`pa_acreedores`, CONSTRAINT `FK_PA_ACREEDORES_PA_PAISES1` FOREIGN KEY (`PAIS_ID`) REFERENCES `pa_paises` (`PAIS_ID`))
 ]]></system-err>
   </testcase>
-  <testcase name="testModificar" classname="pe.edu.pucp.softpac.dao.AcreedoresDAOTest" time="0.044">
+  <testcase name="testModificar" classname="pe.edu.pucp.softpac.dao.AcreedoresDAOTest" time="0.045">
     <failure message="Modificar debe afectar al menos una fila ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Modificar debe afectar al menos una fila ==> expected: <true> but was: <false>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
 	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
 	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
 	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
-	at pe.edu.pucp.softpac.dao.AcreedoresDAOTest.testModificar(AcreedoresDAOTest.java:84)
+	at pe.edu.pucp.softpac.dao.AcreedoresDAOTest.testModificar(AcreedoresDAOTest.java:95)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 ]]></failure>
-    <system-err><![CDATA[Error al intentar ejecutar DML - java.sql.SQLSyntaxErrorException: Table 'sys.pa_acreedores' doesn't exist
-Error al intentar ejecutar DML - java.sql.SQLSyntaxErrorException: Table 'sys.pa_acreedores' doesn't exist
+    <system-err><![CDATA[Error al intentar ejecutar DML - java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`mydb`.`pa_acreedores`, CONSTRAINT `FK_PA_ACREEDORES_PA_PAISES1` FOREIGN KEY (`PAIS_ID`) REFERENCES `pa_paises` (`PAIS_ID`))
 ]]></system-err>
   </testcase>
-  <testcase name="testListarTodos" classname="pe.edu.pucp.softpac.dao.AcreedoresDAOTest" time="0.04">
-    <failure message="La lista no debe ser null ==&gt; expected: not &lt;null&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: La lista no debe ser null ==> expected: not <null>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+  <testcase name="testListarTodos" classname="pe.edu.pucp.softpac.dao.AcreedoresDAOTest" time="0.039">
+    <failure message="La lista no debe estar vacía ==&gt; expected: &lt;false&gt; but was: &lt;true&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: La lista no debe estar vacía ==> expected: <false> but was: <true>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertNotNull.failNull(AssertNotNull.java:49)
-	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
-	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:312)
-	at pe.edu.pucp.softpac.dao.AcreedoresDAOTest.testListarTodos(AcreedoresDAOTest.java:98)
+	at org.junit.jupiter.api.AssertFalse.failNotFalse(AssertFalse.java:63)
+	at org.junit.jupiter.api.AssertFalse.assertFalse(AssertFalse.java:36)
+	at org.junit.jupiter.api.Assertions.assertFalse(Assertions.java:239)
+	at pe.edu.pucp.softpac.dao.AcreedoresDAOTest.testListarTodos(AcreedoresDAOTest.java:110)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 ]]></failure>
-    <system-err><![CDATA[Error al intentar ejecutar DML - java.sql.SQLSyntaxErrorException: Table 'sys.pa_acreedores' doesn't exist
-Error al intentar query - java.sql.SQLSyntaxErrorException: Table 'sys.pa_acreedores' doesn't exist
-Error al hacer rollback - java.sql.SQLNonTransientConnectionException: Can't call rollback when autocommit=true
+    <system-err><![CDATA[Error al intentar ejecutar DML - java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`mydb`.`pa_acreedores`, CONSTRAINT `FK_PA_ACREEDORES_PA_PAISES1` FOREIGN KEY (`PAIS_ID`) REFERENCES `pa_paises` (`PAIS_ID`))
 ]]></system-err>
   </testcase>
-  <testcase name="testEliminar" classname="pe.edu.pucp.softpac.dao.AcreedoresDAOTest" time="0.033">
+  <testcase name="testEliminar" classname="pe.edu.pucp.softpac.dao.AcreedoresDAOTest" time="0.039">
     <failure message="Eliminar debe afectar al menos una fila ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Eliminar debe afectar al menos una fila ==> expected: <true> but was: <false>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
 	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
 	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
 	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
-	at pe.edu.pucp.softpac.dao.AcreedoresDAOTest.testEliminar(AcreedoresDAOTest.java:112)
+	at pe.edu.pucp.softpac.dao.AcreedoresDAOTest.testEliminar(AcreedoresDAOTest.java:123)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 ]]></failure>
-    <system-err><![CDATA[Error al intentar ejecutar DML - java.sql.SQLSyntaxErrorException: Table 'sys.pa_acreedores' doesn't exist
-Error al intentar ejecutar DML - java.sql.SQLSyntaxErrorException: Table 'sys.pa_acreedores' doesn't exist
+    <system-err><![CDATA[Error al intentar ejecutar DML - java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`mydb`.`pa_acreedores`, CONSTRAINT `FK_PA_ACREEDORES_PA_PAISES1` FOREIGN KEY (`PAIS_ID`) REFERENCES `pa_paises` (`PAIS_ID`))
 ]]></system-err>
   </testcase>
 </testsuite>

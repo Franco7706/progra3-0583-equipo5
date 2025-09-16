@@ -1,11 +1,14 @@
 package pe.edu.pucp.softpac.dao;
 
 import org.junit.jupiter.api.*;
+import pe.edu.pucp.softpac.daoImpl.EntidadesBancariasDAOImpl;
+import pe.edu.pucp.softpac.daoImpl.PaisesDAOImpl;
 import pe.edu.pucp.softpac.daoImpl.PropuestasPagoDAOImpl;
 import pe.edu.pucp.softpac.model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,6 +19,28 @@ public class PropuestasPagoDAOTest {
     protected static PropuestasPagoDTO testPropuesta;
     private static Integer generatedId;
 
+    protected static PaisesDTO testPais;
+    protected static PaisesDAO paisesDAO;
+    protected static EntidadesBancariasDTO testEntidad;
+    protected static EntidadesBancariasDAO entidadesBancariasDAO;
+
+    @BeforeAll
+    static void init(){
+        paisesDAO = new PaisesDAOImpl();
+        testPais = new PaisesDTO(0,"PaisPruebaPropuesta","XP","+");
+        Integer idPais = paisesDAO.insertar(testPais);
+        testPais.setPais_id(idPais);
+
+        entidadesBancariasDAO = new EntidadesBancariasDAOImpl();
+        testEntidad = new EntidadesBancariasDTO();
+        testEntidad.setNombre("Test");
+        testEntidad.setFormato_aceptado("x");
+        testEntidad.setCodigo_swift("000");
+        testEntidad.setPais(testPais);
+        Integer idBanco = entidadesBancariasDAO.insertar(testEntidad);
+        testEntidad.setEntidad_bancaria_id(idBanco);
+    }
+
     @BeforeEach
     void setUp() {
         dao = new PropuestasPagoDAOImpl();
@@ -24,11 +49,7 @@ public class PropuestasPagoDAOTest {
         testPropuesta.setPropuesta_id(0);
         testPropuesta.setFecha_hora_creacion(LocalDateTime.now());
         testPropuesta.setEstado("PENDIENTE");
-
-        // ⚠️ Asegúrate de que exista en tu BD un banco con ID=1
-        EntidadesBancariasDTO banco = new EntidadesBancariasDTO();
-        banco.setEntidad_bancaria_id(1);
-        testPropuesta.setEntidad_bancaria(banco);
+        testPropuesta.setEntidad_bancaria(testEntidad);
     }
 
     @AfterEach
@@ -42,6 +63,12 @@ public class PropuestasPagoDAOTest {
             }
             generatedId = 0;
         }
+    }
+
+    @AfterAll
+    static void deleteDependencies(){
+        entidadesBancariasDAO.eliminar(testEntidad);
+        paisesDAO.eliminar(testPais);
     }
 
     @Test
@@ -96,8 +123,8 @@ public class PropuestasPagoDAOTest {
         ArrayList<PropuestasPagoDTO> lista = dao.listarTodos();
         assertNotNull(lista, "La lista no debe ser null");
         assertFalse(lista.isEmpty(), "La lista no debe estar vacía");
-        assertTrue(lista.stream().anyMatch(p -> p.getPropuesta_id() == generatedId),
-                "La lista debe contener la propuesta insertada");
+        assertTrue(lista.stream().anyMatch(p -> Objects.equals(p.getPropuesta_id(), generatedId)),
+                 "La lista debe contener la propuesta insertada");
     }
 
     @Test
