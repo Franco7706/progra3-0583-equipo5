@@ -168,6 +168,10 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
         }
     }
     
+    private void completarFactura(FacturasDTO f) {
+        
+    }
+    
     @Override
     public Integer insertar(FacturasDTO factura) {
         this.factura = factura;

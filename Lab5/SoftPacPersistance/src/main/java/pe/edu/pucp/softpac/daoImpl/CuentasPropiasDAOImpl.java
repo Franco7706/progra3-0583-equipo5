@@ -66,7 +66,10 @@ public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropias
 
     @Override
     protected String generarSQLParaObtenerPorId() {
-        return "SELECT * FROM VW_CUENTA_PROPIA_DETALLADA WHERE P1_CUENTA_PROPIA_ID = ?";
+        return "SELECT c.cuenta_bancaria_id, c.saldo_disponible, c.tipo_cuenta, c.numero_cuenta, c.cci, c.activa, m.moneda_id," +
+               " m.nombre      AS moneda_nombre, m.codigo_iso, m.simbolo, eb.entidad_bancaria_id, eb.nombre     AS entidad_nombre," +
+               " eb.formato_aceptado, eb.codigo_swift FROM CuentasPropias c JOIN Monedas m ON c.moneda_id = m.moneda_id" +
+               " JOIN EntidadesBancarias eb ON c.entidad_bancaria_id = eb.entidad_bancaria_id WHERE c.cuenta_bancaria_id = ?";
     }
 
     
