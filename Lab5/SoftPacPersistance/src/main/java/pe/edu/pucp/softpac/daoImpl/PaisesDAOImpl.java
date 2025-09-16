@@ -5,18 +5,15 @@ import pe.edu.pucp.softpac.dao.PaisesDAO;
 import pe.edu.pucp.softpac.model.PaisesDTO;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
-import pe.edu.pucp.softpac.db.DBManager;
 
 public class PaisesDAOImpl extends DAOImplBase implements PaisesDAO {
 
     private PaisesDTO pais;
+    private ArrayList<PaisesDTO> paises;
 
     public PaisesDAOImpl() {
         super("PA_PAISES");
-        this.pais = null;
         this.retornarLlavePrimaria = true;
     }
 
@@ -29,6 +26,57 @@ public class PaisesDAOImpl extends DAOImplBase implements PaisesDAO {
     }
 
     @Override
+    protected void incluirValorDeParametrosParaInsercion() throws SQLException{
+        this.statement.setString(1, this.pais.getNombre());
+        this.statement.setString(2, this.pais.getCodigo_iso());
+        this.statement.setString(3, this.pais.getCodigo_telefonico());
+    }
+
+    @Override
+    protected void incluirValorDeParametrosParaModificacion() throws SQLException{
+        this.statement.setString(1, this.pais.getNombre());
+        this.statement.setString(2, this.pais.getCodigo_iso());
+        this.statement.setString(3, this.pais.getCodigo_telefonico());
+        this.statement.setInt(4, this.pais.getPais_id());
+
+    }
+
+    @Override
+    protected void incluirValorDeParametrosParaEliminacion() throws SQLException{
+        this.statement.setInt(1, this.pais.getPais_id());
+    }
+
+    @Override
+    protected void incluirValorDeParametrosParaObtenerPorId() throws SQLException{
+        this.statement.setInt(1, this.pais.getPais_id());
+    }
+
+    @Override
+    protected void extraerResultSetParaObtenerPorId() throws SQLException{
+        this.pais=null;
+        if(this.resultSet.next()){
+            this.pais = new PaisesDTO();
+            this.pais.setPais_id(this.resultSet.getInt(1));
+            this.pais.setNombre(this.resultSet.getString(2));
+            this.pais.setCodigo_iso(this.resultSet.getString(3));
+            this.pais.setCodigo_telefonico(this.resultSet.getString(4));
+        }
+    }
+
+    @Override
+    protected void extraerResultSetParaListarTodos() throws SQLException{
+        this.paises=new ArrayList<>();
+        while(this.resultSet.next()){
+            PaisesDTO p = new PaisesDTO();
+            p.setPais_id(this.resultSet.getInt(1));
+            p.setNombre(this.resultSet.getString(2));
+            p.setCodigo_iso(this.resultSet.getString(3));
+            p.setCodigo_telefonico(this.resultSet.getString(4));
+            this.paises.add(p);
+        }
+    }
+
+    @Override
     public Integer insertar(PaisesDTO pais) {
         this.pais = pais;
         return super.insertar();
@@ -36,81 +84,28 @@ public class PaisesDAOImpl extends DAOImplBase implements PaisesDAO {
 
     @Override
     public PaisesDTO obtenerPorId(Integer paisId) {
-        PaisesDTO pais = null;
-        try {
-            
-            this.conexion = DBManager.getInstance().getConnection();
-            String sql = "SELECT PAIS_ID, NOMBRE, CODIGO_ISO, CODIGO_TELEFONICO FROM PA_PAISES WHERE PAIS_ID = ?";
-            this.statement = this.conexion.prepareCall(sql);
-            this.statement.setInt(1, paisId);
-            this.resultSet = this.statement.executeQuery();
-            if(this.resultSet.next()){
-                pais = new PaisesDTO();
-                pais.setPais_id(this.resultSet.getInt("PAIS_ID"));
-                pais.setNombre(this.resultSet.getString("NOMBRE"));
-                pais.setCodigo_telefonico(this.resultSet.getString("CODIGO_TELEFONICO"));
-                pais.setCodigo_iso(this.resultSet.getString("CODIGO_ISO"));
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(PaisesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{         
-                try {
-                    if(this.conexion != null){
-                        this.conexion.close();
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(PaisesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
-        } 
-        return pais;
+        this.pais = new PaisesDTO();
+        this.pais.setPais_id(paisId);
+        super.obtenerPorId();
+        return this.pais;
     }
 
     @Override
     public ArrayList<PaisesDTO> listarTodos() {
-        ArrayList<PaisesDTO> listaPaises = new ArrayList<>();
-        try {
-            
-            this.conexion = DBManager.getInstance().getConnection();
-            String sql = "SELECT PAIS_ID, NOMBRE, CODIGO_ISO, CODIGO_TELEFONICO FROM PA_PAISES";
-            this.statement = this.conexion.prepareCall(sql);
-            this.resultSet = this.statement.executeQuery();
-            while(this.resultSet.next()){
-                PaisesDTO pais = new PaisesDTO();
-                pais.setPais_id(this.resultSet.getInt("PAIS_ID"));
-                pais.setNombre(this.resultSet.getString("NOMBRE"));
-                pais.setCodigo_iso(this.resultSet.getString("CODIGO_ISO"));
-                pais.setCodigo_telefonico(this.resultSet.getString("CODIGO_TELEFONICO"));
-                listaPaises.add(pais);
-            }
-          
-        } catch (SQLException ex) {
-            Logger.getLogger(PaisesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            try {
-                if(this.conexion != null){
-                    this.conexion.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(PaisesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return listaPaises;
+        super.listarTodosQuery();
+        return this.paises;
     }
-    
-    //Por evaluar 
+
+
     @Override
     public Integer modificar(PaisesDTO pais) {
-//        this.pais = pais;
-//        return super.modificar();
-        return 0;
+        this.pais = pais;
+        return super.modificar();
     }
 
     @Override
     public Integer eliminar(PaisesDTO pais) {
-//        this.pais = pais;
-//        return super.eliminar();
-        return 0;
+        this.pais = pais;
+        return super.eliminar();
     }
 }

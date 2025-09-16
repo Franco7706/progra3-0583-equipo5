@@ -32,7 +32,7 @@ public class AcreedoresDTO {
     }
     
     public AcreedoresDTO(AcreedoresDTO acreedor){
-        this.acreedor_id = acreedor.getProveedor_id();
+        this.acreedor_id = acreedor.getAcreedor_id();
         this.razon_social = acreedor.getRazon_social();
         this.ruc = acreedor.getRuc();
         this.direccion_fiscal = acreedor.getDireccion_fiscal();
@@ -45,14 +45,14 @@ public class AcreedoresDTO {
     /**
      * @return the acreedor_id
      */
-    public Integer getProveedor_id() {
+    public Integer getAcreedor_id() {
         return acreedor_id;
     }
 
     /**
      * @param acreedor_id the acreedor_id to set
      */
-    public void setProveedor_id(Integer acreedor_id) {
+    public void setAcreedor_id(Integer acreedor_id) {
         this.acreedor_id = acreedor_id;
     }
 
