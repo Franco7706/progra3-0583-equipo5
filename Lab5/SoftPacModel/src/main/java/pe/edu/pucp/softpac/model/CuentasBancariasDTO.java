@@ -1,6 +1,6 @@
 package pe.edu.pucp.softpac.model;
 
-public abstract class CuentasBancariasDTO {
+public abstract class CuentasBancariasDTO extends EliminableDTOBase {
     private Integer cuenta_bancaria_id;
     private String tipo_cuenta;
     private String numero_cuenta;
@@ -17,6 +17,7 @@ public abstract class CuentasBancariasDTO {
         numero_cuenta=null;
         moneda=null;
         entidad_bancaria=null;
+        super();
     }
     
     public CuentasBancariasDTO(Integer cuenta_bancaria_id, String tipo_cuenta, String cci, Boolean activa, String numero_cuenta, MonedasDTO moneda, EntidadesBancariasDTO entidad_bancaria){
@@ -37,6 +38,7 @@ public abstract class CuentasBancariasDTO {
         this.numero_cuenta=cuenta_bancaria.getNumero_cuenta();
         this.moneda=new MonedasDTO(cuenta_bancaria.getMoneda());
         this.entidad_bancaria=new EntidadesBancariasDTO(cuenta_bancaria.getEntidad_bancaria());
+        
     }
     
     /**

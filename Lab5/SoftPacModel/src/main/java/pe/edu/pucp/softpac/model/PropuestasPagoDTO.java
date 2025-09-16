@@ -3,7 +3,7 @@ package pe.edu.pucp.softpac.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class PropuestasPagoDTO {
+public class PropuestasPagoDTO extends EliminableDTOBase{
     private Integer propuesta_id;
     private LocalDateTime fecha_hora_creacion;
     private String estado;
@@ -16,6 +16,7 @@ public class PropuestasPagoDTO {
         estado="I";
         entidad_bancaria=new EntidadesBancariasDTO();
         detalles_propuesta=new ArrayList<>();
+        super();
     }
     public PropuestasPagoDTO(Integer propuesta_id, LocalDateTime fecha_hora_creacion, String estado,
                              EntidadesBancariasDTO entidad_bancaria) {
@@ -37,8 +38,9 @@ public class PropuestasPagoDTO {
         this.propuesta_id=propuestaPago.getPropuesta_id();
         this.fecha_hora_creacion=propuestaPago.getFecha_hora_creacion();
         this.estado=propuestaPago.getEstado();
-        this.entidad_bancaria=new EntidadesBancariasDTO(entidad_bancaria);
+        this.entidad_bancaria=new EntidadesBancariasDTO(propuestaPago.getEntidad_bancaria());
         this.detalles_propuesta=propuestaPago.getDetalles_propuesta();
+        super(propuestaPago);
     }
     public Integer getPropuesta_id() {
         return propuesta_id;

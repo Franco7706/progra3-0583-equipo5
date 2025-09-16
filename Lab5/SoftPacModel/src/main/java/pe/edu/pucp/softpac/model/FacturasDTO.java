@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class FacturasDTO {
+public class FacturasDTO extends EliminableDTOBase{
     private Integer factura_id;
     private String numero_factura;
     private LocalDateTime fecha_emision;
@@ -32,6 +32,7 @@ public class FacturasDTO {
         monto_igv=new BigDecimal("0.0");
         monto_restante=new BigDecimal("0.0");
         detalles_factura = new ArrayList<>();
+        super();
     }
 
     public FacturasDTO(Integer factura_id, String numero_factura, LocalDateTime fecha_emision,
@@ -94,6 +95,7 @@ public class FacturasDTO {
         this.acreedor=factura.getAcreedor();
         this.moneda=factura.getMoneda();
         this.detalles_factura=factura.getDetalles_Factura();
+        super(factura);
     }
 
     public Integer getFactura_id() {

@@ -1,6 +1,7 @@
 package pe.edu.pucp.softpac.model;
 
-public class AcreedoresDTO {
+
+public class AcreedoresDTO extends EliminableDTOBase {
     private Integer acreedor_id;
     private String razon_social;
     private String ruc;
@@ -18,9 +19,11 @@ public class AcreedoresDTO {
         pais=null;
         condicion=null;
         plazo_de_pago=0;
+        super();
     }
 
-    public AcreedoresDTO(Integer acreedor_id, String razon_social, String ruc, String direccion_fiscal, PaisesDTO pais, String condicion, Integer plazo_de_pago, Boolean activo) {
+    public AcreedoresDTO(Integer acreedor_id, String razon_social, String ruc, String direccion_fiscal, PaisesDTO pais,
+            String condicion, Integer plazo_de_pago, Boolean activo) {
         this.acreedor_id = acreedor_id;
         this.razon_social = razon_social;
         this.ruc = ruc;
@@ -40,6 +43,7 @@ public class AcreedoresDTO {
         this.condicion = acreedor.getCondicion();
         this.plazo_de_pago = acreedor.getPlazo_de_pago();
         this.activo = acreedor.getActivo();
+        super(acreedor);
     }
 
     /**

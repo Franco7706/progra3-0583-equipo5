@@ -2,7 +2,7 @@ package pe.edu.pucp.softpac.model;
 
 import java.math.BigDecimal;
 
-public class DetallesPropuestaDTO {
+public class DetallesPropuestaDTO extends EliminableDTOBase{
     private Integer detalle_propuesta_id;
     private BigDecimal monto_pago;
     private char forma_pago;
