@@ -6,3 +6,4 @@ pe\edu\pucp\softpac\dao\PropuestasPagoDAOTest.class
 pe\edu\pucp\softpac\dao\AcreedoresDAOTest.class
 pe\edu\pucp\softpac\dao\TiposDeCambioDAOTest.class
 pe\edu\pucp\softpac\dao\UsuariosDAOTest.class
+pe\edu\pucp\softpac\dao\FacturasDAOTest.class
