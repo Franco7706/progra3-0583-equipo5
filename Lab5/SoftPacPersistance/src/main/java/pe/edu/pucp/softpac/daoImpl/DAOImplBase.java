@@ -1,5 +1,6 @@
 package pe.edu.pucp.softpac.daoImpl;
 
+import pe.edu.pucp.softpac.daoImpl.exception.DAODetalleException;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.daoImpl.util.Tipo_Operacion;
 import pe.edu.pucp.softpac.daoImpl.util.Tipo_Query;
@@ -30,6 +31,14 @@ public abstract class DAOImplBase {
         this.incluirListaDeColumnas();
     }
 
+    protected void setConexion(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    protected Connection getConexion() {
+        return this.conexion;
+    }
+
     private void incluirListaDeColumnas() {
         this.listaColumnas = new ArrayList<>();
         this.configurarListaDeColumnas();
@@ -38,17 +47,35 @@ public abstract class DAOImplBase {
     protected abstract void configurarListaDeColumnas();
 
     protected Integer insertar()  {
-        if(this.esDetalle) {this.ejecutaDetalle_DML(Tipo_Operacion.INSERTAR);}
+        if(this.esDetalle) {
+            try{
+                this.ejecutaDetalle_DML(Tipo_Operacion.INSERTAR);
+            } catch(DAODetalleException e){
+                throw e;
+            }
+        }
         return this.ejecuta_DML(Tipo_Operacion.INSERTAR);
     }
 
     protected Integer modificar() {
-        if(this.esDetalle) {this.ejecutaDetalle_DML(Tipo_Operacion.MODIFICAR);}
+        if(this.esDetalle){
+            try{
+                this.ejecutaDetalle_DML(Tipo_Operacion.MODIFICAR);
+            } catch(DAODetalleException e){
+                throw e;
+            }
+        }
         return this.ejecuta_DML(Tipo_Operacion.MODIFICAR);
     }
 
     protected Integer eliminar() {
-        if(this.esDetalle) {this.ejecutaDetalle_DML(Tipo_Operacion.ELIMINAR);}
+        if(this.esDetalle){
+            try{
+                this.ejecutaDetalle_DML(Tipo_Operacion.ELIMINAR);
+            } catch(DAODetalleException e){
+                throw e;
+            }
+        }
         return this.ejecuta_DML(Tipo_Operacion.ELIMINAR);
     }
 
@@ -136,30 +163,38 @@ public abstract class DAOImplBase {
 
     protected void ejecutarOperacionesEnCascada(Tipo_Operacion tipo_operacion) throws SQLException {
         if(this.ejecutaOperacionesEnCascada==false) return;
-        switch (tipo_operacion) {
-            case Tipo_Operacion.INSERTAR:
-                this.ejecutarCascadaParaInsercion();
-                break;
-            case Tipo_Operacion.MODIFICAR:
-                this.ejecutarCascadaParaModificacion();
-                break;
-            case Tipo_Operacion.ELIMINAR:
-                this.ejecutarCascadaParaEliminacion();
-                break;
+        try {
+            switch (tipo_operacion) {
+                case Tipo_Operacion.INSERTAR:
+                    this.ejecutarCascadaParaInsercion();
+                    break;
+                case Tipo_Operacion.MODIFICAR:
+                    this.ejecutarCascadaParaModificacion();
+                    break;
+                case Tipo_Operacion.ELIMINAR:
+                    this.ejecutarCascadaParaEliminacion();
+                    break;
+            }
+        }
+        catch(DAODetalleException e) {
+            SQLException sqlEx = e.getSQLException();
+            if (sqlEx != null) {
+                throw sqlEx;
+            } else {
+                throw new SQLException("Error en operación en cascada", e);
+            }
         }
     }
 
-    protected void ejecutarCascadaParaEliminacion() {
-    }
 
     protected void ejecutarCascadaParaModificacion() {
     }
-
     protected void ejecutarCascadaParaInsercion() {
+    }
+    protected void ejecutarCascadaParaEliminacion() {
     }
 
     private Integer ejecutaDetalle_DML(Tipo_Operacion tipo_operacion) {
-
         Integer resultado = 0;
         try {
             String sql = this.generarSQLparaDML(tipo_operacion);
@@ -172,9 +207,8 @@ public abstract class DAOImplBase {
             return resultado;
         } catch(SQLException ex){
             System.err.println("Error al intentar ejecutar DML - " + ex);
-
+            throw new DAODetalleException(" Error al ejecutar operación de detalle: " + tipo_operacion, ex);
         }
-        return resultado;
     }
     private Integer ejecuta_DML(Tipo_Operacion tipo_operacion) {
         Integer resultado = 0;

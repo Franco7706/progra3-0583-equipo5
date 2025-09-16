@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.CuentasAcreedorDAO;
 import pe.edu.pucp.softpac.dao.DetallesPropuestaDAO;
 import pe.edu.pucp.softpac.dao.PropuestasPagoDAO;
+import pe.edu.pucp.softpac.daoImpl.exception.DAODetalleException;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.model.*;
 
@@ -268,9 +269,41 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
 
     @Override
     protected void ejecutarCascadaParaInsercion(){
-        DetallesPropuestaDAO daoDetalle = new DetallesPropuestaDAOImpl();
-        for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
+        try{
+            DetallesPropuestaDAO daoDetalle =  new DetallesPropuestaDAOImpl(this.getConexion());
+            for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
+                daoDetalle.insertar(detalle);
+            }
+        }
+        catch(DAODetalleException e){
+            throw e;
+        }
+    }
 
+    @Override
+    protected void ejecutarCascadaParaModificacion(){
+        try{
+            DetallesPropuestaDAO daoDetalle =  new DetallesPropuestaDAOImpl(this.getConexion());
+            for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
+                daoDetalle.modificar(detalle);
+            }
+        }
+        catch(DAODetalleException e){
+            throw e;
+        }
+    }
+
+
+    @Override
+    protected void ejecutarCascadaParaEliminacion(){
+        try{
+            DetallesPropuestaDAO daoDetalle =  new DetallesPropuestaDAOImpl(this.getConexion());
+            for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
+                daoDetalle.modificar(detalle);
+            }
+        }
+        catch(DAODetalleException e){
+            throw e;
         }
     }
 

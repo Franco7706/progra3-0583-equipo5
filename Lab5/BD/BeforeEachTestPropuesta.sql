@@ -25,4 +25,30 @@ SELECT a.ACREEDOR_ID, a.RAZON_SOCIAL, a.RUC, a.DIRECCION_FISCAL, a.CONDICION,
 delete from pa_paises;
 delete from pa_entidades_bancarias;
 delete from pa_propuestas_de_pago;
+
+select * from pa_monedas;
+select * from pa_paises;
+select * from pa_tipos_de_cambio;
+delete from pa_monedas;
+
+
+delete from pa_paises;
+delete from pa_entidades_bancarias;
+delete from pa_acreedores;
+delete from pa_cuentas_acreedor;
+
+delete from pa_propuestas_de_pago;
+
+select * from pa_detalles_factura;
+select * from pa_cuentas_propias;
+delete from pa_cuentas_propias;
+delete from pa_entidades_bancarias;
+delete from pa_paises;
+delete from pa_usuarios;
+delete from pa_monedas;
+delete from pa_tipos_de_cambio;
+delete from pa_detalles_factura;
+delete from pa_facturas;
+delete from pa_acreedores;
+delete from pa_detalles_propuesta;
                 

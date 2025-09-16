@@ -15,6 +15,7 @@ C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\s
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\DAOImplBase.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\DetallesPropuestaDAOImpl.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\EntidadesBancariasDAOImpl.java
+C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\exception\DAODetalleException.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\FacturasDAOImpl.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\MonedasDAOImpl.java
 C:\Users\Usuario\Documents\2025-2\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\PaisesDAOImpl.java

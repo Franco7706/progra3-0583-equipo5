@@ -4,6 +4,7 @@ import pe.edu.pucp.softpac.dao.DetallesPropuestaDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.model.*;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPropuestaDAO {
@@ -13,6 +14,14 @@ public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPro
     public DetallesPropuestaDAOImpl() {
         super("PA_DETALLES_PROPUESTA");
         this.retornarLlavePrimaria=true;
+        this.esDetalle=true;
+    }
+
+    public DetallesPropuestaDAOImpl(Connection conexion) {
+        super("PA_DETALLES_PROPUESTA");
+        this.retornarLlavePrimaria=true;
+        this.esDetalle=true;
+        this.conexion=conexion;
     }
 
     @Override

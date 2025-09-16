@@ -5,6 +5,7 @@ import pe.edu.pucp.softpac.daoImpl.*;
 import pe.edu.pucp.softpac.model.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -143,7 +144,7 @@ public class CuentasAcreedorDAOTest {
         ArrayList<CuentasAcreedorDTO> lista = dao.listarTodos();
         assertNotNull(lista);
         assertFalse(lista.isEmpty());
-        assertTrue(lista.stream().anyMatch(c -> c.getCuenta_bancaria_id() == generatedId));
+        assertTrue(lista.stream().anyMatch(c -> Objects.equals(c.getCuenta_bancaria_id(), generatedId)));
     }
 
     @Test
