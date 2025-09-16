@@ -45,6 +45,7 @@ public class DBManager {
         // El archivo se encuentra en la carpeta de resources
         // por eso se agrega el /
         String nmArchivoConf = "/" + ARCHIVO_CONFIGURACION;
+        
         Properties properties = new Properties();
         try {
             properties.load(this.getClass().getResourceAsStream(nmArchivoConf));
