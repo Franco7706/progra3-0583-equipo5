@@ -60,7 +60,27 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
         this.statement.setInt(1, this.cuentaAcreedor.getCuenta_bancaria_id());
         this.cuentaAcreedor = null;
     }
-
+    
+    @Override
+    protected void incluirValorDeParametrosParaEliminacion() throws SQLException {
+        this.statement.setInt(1, this.cuentaAcreedor.getCuenta_bancaria_id());
+    }
+    
+    @Override
+    protected String generarSQLParaObtenerPorId() {
+        return "SELECT "
+         + "c.CUENTA_ACREEDOR_ID, c.TIPO_CUENTA, c.NUMERO_CUENTA, c.CCI, c.ACTIVO, "
+         + "c.ACREEDOR_ID, "
+         + "a.RAZON_SOCIAL, a.RUC, a.DIRECCION_FISCAL, a.CONDICION, a.PLAZO_DE_PAGO, a.ACTIVO, "
+         + "e.ENTIDAD_BANCARIA_ID, e.NOMBRE, e.FORMATO_ACEPTADO, e.CODIGO_SWIFT, "
+         + "m.MONEDA_ID, m.NOMBRE, m.CODIGO_ISO, m.SIMBOLO "
+         + "FROM mydb.PA_CUENTAS_ACREEDOR c "
+         + "JOIN mydb.PA_ACREEDORES a ON a.ACREEDOR_ID = c.ACREEDOR_ID "
+         + "JOIN mydb.PA_ENTIDADES_BANCARIAS e ON e.ENTIDAD_BANCARIA_ID = c.ENTIDAD_BANCARIA_ID "
+         + "JOIN mydb.PA_MONEDAS m ON m.MONEDA_ID = c.MONEDA_ID "
+         + "WHERE c.CUENTA_ACREEDOR_ID = ?";
+    }
+    
     @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException {
         this.cuentaAcreedor = null;
@@ -77,24 +97,23 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
             acreedor = new AcreedoresDTO();
             acreedor.setAcreedor_id(this.resultSet.getInt(6));
             acreedor.setRazon_social(this.resultSet.getString(7));
-            acreedor.setRazon_social(this.resultSet.getString(8));
-            acreedor.setRuc(this.resultSet.getString(9));
-            acreedor.setDireccion_fiscal(this.resultSet.getString(10));
-            acreedor.setCondicion(this.resultSet.getString(11));
-            acreedor.setPlazo_de_pago(this.resultSet.getInt(12));
-            acreedor.setActivo(this.resultSet.getBoolean(13));
+            acreedor.setRuc(this.resultSet.getString(8));
+            acreedor.setDireccion_fiscal(this.resultSet.getString(9));
+            acreedor.setCondicion(this.resultSet.getString(10));
+            acreedor.setPlazo_de_pago(this.resultSet.getInt(11));
+            acreedor.setActivo(this.resultSet.getBoolean(12));
             
             entidadBancaria = new EntidadesBancariasDTO();
-            entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(14));
-            entidadBancaria.setNombre(this.resultSet.getString(15));
-            entidadBancaria.setFormato_aceptado(this.resultSet.getString(16));
-            entidadBancaria.setCodigo_swift(this.resultSet.getString(17));
+            entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(13));
+            entidadBancaria.setNombre(this.resultSet.getString(14));
+            entidadBancaria.setFormato_aceptado(this.resultSet.getString(15));
+            entidadBancaria.setCodigo_swift(this.resultSet.getString(16));
             
             moneda = new MonedasDTO();
-            moneda.setMoneda_id(this.resultSet.getInt(18));
-            moneda.setNombre(this.resultSet.getString(19));
-            moneda.setCodigo_iso(this.resultSet.getString(20));
-            moneda.setSimbolo(this.resultSet.getString(21));
+            moneda.setMoneda_id(this.resultSet.getInt(17));
+            moneda.setNombre(this.resultSet.getString(18));
+            moneda.setCodigo_iso(this.resultSet.getString(19));
+            moneda.setSimbolo(this.resultSet.getString(20));
             
             this.cuentaAcreedor.setAcreedor(acreedor);
             this.cuentaAcreedor.setEntidad_bancaria(entidadBancaria);
@@ -160,10 +179,9 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
         return super.modificar();
     }
 
-//    @Override
-//    public Integer eliminar(CuentasAcreedorDTO cuentaAcreedor) {
-////        this.cuentaAcreedor = cuentaAcreedor;
-////        return super.eliminar();
-//        return null;
-//    }
+    @Override
+    public Integer eliminar(CuentasAcreedorDTO cuentaAcreedor) {
+        this.cuentaAcreedor = cuentaAcreedor;
+        return super.eliminar();
+    }
 }
