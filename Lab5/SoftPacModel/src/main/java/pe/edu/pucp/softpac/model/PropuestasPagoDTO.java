@@ -16,36 +16,36 @@ public class PropuestasPagoDTO extends EliminableDTOBase{
     public PropuestasPagoDTO() {
         propuesta_id=0;
         fecha_hora_creacion=null;
-        usuario_creacion=new UsuariosDTO();
+        usuario_creacion=null;
         estado="I";
         entidad_bancaria=new EntidadesBancariasDTO();
         detalles_propuesta=new ArrayList<>();
         fecha_hora_modificacion=null;
-        usuario_modificacion=new UsuariosDTO();
+        usuario_modificacion=null;
         super();
     }
     public PropuestasPagoDTO(Integer propuesta_id, LocalDateTime fecha_hora_creacion,UsuariosDTO usuario_creacion, String estado,
                              EntidadesBancariasDTO entidad_bancaria, LocalDateTime fecha_hora_modificacion, UsuariosDTO usuario_modificacion) {
         this.propuesta_id=propuesta_id;
         this.fecha_hora_creacion=fecha_hora_creacion;
-        this.usuario_creacion=usuario_creacion;
+        this.usuario_creacion=new UsuariosDTO(usuario_creacion);
         this.estado=estado;
         this.entidad_bancaria=entidad_bancaria;
         this.detalles_propuesta=new ArrayList<>();
         this.fecha_hora_modificacion=fecha_hora_modificacion;
-        this.usuario_modificacion=usuario_modificacion;
+        this.usuario_modificacion=new UsuariosDTO(usuario_modificacion);
     }
     public PropuestasPagoDTO(Integer propuesta_id, LocalDateTime fecha_hora_creacion,UsuariosDTO usuario_creacion, String estado,
                              EntidadesBancariasDTO entidad_bancaria, ArrayList<DetallesPropuestaDTO> detalles_propuesta,
                              LocalDateTime fecha_hora_modificacion, UsuariosDTO usuario_modificacion) {
         this.propuesta_id=propuesta_id;
         this.fecha_hora_creacion=fecha_hora_creacion;
-        this.usuario_creacion=usuario_modificacion;
+        this.usuario_creacion=new UsuariosDTO(usuario_modificacion);
         this.estado=estado;
         this.entidad_bancaria=entidad_bancaria;
         this.detalles_propuesta=detalles_propuesta;
         this.fecha_hora_modificacion=fecha_hora_creacion;
-        this.usuario_modificacion=usuario_modificacion;
+        this.usuario_modificacion=new UsuariosDTO(usuario_modificacion);
     }
     public PropuestasPagoDTO(PropuestasPagoDTO propuestaPago) {
         this.propuesta_id=propuestaPago.getPropuesta_id();
