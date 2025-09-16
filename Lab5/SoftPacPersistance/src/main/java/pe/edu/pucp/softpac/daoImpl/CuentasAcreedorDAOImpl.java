@@ -17,7 +17,7 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
     public CuentasAcreedorDAOImpl() {
         super("PA_CUENTAS_ACREEDOR");
         this.cuentaAcreedor=null;
-        this.retornarLlavePrimaria=null;
+        this.retornarLlavePrimaria=true;
     }
 
     @Override
@@ -38,9 +38,9 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
         this.statement.setString(2, this.cuentaAcreedor.getNumero_cuenta());
         this.statement.setString(3, this.cuentaAcreedor.getCci());
         this.statement.setInt(4, this.cuentaAcreedor.getActiva() ? 1:0);
-        this.statement.setObject(5, this.cuentaAcreedor.getAcreedor());
-        this.statement.setObject(6, this.cuentaAcreedor.getEntidad_bancaria());
-        this.statement.setObject(7, this.cuentaAcreedor.getMoneda());
+        this.statement.setInt(5, this.cuentaAcreedor.getAcreedor().getAcreedor_id());
+        this.statement.setInt(6, this.cuentaAcreedor.getEntidad_bancaria().getEntidad_bancaria_id());
+        this.statement.setInt(7, this.cuentaAcreedor.getMoneda().getMoneda_id());
     }
     
     @Override
@@ -49,9 +49,9 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
         this.statement.setString(2, this.cuentaAcreedor.getNumero_cuenta());
         this.statement.setString(3, this.cuentaAcreedor.getCci());
         this.statement.setInt(4, this.cuentaAcreedor.getActiva() ? 1:0);
-        this.statement.setObject(5, this.cuentaAcreedor.getAcreedor());
-        this.statement.setObject(6, this.cuentaAcreedor.getEntidad_bancaria());
-        this.statement.setObject(7, this.cuentaAcreedor.getMoneda());
+        this.statement.setInt(5, this.cuentaAcreedor.getAcreedor().getAcreedor_id());
+        this.statement.setInt(6, this.cuentaAcreedor.getEntidad_bancaria().getEntidad_bancaria_id());
+        this.statement.setInt(7, this.cuentaAcreedor.getMoneda().getMoneda_id());
         this.statement.setInt(8,this.cuentaAcreedor.getCuenta_bancaria_id());
     }
     
@@ -74,10 +74,10 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
          + "a.RAZON_SOCIAL, a.RUC, a.DIRECCION_FISCAL, a.CONDICION, a.PLAZO_DE_PAGO, a.ACTIVO, "
          + "e.ENTIDAD_BANCARIA_ID, e.NOMBRE, e.FORMATO_ACEPTADO, e.CODIGO_SWIFT, "
          + "m.MONEDA_ID, m.NOMBRE, m.CODIGO_ISO, m.SIMBOLO "
-         + "FROM mydb.PA_CUENTAS_ACREEDOR c "
-         + "JOIN mydb.PA_ACREEDORES a ON a.ACREEDOR_ID = c.ACREEDOR_ID "
-         + "JOIN mydb.PA_ENTIDADES_BANCARIAS e ON e.ENTIDAD_BANCARIA_ID = c.ENTIDAD_BANCARIA_ID "
-         + "JOIN mydb.PA_MONEDAS m ON m.MONEDA_ID = c.MONEDA_ID "
+         + "FROM PA_CUENTAS_ACREEDOR c "
+         + "JOIN PA_ACREEDORES a ON a.ACREEDOR_ID = c.ACREEDOR_ID "
+         + "JOIN PA_ENTIDADES_BANCARIAS e ON e.ENTIDAD_BANCARIA_ID = c.ENTIDAD_BANCARIA_ID "
+         + "JOIN PA_MONEDAS m ON m.MONEDA_ID = c.MONEDA_ID "
          + "WHERE c.CUENTA_ACREEDOR_ID = ?";
     }
     
@@ -129,7 +129,6 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
         AcreedoresDTO acreedor = null;
         while(this.resultSet.next()){
             CuentasAcreedorDTO cuenta = new CuentasAcreedorDTO();
-            cuenta = new CuentasAcreedorDTO();
             cuenta.setCuenta_bancaria_id(this.resultSet.getInt(1));
             cuenta.setTipo_cuenta(this.resultSet.getString(2));
             cuenta.setNumero_cuenta(this.resultSet.getString(3));
@@ -179,9 +178,9 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
         return super.modificar();
     }
 
-    @Override
-    public Integer eliminar(CuentasAcreedorDTO cuentaAcreedor) {
-        this.cuentaAcreedor = cuentaAcreedor;
-        return super.eliminar();
-    }
+//    @Override
+//    public Integer eliminar(CuentasAcreedorDTO cuentaAcreedor) {
+//        this.cuentaAcreedor = cuentaAcreedor;
+//        return super.eliminar();
+//    }
 }

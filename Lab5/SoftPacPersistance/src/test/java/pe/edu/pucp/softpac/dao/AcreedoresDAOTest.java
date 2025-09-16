@@ -37,7 +37,7 @@ public class AcreedoresDAOTest {
         testAcreedor = new AcreedoresDTO();
         testAcreedor.setAcreedor_id(0);
         testAcreedor.setRazon_social("Proveedor de Prueba S.A.");
-        testAcreedor.setRuc("12345678901");
+        testAcreedor.setRuc("12345678910");
         testAcreedor.setDireccion_fiscal("Av. Siempre Viva 742");
         testAcreedor.setCondicion("ACTIVO");
         testAcreedor.setPlazo_de_pago(30);
