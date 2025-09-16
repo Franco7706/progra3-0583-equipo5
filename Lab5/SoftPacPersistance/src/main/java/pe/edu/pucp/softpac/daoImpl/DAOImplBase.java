@@ -19,10 +19,14 @@ public abstract class DAOImplBase {
     protected Connection conexion;
     protected CallableStatement statement;
     protected ResultSet resultSet;
+    protected Boolean ejecutaOperacionesEnCascada;
+    protected Boolean esDetalle;
 
     public DAOImplBase(String nombre_tabla) {
         this.nombre_tabla = nombre_tabla;
         this.retornarLlavePrimaria = false;
+        this.ejecutaOperacionesEnCascada = false;
+        this.esDetalle = false;
         this.incluirListaDeColumnas();
     }
 
@@ -32,79 +36,169 @@ public abstract class DAOImplBase {
     }
 
     protected abstract void configurarListaDeColumnas();
-    
-    protected Integer insertar(){
+
+    protected Integer insertar()  {
+        if(this.esDetalle) {this.ejecutaDetalle_DML(Tipo_Operacion.INSERTAR);}
         return this.ejecuta_DML(Tipo_Operacion.INSERTAR);
     }
-    
-    protected Integer modificar(){
+
+    protected Integer modificar() {
+        if(this.esDetalle) {this.ejecutaDetalle_DML(Tipo_Operacion.MODIFICAR);}
         return this.ejecuta_DML(Tipo_Operacion.MODIFICAR);
     }
-    
-    protected Integer eliminar(){
+
+    protected Integer eliminar() {
+        if(this.esDetalle) {this.ejecutaDetalle_DML(Tipo_Operacion.ELIMINAR);}
         return this.ejecuta_DML(Tipo_Operacion.ELIMINAR);
     }
 
-    protected void obtenerPorId() { this.ejecuta_Query(Tipo_Query.OBTENER_POR_ID);}
 
-    protected void listarTodosQuery() { this.ejecuta_Query(Tipo_Query.LISTAR_TODOS);}
+    protected void obtenerPorId() {
+        this.ejecuta_Query(Tipo_Query.OBTENER_POR_ID);
+    }
 
-    protected void queryCustom1() { this.ejecuta_Query(Tipo_Query.CUSTOM1);}
+    protected void listarTodosQuery() {
+        this.ejecuta_Query(Tipo_Query.LISTAR_TODOS);
+    }
 
-    protected void queryCustom2() { this.ejecuta_Query(Tipo_Query.CUSTOM3);}
+    protected void queryCustom1() {
+        this.ejecuta_Query(Tipo_Query.CUSTOM1);
+    }
 
-    protected void queryCustom3() { this.ejecuta_Query(Tipo_Query.CUSTOM3);}
+    protected void queryCustom2() {
+        this.ejecuta_Query(Tipo_Query.CUSTOM2);
+    }
 
-    private Integer ejecuta_DML(Tipo_Operacion tipo_operacion) {
+    protected void queryCustom3() {
+        this.ejecuta_Query(Tipo_Query.CUSTOM3);
+    }
+
+
+    private Integer ejecutarDMLenBD() throws SQLException {
+        return this.statement.executeUpdate();
+    }
+
+    protected void colocarSQLEnStatement(String sql) throws SQLException {
+        this.statement = this.conexion.prepareCall(sql);
+    }
+
+    protected void rollbackTransaccion() throws SQLException {
+        if (this.conexion != null) {
+            this.conexion.rollback();
+        }
+    }
+
+    protected void commitTransaccion() throws SQLException {
+        this.conexion.commit();
+    }
+
+    protected void iniciarTransaccion() throws SQLException {
+        this.abrirConexion();
+        this.conexion.setAutoCommit(false);
+
+    }
+
+    protected void cerrarConexion() throws SQLException {
+        if (this.conexion != null) {
+            this.conexion.close();
+        }
+    }
+
+    private String generarSQLparaDML(Tipo_Operacion tipo_operacion) {
+        String sql = null;
+        switch (tipo_operacion) {
+            case Tipo_Operacion.INSERTAR:
+                sql = this.generarSQLParaInsercion();
+                break;
+            case Tipo_Operacion.MODIFICAR:
+                sql = this.generarSQLParaModificacion();
+                break;
+            case Tipo_Operacion.ELIMINAR:
+                sql = this.generarSQLParaEliminacion();
+                break;
+        }
+        return sql;
+    }
+
+    private void incluirValorDeParametrosParaDML(Tipo_Operacion tipo_operacion) throws SQLException {
+        switch (tipo_operacion) {
+            case Tipo_Operacion.INSERTAR:
+                this.incluirValorDeParametrosParaInsercion();
+                break;
+            case Tipo_Operacion.MODIFICAR:
+                this.incluirValorDeParametrosParaModificacion();
+                break;
+            case Tipo_Operacion.ELIMINAR:
+                this.incluirValorDeParametrosParaEliminacion();
+                break;
+        }
+    }
+
+    protected void ejecutarOperacionesEnCascada(Tipo_Operacion tipo_operacion) throws SQLException {
+        if(this.ejecutaOperacionesEnCascada==false) return;
+        switch (tipo_operacion) {
+            case Tipo_Operacion.INSERTAR:
+                this.ejecutarCascadaParaInsercion();
+                break;
+            case Tipo_Operacion.MODIFICAR:
+                this.ejecutarCascadaParaModificacion();
+                break;
+            case Tipo_Operacion.ELIMINAR:
+                this.ejecutarCascadaParaEliminacion();
+                break;
+        }
+    }
+
+    protected void ejecutarCascadaParaEliminacion() {
+    }
+
+    protected void ejecutarCascadaParaModificacion() {
+    }
+
+    protected void ejecutarCascadaParaInsercion() {
+    }
+
+    private Integer ejecutaDetalle_DML(Tipo_Operacion tipo_operacion) {
+
         Integer resultado = 0;
         try {
-            this.conexion = DBManager.getInstance().getConnection();
-            this.conexion.setAutoCommit(false);
-            String sql = null;
-            switch (tipo_operacion) {
-                case Tipo_Operacion.INSERTAR:
-                    sql = this.generarSQLParaInsercion();
-                    break;
-                case Tipo_Operacion.MODIFICAR:
-                    sql = this.generarSQLParaModificacion();
-                    break;
-                case Tipo_Operacion.ELIMINAR:
-                    sql = this.generarSQLParaEliminacion();
-                    break;
-            }
-
-            this.statement = this.conexion.prepareCall(sql);
-            switch (tipo_operacion) {
-                case Tipo_Operacion.INSERTAR:
-                    this.incluirValorDeParametrosParaInsercion();
-                    break;
-                case Tipo_Operacion.MODIFICAR:
-                    this.incluirValorDeParametrosParaModificacion();
-                    break;
-                case Tipo_Operacion.ELIMINAR:
-                    this.incluirValorDeParametrosParaEliminacion();
-                    break;
-            }
-
-            resultado = this.statement.executeUpdate();
+            String sql = this.generarSQLparaDML(tipo_operacion);
+            this.colocarSQLEnStatement(sql);
+            this.incluirValorDeParametrosParaDML(tipo_operacion);
+            resultado = this.ejecutarDMLenBD();
             if (this.retornarLlavePrimaria && tipo_operacion == Tipo_Operacion.INSERTAR) {
                 resultado = this.retornarUltimoAutoGenerado();
             }
-            this.conexion.commit();
+            return resultado;
+        } catch(SQLException ex){
+            System.err.println("Error al intentar ejecutar DML - " + ex);
+
+        }
+        return resultado;
+    }
+    private Integer ejecuta_DML(Tipo_Operacion tipo_operacion) {
+        Integer resultado = 0;
+        try {
+            this.iniciarTransaccion();
+            String sql = this.generarSQLparaDML(tipo_operacion);
+            this.colocarSQLEnStatement(sql);
+            this.incluirValorDeParametrosParaDML(tipo_operacion);
+            resultado = this.ejecutarDMLenBD();
+            if (this.retornarLlavePrimaria && tipo_operacion == Tipo_Operacion.INSERTAR) {
+                resultado = this.retornarUltimoAutoGenerado();
+            }
+            this.ejecutarOperacionesEnCascada(tipo_operacion);
+            this.commitTransaccion();
         } catch (SQLException ex) {
             System.err.println("Error al intentar ejecutar DML - " + ex);
             try {
-                if (this.conexion != null) {
-                    this.conexion.rollback();
-                }
+                this.rollbackTransaccion();
             } catch (SQLException ex1) {
                 System.err.println("Error al hacer rollback - " + ex1);
             }
         } finally {
             try {
-                if (this.conexion != null) {
-                    this.conexion.close();
-                }
+                this.cerrarConexion();
             } catch (SQLException ex) {
                 System.err.println("Error al cerrar la conexión - " + ex);
             }
@@ -112,74 +206,91 @@ public abstract class DAOImplBase {
         return resultado;
     }
 
+    private String generarSQLParaQuerys(Tipo_Query tipo_query) throws SQLException {
+        String sql = null;
+        switch (tipo_query) {
+            case Tipo_Query.LISTAR_TODOS:
+                sql = this.generarSQLParaListarTodos();
+                break;
+            case Tipo_Query.OBTENER_POR_ID:
+                sql = this.generarSQLParaObtenerPorId();
+                break;
+            case Tipo_Query.CUSTOM1:
+                sql = this.generarSQLCustom1();
+                break;
+            case Tipo_Query.CUSTOM2:
+                sql = this.generarSQLCustom2();
+                break;
+            case Tipo_Query.CUSTOM3:
+                sql = this.generarSQLCustom3();
+                break;
+        }
+        return sql;
+    }
+
+    private void incluirValorDeParametrosParaQuerys(Tipo_Query tipo_query) throws SQLException {
+        switch (tipo_query) {
+            case Tipo_Query.LISTAR_TODOS:
+                break;
+            case Tipo_Query.OBTENER_POR_ID:
+                this.incluirValorDeParametrosParaObtenerPorId();
+                break;
+            case Tipo_Query.CUSTOM1:
+                this.incluirValorDeParametrosCustom1();
+                break;
+            case Tipo_Query.CUSTOM2:
+                this.incluirValorDeParametrosCustom2();
+                break;
+            case Tipo_Query.CUSTOM3:
+                this.incluirValorDeParametrosCustom3();
+                break;
+        }
+    }
+
+    private ResultSet ejecutarQueryEnBD() throws SQLException {
+        this.resultSet = this.statement.executeQuery();
+        return resultSet;
+    }
+
+    private void extraerResultSetParaQuerys(Tipo_Query tipo_query) throws SQLException {
+        switch (tipo_query) {
+            case Tipo_Query.LISTAR_TODOS:
+                this.extraerResultSetParaListarTodos();
+                break;
+            case Tipo_Query.OBTENER_POR_ID:
+                this.extraerResultSetParaObtenerPorId();
+                break;
+            case Tipo_Query.CUSTOM1:
+                this.extraerResultSetCustom1();
+                break;
+            case Tipo_Query.CUSTOM2:
+                this.extraerResultSetCustom2();
+                break;
+            case Tipo_Query.CUSTOM3:
+                this.extraerResultSetCustom3();
+                break;
+        }
+    }
+
     private void ejecuta_Query(Tipo_Query tipo_query) {
         try {
-            this.conexion = DBManager.getInstance().getConnection();
-            String sql = null;
-            switch (tipo_query) {
-                case Tipo_Query.LISTAR_TODOS:
-                    sql = this.generarSQLParaListarTodos();
-                    break;
-                case Tipo_Query.OBTENER_POR_ID:
-                    sql = this.generarSQLParaObtenerPorId();
-                    break;
-                case Tipo_Query.CUSTOM1:
-                    sql = this.generarSQLCustom1();
-                    break;
-                case Tipo_Query.CUSTOM2:
-                    sql = this.generarSQLCustom2();
-                    break;
-                case Tipo_Query.CUSTOM3:
-                    sql = this.generarSQLCustom3();
-                    break;
-            }
-            this.statement = this.conexion.prepareCall(sql);
-            switch (tipo_query) {
-                case Tipo_Query.LISTAR_TODOS:
-                    break;
-                case Tipo_Query.OBTENER_POR_ID:
-                    this.incluirValorDeParametrosParaObtenerPorId();
-                    break;
-                case Tipo_Query.CUSTOM1:
-                    this.incluirValorDeParametrosCustom1();
-                    break;
-                case Tipo_Query.CUSTOM2:
-                    this.incluirValorDeParametrosCustom2();
-                    break;
-                case Tipo_Query.CUSTOM3:
-                    this.incluirValorDeParametrosCustom3();
-                    break;
-            }
-            this.resultSet = this.statement.executeQuery();
-            switch (tipo_query) {
-                case Tipo_Query.LISTAR_TODOS:
-                    this.extraerResultSetParaListarTodos();
-                    break;
-                case Tipo_Query.OBTENER_POR_ID:
-                    this.extraerResultSetParaObtenerPorId();
-                    break;
-                case Tipo_Query.CUSTOM1:
-                    this.extraerResultSetCustom1();
-                    break;
-                case Tipo_Query.CUSTOM2:
-                    this.extraerResultSetCustom2();
-                    break;
-                case Tipo_Query.CUSTOM3:
-                    this.extraerResultSetCustom3();
-                    break;
-            }
+            abrirConexion();
+            String sql = this.generarSQLParaQuerys(tipo_query);
+            this.colocarSQLEnStatement(sql);
+            this.incluirValorDeParametrosParaQuerys(tipo_query);
+            this.ejecutarQueryEnBD();
+            this.extraerResultSetParaQuerys(tipo_query);
         } catch (SQLException ex) {
             System.err.println("Error al intentar query - " + ex);
         } finally {
             try {
-                if (this.conexion != null) {
-                    this.conexion.close();
-                }
+                cerrarConexion();
             } catch (SQLException ex) {
                 System.err.println("Error al cerrar la conexión - " + ex);
             }
         }
     }
+
 
     protected String generarSQLParaInsercion() {
         //La sentencia que se generará es similiar a
@@ -217,7 +328,7 @@ public abstract class DAOImplBase {
         for (Columna columna : this.listaColumnas) {
             if (columna.getEsLlavePrimaria()) {
                 if (!sql_predicado.isBlank()) {
-                    sql_predicado = sql_predicado.concat(", ");
+                    sql_predicado = sql_predicado.concat(" AND ");
                 }
                 sql_predicado = sql_predicado.concat(columna.getNombre());
                 sql_predicado = sql_predicado.concat("=?");
@@ -245,7 +356,7 @@ public abstract class DAOImplBase {
         for (Columna columna : this.listaColumnas) {
             if (columna.getEsLlavePrimaria()) {
                 if (!sql_predicado.isBlank()) {
-                    sql_predicado = sql_predicado.concat(", ");
+                    sql_predicado = sql_predicado.concat(" AND ");
                 }
                 sql_predicado = sql_predicado.concat(columna.getNombre());
                 sql_predicado = sql_predicado.concat("=?");
@@ -375,4 +486,7 @@ public abstract class DAOImplBase {
         return resultado;
     }
 
+    protected void abrirConexion() {
+        this.conexion = DBManager.getInstance().getConnection();
+    }
 }

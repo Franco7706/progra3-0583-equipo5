@@ -9,6 +9,7 @@ import pe.edu.pucp.softpac.model.TiposDeCambioDTO;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -117,7 +118,7 @@ public class TiposDeCambioDAOTest {
         ArrayList<TiposDeCambioDTO> lista = dao.listarTodos();
         assertNotNull(lista, "La lista no debe ser null");
         assertFalse(lista.isEmpty(), "La lista no debe estar vacía");
-        assertTrue(lista.stream().anyMatch(tc -> tc.getTipo_cambio_id() == generatedId),
+        assertTrue(lista.stream().anyMatch(tc -> Objects.equals(tc.getTipo_cambio_id(), generatedId)),
                 "La lista debe contener el tipo de cambio insertado");
     }
 
