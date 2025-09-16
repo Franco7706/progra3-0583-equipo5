@@ -3,6 +3,7 @@ package pe.edu.pucp.softpac.daoImpl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import pe.edu.pucp.softpac.dao.CuentasAcreedorDAO;
 import pe.edu.pucp.softpac.dao.DetallesPropuestaDAO;
 import pe.edu.pucp.softpac.dao.PropuestasPagoDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
@@ -12,12 +13,11 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
 
     private PropuestasPagoDTO propuestaPago;
     private ArrayList<PropuestasPagoDTO> propuestasPago;
-    private DetallesPropuestaDAO daoDetalle;
 
     public PropuestasPagoDAOImpl() {
         super("PA_PROPUESTAS_DE_PAGO");
         this.retornarLlavePrimaria=true;
-        daoDetalle = new DetallesPropuestaDAOImpl();
+        this.ejecutaOperacionesEnCascada=true;
     }
 
     @Override
@@ -50,16 +50,152 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
 
     @Override
     protected String generarSQLParaObtenerPorId(){
-        return "SELECT * FROM VW_PROPUESTA_COMPLETA WHERE P1_PROPUESTA_DE_PAGO_ID = ?";
+        return "SELECT \n" +
+                "    -- Propuesta\n" +
+                "    P1_PROPUESTA_DE_PAGO_ID,\n" +
+                "    P2_FECHA_HORA_CREACION,\n" +
+                "    P3_ESTADO_PROPUESTA,\n" +
+                "    P4_ENTIDAD_BANCARIA_PROPUESTA,\n" +
+                "    P5_ENTIDAD_BANCARIA_NOMBRE,\n" +
+                "    P6_ENTIDAD_BANCARIA_FORMATO,\n" +
+                "    P7_ENTIDAD_BANCARIA_SWIFT,\n" +
+                "    P8_ENTIDAD_BANCARIA_PAIS_ID,\n" +
+                "    P9_ENTIDAD_BANCARIA_PAIS_NOMBRE,\n" +
+                "    -- Detalle de propuesta\n" +
+                "    D1_DETALLE_PROPUESTA_ID,\n" +
+                "    D2_MONTO_PAGO,\n" +
+                "    D3_FORMA_PAGO,\n" +
+                "    -- Factura\n" +
+                "    F1_FACTURA_ID,\n" +
+                "    F2_NUMERO_FACTURA,\n" +
+                "    F3_FECHA_EMISION,\n" +
+                "    F4_FECHA_RECEPCION,\n" +
+                "    F5_FECHA_LIMITE_PAGO,\n" +
+                "    F6_ESTADO_FACTURA,\n" +
+                "    F7_MONTO_TOTAL,\n" +
+                "    F8_MONTO_IGV,\n" +
+                "    F9_MONTO_RESTANTE,\n" +
+                "    F10_REGIMEN_FISCAL,\n" +
+                "    F11_TASA_IVA,\n" +
+                "    F12_OTROS_TRIBUTOS,\n" +
+                "    F13_MONEDA_ID,\n" +
+                "    F14_ACREEDOR_ID,\n" +
+                "    -- Cuenta acreedor (destino)\n" +
+                "    CA1_CUENTA_ACREEDOR_ID,\n" +
+                "    CA2_TIPO_CUENTA,\n" +
+                "    CA3_NUMERO_CUENTA,\n" +
+                "    CA4_CCI,\n" +
+                "    CA5_ACTIVO,\n" +
+                "    CA6_ACREEDOR_ID,\n" +
+                "    CA7_ENTIDAD_BANCARIA_ID,\n" +
+                "    CA8_MONEDA_ID,\n" +
+                "    CA9_ENTIDAD_BANCARIA_NOMBRE,\n" +
+                "    CA10_ENTIDAD_BANCARIA_SWIFT,\n" +
+                "    CA11_ENTIDAD_BANCARIA_PAIS_ID,\n" +
+                "    CA12_ENTIDAD_BANCARIA_PAIS_NOMBRE,\n" +
+                "    -- Cuenta propia (origen)\n" +
+                "    CP1_CUENTA_PROPIA_ID,\n" +
+                "    CP2_SALDO_DISPONIBLE,\n" +
+                "    CP3_TIPO_CUENTA,\n" +
+                "    CP4_NUMERO_CUENTA,\n" +
+                "    CP5_CCI,\n" +
+                "    CP6_ACTIVO,\n" +
+                "    CP7_ENTIDAD_BANCARIA_ID,\n" +
+                "    CP8_MONEDA_ID,\n" +
+                "    CP9_ENTIDAD_BANCARIA_NOMBRE,\n" +
+                "    CP10_ENTIDAD_BANCARIA_SWIFT,\n" +
+                "    CP11_ENTIDAD_BANCARIA_PAIS_ID,\n" +
+                "    CP12_ENTIDAD_BANCARIA_PAIS_NOMBRE\n" +
+                "    FROM VW_PROPUESTA_COMPLETA WHERE P1_PROPUESTA_DE_PAGO_ID = ?";
     }
 
     @Override
     protected void incluirValorDeParametrosParaObtenerPorId() throws SQLException {
         this.statement.setInt(1,this.propuestaPago.getPropuesta_id());
     }
+    private FacturasDTO insertarFactura() throws SQLException {
+        FacturasDTO factura = new FacturasDTO();
+        MonedasDTO moneda = new MonedasDTO();
+        AcreedoresDTO acreedor = new AcreedoresDTO();
+        factura.setFactura_id(this.resultSet.getInt(13));
+        factura.setNumero_factura(resultSet.getString(14));
+        factura.setFecha_emision(resultSet.getDate(15).toLocalDate().atStartOfDay());
+        factura.setFecha_recepcion(resultSet.getDate(16).toLocalDate().atStartOfDay());
+        factura.setFecha_limite_pago(resultSet.getDate(17).toLocalDate().atStartOfDay());
+        factura.setEstado(this.resultSet.getString(18));
+        factura.setMonto_total(this.resultSet.getBigDecimal(19));
+        factura.setMonto_igv(this.resultSet.getBigDecimal(20));
+        factura.setMonto_restante(this.resultSet.getBigDecimal(21));
+        factura.setRegimen_fiscal(this.resultSet.getString(22));
+        factura.setTasa_iva(this.resultSet.getBigDecimal(23));
+        factura.setOtros_tributos(this.resultSet.getBigDecimal(24));
 
-    @Override
-    protected void extraerResultSetParaObtenerPorId() throws SQLException {
+        moneda.setMoneda_id(this.resultSet.getInt(25));
+        factura.setMoneda(moneda);
+
+        acreedor.setAcreedor_id(this.resultSet.getInt(26));
+        factura.setAcreedor(acreedor);
+
+        return factura;
+    }
+
+    private CuentasAcreedorDTO insertarCuentaAcreedor() throws SQLException {
+        EntidadesBancariasDTO entidadBancaria = new EntidadesBancariasDTO();
+        PaisesDTO pais = new PaisesDTO();
+        CuentasAcreedorDTO cuentaAcreedor = new CuentasAcreedorDTO();
+        MonedasDTO moneda = new MonedasDTO();
+        AcreedoresDTO acreedor = new AcreedoresDTO();
+
+        cuentaAcreedor.setCuenta_bancaria_id(this.resultSet.getInt(27));
+        cuentaAcreedor.setTipo_cuenta(resultSet.getString(28));
+        cuentaAcreedor.setNumero_cuenta(resultSet.getString(29));
+        cuentaAcreedor.setCci(resultSet.getString(30));
+        cuentaAcreedor.setActiva(resultSet.getString(31).charAt(0)=='S'?true:false);
+
+        acreedor.setAcreedor_id(this.resultSet.getInt(32));
+        cuentaAcreedor.setAcreedor(acreedor);
+
+        entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(33));
+        cuentaAcreedor.setEntidad_bancaria(entidadBancaria);
+
+        moneda.setMoneda_id(this.resultSet.getInt(34));
+        cuentaAcreedor.setMoneda(moneda);
+        entidadBancaria.setNombre(resultSet.getString(35));
+        entidadBancaria.setCodigo_swift(resultSet.getString(36));
+
+        pais.setPais_id(this.resultSet.getInt(37));
+        pais.setNombre(this.resultSet.getString(38));
+        entidadBancaria.setPais(pais);
+        return cuentaAcreedor;
+    }
+    private CuentasPropiasDTO insertarCuentaPropia() throws SQLException {
+        EntidadesBancariasDTO entidadBancaria = new EntidadesBancariasDTO();
+        PaisesDTO pais = new PaisesDTO();
+        CuentasPropiasDTO cuentaPropia = new CuentasPropiasDTO();
+        MonedasDTO moneda = new MonedasDTO();
+
+        cuentaPropia.setCuenta_bancaria_id(this.resultSet.getInt(39));
+        cuentaPropia.setSaldo_disponible(this.resultSet.getBigDecimal(40));
+        cuentaPropia.setTipo_cuenta(resultSet.getString(41));
+        cuentaPropia.setNumero_cuenta(resultSet.getString(42));
+        cuentaPropia.setCci(resultSet.getString(43));
+        cuentaPropia.setActiva(resultSet.getString(44).charAt(0)=='S'?true:false);
+
+        entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(45));
+        cuentaPropia.setEntidad_bancaria(entidadBancaria);
+
+        moneda.setMoneda_id(this.resultSet.getInt(46));
+        cuentaPropia.setMoneda(moneda);
+        entidadBancaria.setNombre(resultSet.getString(47));
+        entidadBancaria.setCodigo_swift(resultSet.getString(48));
+
+        pais.setPais_id(this.resultSet.getInt(49));
+        pais.setNombre(this.resultSet.getString(50));
+        entidadBancaria.setPais(pais);
+        return cuentaPropia;
+    }
+    private DetallesPropuestaDTO insertarDetalleDePropuesta() throws SQLException {
+
         DetallesPropuestaDTO detallePropuesta = null;
         EntidadesBancariasDTO entidadBancaria = null;
         PaisesDTO pais=null;
@@ -68,6 +204,26 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         FacturasDTO factura=null;
         MonedasDTO moneda=null;
         AcreedoresDTO acreedor=null;
+
+        detallePropuesta = new DetallesPropuestaDTO();
+        detallePropuesta.setPropuesta_pago(propuestaPago);
+        detallePropuesta.setDetalle_propuesta_id(this.resultSet.getInt(10));
+        if(this.resultSet.wasNull()) return null;
+        detallePropuesta.setMonto_pago(this.resultSet.getBigDecimal(11));
+        detallePropuesta.setForma_pago(this.resultSet.getString(12).charAt(0));
+
+        detallePropuesta.setFactura(insertarFactura());
+        detallePropuesta.setCuenta_acreedor(insertarCuentaAcreedor());
+        detallePropuesta.setCuenta_propia(insertarCuentaPropia());
+
+        return detallePropuesta;
+    }
+
+    @Override
+    protected void extraerResultSetParaObtenerPorId() throws SQLException {
+        DetallesPropuestaDTO detallePropuesta = null;
+        EntidadesBancariasDTO entidadBancaria = null;
+        PaisesDTO pais=null;
         this.propuestaPago=null;
         int i=0;
         while (this.resultSet.next()) {
@@ -88,87 +244,8 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
                 propuestaPago.setEntidad_bancaria(entidadBancaria);
                 i++;
             }
-            detallePropuesta = new DetallesPropuestaDTO();
-            detallePropuesta.setPropuesta_pago(propuestaPago);
-            detallePropuesta.setDetalle_propuesta_id(this.resultSet.getInt(10));
-            if(this.resultSet.wasNull()) break;
-            detallePropuesta.setMonto_pago(this.resultSet.getBigDecimal(11));
-            detallePropuesta.setForma_pago(this.resultSet.getString(12).charAt(0));
-
-            factura = new FacturasDTO();
-            detallePropuesta.setFactura(factura);
-            factura.setFactura_id(this.resultSet.getInt(13));
-            factura.setNumero_factura(resultSet.getString(14));
-            factura.setFecha_emision(resultSet.getDate(15).toLocalDate().atStartOfDay());
-            factura.setFecha_recepcion(resultSet.getDate(16).toLocalDate().atStartOfDay());
-            factura.setFecha_limite_pago(resultSet.getDate(17).toLocalDate().atStartOfDay());
-            factura.setEstado(this.resultSet.getString(18));
-            factura.setMonto_total(this.resultSet.getBigDecimal(19));
-            factura.setMonto_igv(this.resultSet.getBigDecimal(20));
-            factura.setMonto_restante(this.resultSet.getBigDecimal(21));
-            factura.setRegimen_fiscal(this.resultSet.getString(22));
-            factura.setTasa_iva(this.resultSet.getBigDecimal(23));
-            factura.setOtros_tributos(this.resultSet.getBigDecimal(24));
-
-            moneda=new MonedasDTO();
-            moneda.setMoneda_id(this.resultSet.getInt(25));
-            factura.setMoneda(moneda);
-
-            acreedor=new AcreedoresDTO();
-            acreedor.setAcreedor_id(this.resultSet.getInt(26));
-            factura.setAcreedor(acreedor);
-
-            cuentaAcreedor=new CuentasAcreedorDTO();
-            detallePropuesta.setCuenta_acreedor(cuentaAcreedor);
-            cuentaAcreedor.setCuenta_bancaria_id(this.resultSet.getInt(27));
-            cuentaAcreedor.setTipo_cuenta(resultSet.getString(28));
-            cuentaAcreedor.setNumero_cuenta(resultSet.getString(29));
-            cuentaAcreedor.setCci(resultSet.getString(30));
-            cuentaAcreedor.setActiva(resultSet.getString(31).charAt(0)=='S'?true:false);
-
-            acreedor=new AcreedoresDTO();
-            acreedor.setAcreedor_id(this.resultSet.getInt(32));
-            cuentaAcreedor.setAcreedor(acreedor);
-
-            entidadBancaria=new EntidadesBancariasDTO();
-            entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(33));
-            cuentaAcreedor.setEntidad_bancaria(entidadBancaria);
-
-            moneda=new MonedasDTO();
-            moneda.setMoneda_id(this.resultSet.getInt(34));
-            cuentaAcreedor.setMoneda(moneda);
-            entidadBancaria.setNombre(resultSet.getString(35));
-            entidadBancaria.setCodigo_swift(resultSet.getString(36));
-
-            pais = new PaisesDTO();
-            pais.setPais_id(this.resultSet.getInt(37));
-            pais.setNombre(this.resultSet.getString(38));
-            entidadBancaria.setPais(pais);
-
-            cuentaPropia = new CuentasPropiasDTO();
-            detallePropuesta.setCuenta_propia(cuentaPropia);
-            cuentaPropia.setCuenta_bancaria_id(this.resultSet.getInt(39));
-            cuentaPropia.setSaldo_disponible(this.resultSet.getBigDecimal(40));
-            cuentaPropia.setTipo_cuenta(resultSet.getString(41));
-            cuentaPropia.setNumero_cuenta(resultSet.getString(42));
-            cuentaPropia.setCci(resultSet.getString(43));
-            cuentaPropia.setActiva(resultSet.getString(44).charAt(0)=='S'?true:false);
-
-            entidadBancaria = new EntidadesBancariasDTO();
-            entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(45));
-            cuentaPropia.setEntidad_bancaria(entidadBancaria);
-
-            moneda=new MonedasDTO();
-            moneda.setMoneda_id(this.resultSet.getInt(46));
-            cuentaPropia.setMoneda(moneda);
-            entidadBancaria.setNombre(resultSet.getString(47));
-            entidadBancaria.setCodigo_swift(resultSet.getString(48));
-
-            pais=new PaisesDTO();
-            pais.setPais_id(this.resultSet.getInt(49));
-            pais.setNombre(this.resultSet.getString(50));
-            entidadBancaria.setPais(pais);
-
+            detallePropuesta = insertarDetalleDePropuesta();
+            if(detallePropuesta==null) break;
             propuestaPago.addDetalle_Propuesta(detallePropuesta);
         }
     }
@@ -190,13 +267,17 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
     }
 
     @Override
+    protected void ejecutarCascadaParaInsercion(){
+        DetallesPropuestaDAO daoDetalle = new DetallesPropuestaDAOImpl();
+        for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
+
+        }
+    }
+
+    @Override
     public Integer insertar(PropuestasPagoDTO propuestaPago) {
         this.propuestaPago = propuestaPago;
-        Integer resultado = super.insertar();
-        for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
-            daoDetalle.insertar(detalle);
-        }
-        return resultado;
+        return super.insertar();
     }
 
     @Override
@@ -216,16 +297,12 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
     @Override
     public Integer modificar(PropuestasPagoDTO propuestaPago) {
         this.propuestaPago=propuestaPago;
-        Integer resultado = super.modificar();
-        return resultado;
+        return super.modificar();
     }
 
     @Override
     public Integer eliminar(PropuestasPagoDTO propuestaPago) {
         this.propuestaPago=propuestaPago;
-        for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
-            daoDetalle.eliminar(detalle);
-        }
         return super.eliminar();
     }
 }
