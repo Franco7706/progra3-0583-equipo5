@@ -75,10 +75,15 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     protected void incluirValorDeParametrosParaEliminacion() throws SQLException {
         this.statement.setInt(1, this.factura.getFactura_id());
     }
+
+    @Override
+    protected void incluirValorDeParametrosParaObtenerPorId() throws SQLException {
+        this.statement.setInt(1,this.factura.getFactura_id());
+    }
     
     @Override
     protected String generarSQLParaObtenerPorId() {
-        return "SELECT * FROM VW_FACTURA_COMPLETA WHERE P1_FACTURA_ID = ?";
+        return "SELECT * FROM VW_FACTURA_COMPLETA WHERE FACTURA_ID = ?";
     }
 
     @Override
@@ -117,7 +122,7 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
                 acreedor.setDireccion_fiscal(this.resultSet.getString(20));
                 acreedor.setCondicion(this.resultSet.getString(21));
                 acreedor.setPlazo_de_pago(this.resultSet.getInt(22));
-                acreedor.setActivo(this.resultSet.getBoolean(23));
+                acreedor.setActivo(this.resultSet.getString(23).charAt(0)=='S'?true:false);
                 pais=new PaisesDTO();
                 pais.setPais_id(this.resultSet.getInt(24));
                 pais.setNombre(this.resultSet.getString(25));

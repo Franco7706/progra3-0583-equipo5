@@ -1,6 +1,7 @@
 C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\AcreedoresDAO.java
 C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\CuentasAcreedorDAO.java
 C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\CuentasPropiasDAO.java
+C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\DetallesPropuestaDAO.java
 C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\EntidadesBancariasDAO.java
 C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\FacturasDAO.java
 C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\MonedasDAO.java
@@ -12,6 +13,7 @@ C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersis
 C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\CuentasAcreedorDAOImpl.java
 C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\CuentasPropiasDAOImpl.java
 C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\DAOImplBase.java
+C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\DetallesPropuestaDAOImpl.java
 C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\EntidadesBancariasDAOImpl.java
 C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\FacturasDAOImpl.java
 C:\Users\angel\OneDrive\Documents\GitHub\progra3-0583-equipo5\Lab5\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\MonedasDAOImpl.java
