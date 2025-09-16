@@ -8,7 +8,7 @@ public class DBManagerTest {
     
     public DBManagerTest() {
     }
-    
+
     @Test
     public void testGetInstance() {
         //La linea de abajo no funciona pues el DBManager 
@@ -16,8 +16,7 @@ public class DBManagerTest {
         //DBManager dbManager = new DBManager();
         System.out.println("testGetInstance");
         DBManager dbManager = DBManager.getInstance();
-        assertNotNull(0);
-        //assertNotNull(dbManager);
+        assertNotNull(dbManager);
     }
     
     @Test
@@ -26,8 +25,7 @@ public class DBManagerTest {
         DBManager dbManager = DBManager.getInstance();
         
         Connection conexion = dbManager.getConnection();
-        assertNotNull(0);
-        //assertNotNull(conexion);
+        assertNotNull(conexion);
     }
     
 }
