@@ -71,6 +71,7 @@ public class UsuarioPaisAccesoDAOImpl extends DAOImplBase implements UsuarioPais
             PaisesDTO pais = new PaisesDTO();
             pais.setPais_id(this.resultSet.getInt("PAIS_ID"));
             this.usuarioPaisAcceso.setPais(pais);
+            this.usuarioPaisAcceso.setAcceso(this.resultSet.getString("ACCESO").equals("S"));
         }
     }
 
