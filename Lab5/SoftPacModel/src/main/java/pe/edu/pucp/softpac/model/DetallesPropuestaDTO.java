@@ -2,7 +2,7 @@ package pe.edu.pucp.softpac.model;
 
 import java.math.BigDecimal;
 
-public class DetallesPropuestaDTO{
+public class DetallesPropuestaDTO extends EliminableDTOBase{
     private Integer detalle_propuesta_id;
     private BigDecimal monto_pago;
     private char forma_pago;
@@ -19,6 +19,7 @@ public class DetallesPropuestaDTO{
         factura=null;
         cuenta_acreedor=null;
         cuenta_propia=null;
+        super();
     }
 
     public DetallesPropuestaDTO(Integer detalle_propuesta_id, BigDecimal monto_pago, char forma_pago, CuentasAcreedorDTO cuenta_acreedor, PropuestasPagoDTO propuesta_pago, CuentasPropiasDTO cuenta_propia, FacturasDTO factura) {
@@ -39,6 +40,7 @@ public class DetallesPropuestaDTO{
         this.cuenta_acreedor = detalle_propuesta_pago.getCuenta_acreedor();
         this.cuenta_propia = detalle_propuesta_pago.getCuenta_propia();
         this.factura = detalle_propuesta_pago.getFactura();
+        super(detalle_propuesta_pago);
     }
 
     public Integer getDetalle_propuesta_id() {
