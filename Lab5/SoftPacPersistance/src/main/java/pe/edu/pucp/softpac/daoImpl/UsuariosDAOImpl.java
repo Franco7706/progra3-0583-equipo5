@@ -8,7 +8,7 @@ import pe.edu.pucp.softpac.model.UsuarioPaisAccesoDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 
-import import pe.edu.pucp.softpac.daoImpl.exception.DAODetalleException;
+import pe.edu.pucp.softpac.daoImpl.exception.DAODetalleException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
