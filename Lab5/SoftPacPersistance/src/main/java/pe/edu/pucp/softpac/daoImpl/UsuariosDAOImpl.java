@@ -1,9 +1,14 @@
 package pe.edu.pucp.softpac.daoImpl;
 
 import pe.edu.pucp.softpac.dao.UsuariosDAO;
+import pe.edu.pucp.softpac.dao.UsuarioPaisAccesoDAO;
+import pe.edu.pucp.softpac.daoImpl.util.Tipo_Operacion;
+import pe.edu.pucp.softpac.model.PaisesDTO;
+import pe.edu.pucp.softpac.model.UsuarioPaisAccesoDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 
+import import pe.edu.pucp.softpac.daoImpl.exception.DAODetalleException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -58,14 +63,35 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException {
         usuario=null;
+        PaisesDTO pais=null;
+        UsuarioPaisAccesoDTO usuarioPaisAcceso=null;
         if (this.resultSet.next()) {
             usuario = new UsuariosDTO();
-            usuario.setUsuario_id(this.resultSet.getInt("USUARIO_ID"));
-            usuario.setCorreo_electronico(this.resultSet.getString("CORREO_ELECTRONICO"));
-            usuario.setActivo(this.resultSet.getString("ACTIVO").equals("S"));
-            usuario.setPassword_hash(this.resultSet.getString("PASSWORD_HASH"));
-            usuario.setSuperusuario(this.resultSet.getString("SUPERUSUARIO").equals("S"));
+            usuario.setUsuario_id(this.resultSet.getInt(1));
+            usuario.setCorreo_electronico(this.resultSet.getString(2));
+            usuario.setActivo(this.resultSet.getString(3).equals("S"));
+            usuario.setPassword_hash(this.resultSet.getString(4));
+            usuario.setSuperusuario(this.resultSet.getString(5).equals("S"));
+            pais = new PaisesDTO();
+            usuarioPaisAcceso = new UsuarioPaisAccesoDTO();
+            pais.setPais_id(this.resultSet.getInt(6));
+            pais.setNombre(this.resultSet.getString(7));
+            pais.setCodigo_iso(this.resultSet.getString(8));
+            pais.setCodigo_telefonico(this.resultSet.getString(9));
+            usuarioPaisAcceso = new UsuarioPaisAccesoDTO();
+            usuarioPaisAcceso.setAcceso(this.resultSet.getString(10).equals("S"));
+            usuarioPaisAcceso.setPais(pais);
+            usuarioPaisAcceso.setUsuario(usuario);
         }
+    }
+
+    @Override
+    protected String generarSQLParaObtenerPorId() {
+        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, p.PAIS_ID," +
+                " p.NOMBRE AS PAIS, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO" +
+                " FROM PA_USUARIOS u JOIN PA_USUARIO_PAIS_ACCESO upa ON upa.USUARIO_ID = u.USUARIO_ID" +
+                " JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID WHERE u.USUARIO_ID = ?" +
+                " AND p.PAIS_ID   = ?";
     }
 
     @Override
@@ -113,4 +139,22 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
         this.usuario = usuario;
         return super.eliminar();
     }
+
+    @Override
+    protected void ejecutarCascadaParaEliminacion() throws SQLException {
+        try {
+            UsuarioPaisAccesoDAO usuarioPaisAccesoDAO = new UsuarioPaisAccesoDAOImpl(this.getConexion());
+            UsuarioPaisAccesoDTO usu = new UsuarioPaisAccesoDTO();
+            usu.setUsuario(this.usuario);
+            usu.eliminar(usu);
+        }
+        catch (DAODetalleException e) {
+            throw e;
+        }
+    }
+
+    /*@Override
+    protected void ejecutarCascadaParaInsercion() {
+        super.ejecutarCascadaParaInsercion();
+    }*/
 }

@@ -38,9 +38,9 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
         this.statement.setString(2, this.cuentaAcreedor.getNumero_cuenta());
         this.statement.setString(3, this.cuentaAcreedor.getCci());
         this.statement.setString(4, this.cuentaAcreedor.getActiva() ? "S":"N");
-        this.statement.setObject(5, this.cuentaAcreedor.getAcreedor().getAcreedor_id());
-        this.statement.setObject(6, this.cuentaAcreedor.getEntidad_bancaria().getEntidad_bancaria_id());
-        this.statement.setObject(7, this.cuentaAcreedor.getMoneda().getMoneda_id());
+        this.statement.setInt(5, this.cuentaAcreedor.getAcreedor().getAcreedor_id());
+        this.statement.setInt(6, this.cuentaAcreedor.getEntidad_bancaria().getEntidad_bancaria_id());
+        this.statement.setInt(7, this.cuentaAcreedor.getMoneda().getMoneda_id());
     }
     
     @Override
