@@ -299,7 +299,7 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         try{
             DetallesPropuestaDAO daoDetalle =  new DetallesPropuestaDAOImpl(this.getConexion());
             for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
-                daoDetalle.modificar(detalle);
+                daoDetalle.eliminar(detalle);
             }
         }
         catch(DAODetalleException e){

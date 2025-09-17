@@ -5,6 +5,7 @@ pe\edu\pucp\softpac\daoImpl\DetallesPropuestaDAOImpl.class
 pe\edu\pucp\softpac\dao\AcreedoresDAO.class
 pe\edu\pucp\softpac\dao\CuentasPropiasDAO.class
 pe\edu\pucp\softpac\daoImpl\PropuestasPagoDAOImpl.class
+pe\edu\pucp\softpac\daoImpl\UsuarioPaisAccesoDAOImpl.class
 pe\edu\pucp\softpac\dao\PaisesDAO.class
 pe\edu\pucp\softpac\daoImpl\PaisesDAOImpl.class
 pe\edu\pucp\softpac\dao\PropuestasPagoDAO.class
@@ -12,6 +13,7 @@ pe\edu\pucp\softpac\dao\DetallesPropuestaDAO.class
 pe\edu\pucp\softpac\dao\FacturasDAO.class
 pe\edu\pucp\softpac\daoImpl\CuentasAcreedorDAOImpl.class
 pe\edu\pucp\softpac\daoImpl\CuentasPropiasDAOImpl.class
+pe\edu\pucp\softpac\dao\UsuarioPaisAccesoDAO.class
 pe\edu\pucp\softpac\daoImpl\exception\DAODetalleException.class
 pe\edu\pucp\softpac\daoImpl\FacturasDAOImpl.class
 pe\edu\pucp\softpac\dao\MonedasDAO.class

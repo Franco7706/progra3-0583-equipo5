@@ -1,9 +1,14 @@
 package pe.edu.pucp.softpac.daoImpl;
 
 import pe.edu.pucp.softpac.dao.UsuariosDAO;
+import pe.edu.pucp.softpac.dao.UsuarioPaisAccesoDAO;
+import pe.edu.pucp.softpac.daoImpl.util.Tipo_Operacion;
+import pe.edu.pucp.softpac.model.PaisesDTO;
+import pe.edu.pucp.softpac.model.UsuarioPaisAccesoDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 
+import pe.edu.pucp.softpac.daoImpl.exception.DAODetalleException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -16,6 +21,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
         super("PA_USUARIOS");
         this.usuario = null;
         this.retornarLlavePrimaria = false; // USUARIO_ID no es auto_increment
+        this.ejecutaOperacionesEnCascada = true;
     }
 
     @Override
@@ -58,14 +64,39 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException {
         usuario=null;
-        if (this.resultSet.next()) {
-            usuario = new UsuariosDTO();
-            usuario.setUsuario_id(this.resultSet.getInt("USUARIO_ID"));
-            usuario.setCorreo_electronico(this.resultSet.getString("CORREO_ELECTRONICO"));
-            usuario.setActivo(this.resultSet.getString("ACTIVO").equals("S"));
-            usuario.setPassword_hash(this.resultSet.getString("PASSWORD_HASH"));
-            usuario.setSuperusuario(this.resultSet.getString("SUPERUSUARIO").equals("S"));
+        PaisesDTO pais=null;
+        UsuarioPaisAccesoDTO usuarioPaisAcceso=null;
+        int i=0;
+        while (this.resultSet.next()) {
+            if (i==0){
+                usuario = new UsuariosDTO();
+                usuario.setUsuario_id(this.resultSet.getInt(1));
+                usuario.setCorreo_electronico(this.resultSet.getString(2));
+                usuario.setActivo(this.resultSet.getString(3).equals("S"));
+                usuario.setPassword_hash(this.resultSet.getString(4));
+                usuario.setSuperusuario(this.resultSet.getString(5).equals("S"));
+                i=1;
+            }
+            pais=new PaisesDTO();
+            pais.setPais_id(this.resultSet.getInt(6));
+            if(this.resultSet.wasNull()) break;
+            pais.setNombre(this.resultSet.getString(7));
+            pais.setCodigo_iso(this.resultSet.getString(8));
+            pais.setCodigo_telefonico(this.resultSet.getString(9));
+            usuarioPaisAcceso = new UsuarioPaisAccesoDTO();
+            usuarioPaisAcceso.setAcceso(this.resultSet.getString(10).equals("S"));
+            usuarioPaisAcceso.setPais(pais);
+            usuarioPaisAcceso.setUsuario(usuario);
+            this.usuario.addUsuario_pais(usuarioPaisAcceso);
         }
+    }
+
+    @Override
+    protected String generarSQLParaObtenerPorId() {
+        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, p.PAIS_ID," +
+                " p.NOMBRE AS PAIS, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO" +
+                " FROM PA_USUARIOS u LEFT JOIN PA_USUARIO_PAIS_ACCESO upa ON u.USUARIO_ID = upa.USUARIO_ID" +
+                " LEFT JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID WHERE u.USUARIO_ID = ?";
     }
 
     @Override
@@ -112,5 +143,43 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     public Integer eliminar(UsuariosDTO usuario) {
         this.usuario = usuario;
         return super.eliminar();
+    }
+
+    @Override
+    protected void ejecutarCascadaParaEliminacion() {
+        try {
+            UsuarioPaisAccesoDAO usuarioPaisAccesoDAO = new UsuarioPaisAccesoDAOImpl(this.getConexion());
+            for(UsuarioPaisAccesoDTO usu_pais_acceso : this.usuario.getUsuario_pais()){
+                usuarioPaisAccesoDAO.eliminar(usu_pais_acceso);
+            }
+        }
+        catch (DAODetalleException e) {
+            throw e;
+        }
+    }
+
+    @Override
+    protected void ejecutarCascadaParaInsercion() {
+        try {
+            UsuarioPaisAccesoDAO usuarioPaisAccesoDAO = new UsuarioPaisAccesoDAOImpl(this.getConexion());
+            for(UsuarioPaisAccesoDTO usu_pais_acceso : this.usuario.getUsuario_pais()){
+                usuarioPaisAccesoDAO.insertar(usu_pais_acceso);
+            }
+        }
+        catch (DAODetalleException e) {
+            throw e;
+        }
+    }
+    @Override
+    protected void ejecutarCascadaParaModificacion() {
+        try {
+            UsuarioPaisAccesoDAO usuarioPaisAccesoDAO = new UsuarioPaisAccesoDAOImpl(this.getConexion());
+            for(UsuarioPaisAccesoDTO usu_pais_acceso : this.usuario.getUsuario_pais()){
+                usuarioPaisAccesoDAO.modificar(usu_pais_acceso);
+            }
+        }
+        catch (DAODetalleException e) {
+            throw e;
+        }
     }
 }

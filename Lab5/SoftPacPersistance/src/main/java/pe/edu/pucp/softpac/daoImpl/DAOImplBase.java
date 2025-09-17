@@ -160,7 +160,12 @@ public abstract class DAOImplBase {
                 break;
         }
     }
-
+    protected void ejecutarEliminacionEnCascada(Tipo_Operacion tipo_operacion) throws SQLException {
+        if(this.ejecutaOperacionesEnCascada==false) return;
+        if(tipo_operacion == Tipo_Operacion.ELIMINAR){
+            this.ejecutarCascadaParaEliminacion();
+        }
+    }
     protected void ejecutarOperacionesEnCascada(Tipo_Operacion tipo_operacion) throws SQLException {
         if(this.ejecutaOperacionesEnCascada==false) return;
         try {
@@ -170,9 +175,6 @@ public abstract class DAOImplBase {
                     break;
                 case Tipo_Operacion.MODIFICAR:
                     this.ejecutarCascadaParaModificacion();
-                    break;
-                case Tipo_Operacion.ELIMINAR:
-                    this.ejecutarCascadaParaEliminacion();
                     break;
             }
         }
@@ -217,6 +219,7 @@ public abstract class DAOImplBase {
             String sql = this.generarSQLparaDML(tipo_operacion);
             this.colocarSQLEnStatement(sql);
             this.incluirValorDeParametrosParaDML(tipo_operacion);
+            this.ejecutarEliminacionEnCascada(tipo_operacion);
             resultado = this.ejecutarDMLenBD();
             if (this.retornarLlavePrimaria && tipo_operacion == Tipo_Operacion.INSERTAR) {
                 resultado = this.retornarUltimoAutoGenerado();
