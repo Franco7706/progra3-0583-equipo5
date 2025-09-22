@@ -38,7 +38,7 @@ delete from pa_acreedores;
 delete from pa_cuentas_acreedor;
 
 delete from pa_propuestas_de_pago;
-
+select * from pa_usuarios;
 select * from pa_detalles_factura;
 select * from pa_cuentas_propias;
 delete from pa_cuentas_propias;
@@ -51,4 +51,9 @@ delete from pa_detalles_factura;
 delete from pa_facturas;
 delete from pa_acreedores;
 delete from pa_detalles_propuesta;
+insert into pa_usuarios values (999, "xd", "S", "xd", "N");
+SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, p.PAIS_ID,
+                 p.NOMBRE AS PAIS, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO
+                 FROM PA_USUARIOS u LEFT JOIN PA_USUARIO_PAIS_ACCESO upa ON u.USUARIO_ID = upa.USUARIO_ID
+				 LEFT JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID;
                 
