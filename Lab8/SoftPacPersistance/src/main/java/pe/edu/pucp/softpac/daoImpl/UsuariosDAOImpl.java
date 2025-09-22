@@ -23,6 +23,8 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
         this.usuario = null;
         this.retornarLlavePrimaria = false; // USUARIO_ID no es auto_increment
         this.ejecutaOperacionesEnCascada = true;
+        this.seEliminaLogicamente = true;
+        this.listarEliminados = true;
         super.incluirColumnasDeEliminacionLogica();
     }
 

@@ -24,6 +24,7 @@ public abstract class DAOImplBase {
     protected Boolean esDetalle;
     protected Boolean listarEliminados;
     protected ArrayList<Columna> columnasEliminacion;
+    protected Boolean seEliminaLogicamente;
 
 
     public DAOImplBase(String nombre_tabla) {
@@ -31,7 +32,8 @@ public abstract class DAOImplBase {
         this.retornarLlavePrimaria = false;
         this.ejecutaOperacionesEnCascada = false;
         this.esDetalle = false;
-        this.listarEliminados = true;
+        this.listarEliminados = false;
+        this.seEliminaLogicamente = false;
         this.incluirListaDeColumnas();
     }
 
@@ -497,6 +499,17 @@ public abstract class DAOImplBase {
         sql = sql.concat(sql_columnas);
         sql = sql.concat(" FROM ");
         sql = sql.concat(this.nombre_tabla);
+        String sql_predicado = "";
+        if(this.seEliminaLogicamente && !this.listarEliminados) {
+            for(Columna columna : this.columnasEliminacion) {
+                if(!sql_predicado.isBlank()) {
+                    sql_predicado = sql_predicado.concat(" AND ");
+                }
+                sql_predicado = sql_predicado.concat(columna.getNombre());
+            }
+            sql = sql.concat(" WHERE ");
+            sql = sql.concat(sql_predicado);
+        }
         return sql;
     }
 
