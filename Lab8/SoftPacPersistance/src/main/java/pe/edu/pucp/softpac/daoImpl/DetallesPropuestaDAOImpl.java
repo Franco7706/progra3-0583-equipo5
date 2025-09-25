@@ -6,6 +6,7 @@ import pe.edu.pucp.softpac.model.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPropuestaDAO {
 
@@ -15,6 +16,8 @@ public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPro
         super("PA_DETALLES_PROPUESTA");
         this.retornarLlavePrimaria=true;
         this.esDetalle=true;
+        this.seEliminaLogicamente=true;
+        this.incluirColumnasDeEliminacionLogica();
     }
 
     public DetallesPropuestaDAOImpl(Connection conexion) {
@@ -22,6 +25,8 @@ public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPro
         this.retornarLlavePrimaria=true;
         this.esDetalle=true;
         this.conexion=conexion;
+        this.seEliminaLogicamente=true;
+        this.incluirColumnasDeEliminacionLogica();
     }
 
     @Override
@@ -261,6 +266,13 @@ public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPro
     }
 
     @Override
+    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException{
+        this.statement.setTimestamp(1, Timestamp.valueOf(this.detallePropuesta.getFecha_eliminacion()));
+        this.statement.setInt(2,this.detallePropuesta.getUsuario_eliminacion().getUsuario_id());
+        this.statement.setInt(3,this.detallePropuesta.getDetalle_propuesta_id());
+    }
+
+    @Override
     public Integer insertar(DetallesPropuestaDTO detallePropuesta) {
         this.detallePropuesta=detallePropuesta;
         return super.insertar();
@@ -284,5 +296,11 @@ public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPro
     public Integer eliminar(DetallesPropuestaDTO detallePropuesta) {
         this.detallePropuesta=detallePropuesta;
         return super.eliminar();
+    }
+
+    @Override
+    public Integer eliminarLogico(DetallesPropuestaDTO detallePropuesta) {
+        this.detallePropuesta=detallePropuesta;
+        return super.eliminarLogico();
     }
 }

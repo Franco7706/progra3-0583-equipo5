@@ -21,7 +21,7 @@ public class UsuariosDAOTest {
     static void init() {
         // Obtenemos la implementación específica del DAO desde la clase hija.
         dao = new UsuariosDAOImpl();
-        testUsuarioEliminacion = new UsuariosDTO(9999,"correo_eliminacion",true,"32134",true);
+        testUsuarioEliminacion = new UsuariosDTO(9999,"correo_eliminacion","usueliminacion",null,null,true,"32134",true);
         dao.insertar(testUsuarioEliminacion);
     }
     @AfterAll
@@ -33,7 +33,7 @@ public class UsuariosDAOTest {
     void setUp() {
 
         // Creamos un usuario de prueba para las operaciones.
-        testUsuario = new UsuariosDTO(999, "test.contract@pucp.edu.pe", true, "hashedpassword", false);
+        testUsuario = new UsuariosDTO(999, "test.contract@pucp.edu.pe","usuarioprueba",null,null, true, "hashedpassword", false);
         // Limpieza previa para asegurar un estado inicial limpio.
         // Se envuelve en try-catch por si el usuario no existe.
         try {

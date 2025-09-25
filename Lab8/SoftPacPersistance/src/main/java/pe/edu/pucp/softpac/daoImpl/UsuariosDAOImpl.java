@@ -32,6 +32,9 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     protected void configurarListaDeColumnas() {
         this.listaColumnas.add(new Columna("USUARIO_ID", true, false)); // PK, no auto_increment
         this.listaColumnas.add(new Columna("CORREO_ELECTRONICO", false, false));
+        this.listaColumnas.add(new Columna("NOMBRE_DE_USUARIO", false, false));
+        this.listaColumnas.add(new Columna("NOMBRE", false, false));
+        this.listaColumnas.add(new Columna("APELLIDOS", false, false));
         this.listaColumnas.add(new Columna("ACTIVO", false, false));
         this.listaColumnas.add(new Columna("PASSWORD_HASH", false, false));
         this.listaColumnas.add(new Columna("SUPERUSUARIO", false, false));
@@ -41,18 +44,24 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     protected void incluirValorDeParametrosParaInsercion() throws SQLException {
         this.statement.setInt(1, this.usuario.getUsuario_id());
         this.statement.setString(2, this.usuario.getCorreo_electronico());
-        this.statement.setString(3, this.usuario.getActivo() ? "S" : "N");
-        this.statement.setString(4, this.usuario.getPassword_hash());
-        this.statement.setString(5, this.usuario.getSuperusuario() ? "S" : "N");
+        this.statement.setString(3, this.usuario.getNombre_de_usuario());
+        this.statement.setString(4, this.usuario.getNombre());
+        this.statement.setString(5, this.usuario.getApellidos());
+        this.statement.setString(6, this.usuario.getActivo() ? "S" : "N");
+        this.statement.setString(7, this.usuario.getPassword_hash());
+        this.statement.setString(8, this.usuario.getSuperusuario() ? "S" : "N");
     }
 
     @Override
     protected void incluirValorDeParametrosParaModificacion() throws SQLException {
         this.statement.setString(1, this.usuario.getCorreo_electronico());
-        this.statement.setString(2, this.usuario.getActivo() ? "S" : "N");
-        this.statement.setString(3, this.usuario.getPassword_hash());
-        this.statement.setString(4, this.usuario.getSuperusuario() ? "S" : "N");
-        this.statement.setInt(5, this.usuario.getUsuario_id());
+        this.statement.setString(2, this.usuario.getNombre_de_usuario());
+        this.statement.setString(3, this.usuario.getNombre());
+        this.statement.setString(4, this.usuario.getApellidos());
+        this.statement.setString(5, this.usuario.getActivo() ? "S" : "N");
+        this.statement.setString(6, this.usuario.getPassword_hash());
+        this.statement.setString(7, this.usuario.getSuperusuario() ? "S" : "N");
+        this.statement.setInt(8, this.usuario.getUsuario_id());
     }
 
     @Override
@@ -77,25 +86,29 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
                 usuario = new UsuariosDTO();
                 usuario.setUsuario_id(this.resultSet.getInt(1));
                 usuario.setCorreo_electronico(this.resultSet.getString(2));
-                usuario.setActivo(this.resultSet.getString(3).equals("S"));
-                usuario.setPassword_hash(this.resultSet.getString(4));
-                usuario.setSuperusuario(this.resultSet.getString(5).equals("S"));
-                if(this.resultSet.getTimestamp(6)!=null){
-                    usuario.setFecha_eliminacion(this.resultSet.getTimestamp(6).toLocalDateTime());
+                usuario.setNombre_de_usuario(this.resultSet.getString(3));
+                usuario.setNombre(this.resultSet.getString(4));
+                usuario.setApellidos(this.resultSet.getString(5));
+                usuario.setActivo(this.resultSet.getString(6).equals("S"));
+                usuario.setPassword_hash(this.resultSet.getString(7));
+                usuario.setSuperusuario(this.resultSet.getString(8).equals("S"));
+                this.resultSet.getTimestamp(9);
+                if(!this.resultSet.wasNull()){
+                    usuario.setFecha_eliminacion(this.resultSet.getTimestamp(9).toLocalDateTime());
                     usuarioEliminacion=new UsuariosDTO();
                     usuario.setUsuario_eliminacion(usuarioEliminacion);
-                    usuarioEliminacion.setUsuario_id(this.resultSet.getInt(7));
+                    usuarioEliminacion.setUsuario_id(this.resultSet.getInt(10));
                 }
                 i=1;
             }
             pais=new PaisesDTO();
-            pais.setPais_id(this.resultSet.getInt(8));
+            pais.setPais_id(this.resultSet.getInt(11));
             if(this.resultSet.wasNull()) break;
-            pais.setNombre(this.resultSet.getString(9));
-            pais.setCodigo_iso(this.resultSet.getString(10));
-            pais.setCodigo_telefonico(this.resultSet.getString(11));
+            pais.setNombre(this.resultSet.getString(12));
+            pais.setCodigo_iso(this.resultSet.getString(13));
+            pais.setCodigo_telefonico(this.resultSet.getString(14));
             usuarioPaisAcceso = new UsuarioPaisAccesoDTO();
-            usuarioPaisAcceso.setAcceso(this.resultSet.getString(12).equals("S"));
+            usuarioPaisAcceso.setAcceso(this.resultSet.getString(15).equals("S"));
             usuarioPaisAcceso.setPais(pais);
             usuarioPaisAcceso.setUsuario(usuario);
             this.usuario.addUsuario_pais(usuarioPaisAcceso);
@@ -104,7 +117,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
     @Override
     protected String generarSQLParaObtenerPorId() {
-        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION," +
+        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION," +
                 " p.PAIS_ID, p.NOMBRE, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO" +
                 " FROM PA_USUARIOS u LEFT JOIN PA_USUARIO_PAIS_ACCESO upa ON u.USUARIO_ID = upa.USUARIO_ID" +
                 " LEFT JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID WHERE u.USUARIO_ID = ?";
@@ -117,6 +130,9 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
             UsuariosDTO u = new UsuariosDTO();
             u.setUsuario_id(this.resultSet.getInt("USUARIO_ID"));
             u.setCorreo_electronico(this.resultSet.getString("CORREO_ELECTRONICO"));
+            u.setNombre_de_usuario(this.resultSet.getString("NOMBRE_DE_USUARIO"));
+            u.setNombre(this.resultSet.getString("NOMBRE"));
+            u.setApellidos(this.resultSet.getString("APELLIDOS"));
             u.setActivo(this.resultSet.getString("ACTIVO").equals("S"));
             u.setPassword_hash(this.resultSet.getString("PASSWORD_HASH"));
             u.setSuperusuario(this.resultSet.getString("SUPERUSUARIO").equals("S"));
@@ -126,7 +142,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
     @Override
     protected String generarSQLCustom1() {
-        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION," +
+        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION," +
                 " p.PAIS_ID, p.NOMBRE, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO" +
                 " FROM PA_USUARIOS u LEFT JOIN PA_USUARIO_PAIS_ACCESO upa ON u.USUARIO_ID = upa.USUARIO_ID" +
                 " LEFT JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID  WHERE u.CORREO_ELECTRONICO = ?";

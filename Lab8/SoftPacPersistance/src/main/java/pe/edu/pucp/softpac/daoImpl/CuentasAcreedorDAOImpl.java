@@ -1,6 +1,7 @@
 package pe.edu.pucp.softpac.daoImpl;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.CuentasAcreedorDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
@@ -18,6 +19,8 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
         super("PA_CUENTAS_ACREEDOR");
         this.cuentaAcreedor=null;
         this.retornarLlavePrimaria=true;
+        this.seEliminaLogicamente=true;
+        super.incluirColumnasDeEliminacionLogica();
     }
 
     @Override
@@ -146,7 +149,14 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
             cuentasAcreedores.add(cuenta);
         }
     }
-    
+
+    @Override
+    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
+        this.statement.setTimestamp(1, Timestamp.valueOf(this.cuentaAcreedor.getFecha_eliminacion()));
+        this.statement.setInt(2,this.cuentaAcreedor.getUsuario_eliminacion().getUsuario_id());
+        this.statement.setInt(3,this.cuentaAcreedor.getCuenta_bancaria_id());
+    }
+
     @Override
     public Integer insertar(CuentasAcreedorDTO cuentaAcreedor) {
         this.cuentaAcreedor = cuentaAcreedor;
@@ -178,5 +188,11 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
     public Integer eliminar(CuentasAcreedorDTO cuentaAcreedor) {
         this.cuentaAcreedor = cuentaAcreedor;
         return super.eliminar();
+    }
+
+    @Override
+    public Integer eliminarLogico(CuentasAcreedorDTO cuentaAcreedor) {
+        this.cuentaAcreedor = cuentaAcreedor;
+        return super.eliminarLogico();
     }
 }

@@ -2,6 +2,8 @@ package pe.edu.pucp.softpac.dao;
 
 import org.junit.jupiter.api.*;
 import pe.edu.pucp.softpac.daoImpl.*;
+import pe.edu.pucp.softpac.dao.UsuariosDAO;
+import pe.edu.pucp.softpac.daoImpl.UsuariosDAOImpl;
 import pe.edu.pucp.softpac.model.*;
 
 import java.util.ArrayList;
@@ -28,6 +30,9 @@ public class CuentasAcreedorDAOTest {
 
     protected static AcreedoresDAO acreedoresDAO;
     protected static AcreedoresDTO testAcreedor;
+
+    protected static UsuariosDAO usuariosDAO;
+    protected static UsuariosDTO testUsuarioEliminacion;
 
     @BeforeAll
     static void init() {
@@ -61,6 +66,17 @@ public class CuentasAcreedorDAOTest {
         testAcreedor.setActivo(true);
         testAcreedor.setPais(testPais);
         testAcreedor.setAcreedor_id(acreedoresDAO.insertar(testAcreedor));
+
+        // Usuario genérico para eliminación lógica
+        usuariosDAO = new UsuariosDAOImpl();
+        testUsuarioEliminacion = new UsuariosDTO();
+        testUsuarioEliminacion.setUsuario_id(999);
+        testUsuarioEliminacion.setCorreo_electronico("eliminacion@softpac.test");
+        testUsuarioEliminacion.setNombre_de_usuario("Usuario de eliminación");
+        testUsuarioEliminacion.setActivo(true);
+        testUsuarioEliminacion.setSuperusuario(true);
+        testUsuarioEliminacion.setPassword_hash("elim123");
+        usuariosDAO.insertar(testUsuarioEliminacion);
     }
 
     @AfterAll
@@ -69,6 +85,7 @@ public class CuentasAcreedorDAOTest {
         try { entidadesDAO.eliminar(testEntidad); } catch (Exception ignored) {}
         try { monedasDAO.eliminar(testMoneda); } catch (Exception ignored) {}
         try { paisesDAO.eliminar(testPais); } catch (Exception ignored) {}
+        try { usuariosDAO.eliminar(testUsuarioEliminacion); } catch (Exception ignored) {}
     }
 
     @BeforeEach
@@ -159,5 +176,25 @@ public class CuentasAcreedorDAOTest {
 
         assertNull(dao.obtenerPorId(generatedId));
         generatedId = 0; // evita doble eliminación
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("Debe eliminar lógicamente una cuenta de acreedor")
+    void testEliminarLogico() {
+        generatedId = dao.insertar(testCuenta);
+        testCuenta.setCuenta_bancaria_id(generatedId);
+        testCuenta.setFecha_eliminacion(java.time.LocalDateTime.now());
+        testCuenta.setUsuario_eliminacion(testUsuarioEliminacion);
+
+        Integer res = dao.eliminarLogico(testCuenta);
+        assertTrue(res > 0);
+
+        CuentasAcreedorDTO cuenta = dao.obtenerPorId(generatedId);
+        assertNotNull(cuenta);
+
+        // Debe excluirse de listarTodos
+        ArrayList<CuentasAcreedorDTO> lista = dao.listarTodos();
+        assertTrue(lista.stream().noneMatch(c -> Objects.equals(c.getCuenta_bancaria_id(), generatedId)));
     }
 }

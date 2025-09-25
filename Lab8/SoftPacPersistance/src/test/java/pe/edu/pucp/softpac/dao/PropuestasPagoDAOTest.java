@@ -16,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PropuestasPagoDAOTest {
 
+    protected static UsuariosDTO testUsuarioEliminacion;
+
     protected static PropuestasPagoDAO dao;
     protected static PropuestasPagoDTO testPropuesta;
     private static Integer generatedId;
@@ -45,13 +47,31 @@ public class PropuestasPagoDAOTest {
 
         usuariosDAO = new UsuariosDAOImpl();
         testUsuario = new UsuariosDTO();
-        testUsuario.setUsuario_id(1);
+        testUsuario.setUsuario_id(1001);
         testUsuario.setCorreo_electronico("correo@prueba.com");
+        testUsuario.setNombre_de_usuario("usuario_prueba");
         testUsuario.setActivo(true);
         testUsuario.setSuperusuario(false);
         testUsuario.setPassword_hash("123456");
-        Integer idUsuario = usuariosDAO.insertar(testUsuario);
-        testUsuario.setUsuario_id(idUsuario);
+        usuariosDAO.insertar(testUsuario);
+
+        // Usuario genérico para eliminación lógica
+        testUsuarioEliminacion = new UsuariosDTO();
+        testUsuarioEliminacion.setUsuario_id(1901);
+        testUsuarioEliminacion.setCorreo_electronico("eliminacion@softpac.test");
+        testUsuarioEliminacion.setNombre_de_usuario("Usuario de eliminación");
+        testUsuarioEliminacion.setActivo(true);
+        testUsuarioEliminacion.setSuperusuario(true);
+        testUsuarioEliminacion.setPassword_hash("elim123");
+        usuariosDAO.insertar(testUsuarioEliminacion);
+    }
+
+    @AfterAll
+    static void deleteDependencies(){
+        try { entidadesBancariasDAO.eliminar(testEntidad); } catch (Exception ignored) {}
+        try { paisesDAO.eliminar(testPais); } catch (Exception ignored) {}
+        try { usuariosDAO.eliminar(testUsuario); } catch (Exception ignored) {}
+        try { usuariosDAO.eliminar(testUsuarioEliminacion); } catch (Exception ignored) {}
     }
 
     @BeforeEach
@@ -80,13 +100,6 @@ public class PropuestasPagoDAOTest {
             }
             generatedId = 0;
         }
-    }
-
-    @AfterAll
-    static void deleteDependencies(){
-        entidadesBancariasDAO.eliminar(testEntidad);
-        paisesDAO.eliminar(testPais);
-        usuariosDAO.eliminar(testUsuario);
     }
 
     @Test
@@ -159,5 +172,25 @@ public class PropuestasPagoDAOTest {
         assertNull(propuestaEliminada, "Después de eliminar, obtenerPorId debe devolver null");
 
         generatedId = 0; // Evita que tearDown intente borrar otra vez
+    }
+    @Test
+    @Order(6)
+    @DisplayName("Contrato: debe realizar eliminación lógica de una propuesta")
+    void testEliminarLogico() {
+        generatedId = dao.insertar(testPropuesta);
+        testPropuesta.setPropuesta_id(generatedId);
+        testPropuesta.setFecha_eliminacion(LocalDateTime.now());
+        testPropuesta.setUsuario_eliminacion(testUsuarioEliminacion);
+
+        int result = dao.eliminarLogico(testPropuesta);
+        assertTrue(result > 0, "Eliminar lógico debe afectar al menos una fila");
+
+        PropuestasPagoDTO propuesta = dao.obtenerPorId(generatedId);
+        assertNotNull(propuesta, "La propuesta debe existir tras eliminación lógica");
+
+        // Debe excluirse de listarTodos
+        ArrayList<PropuestasPagoDTO> lista = dao.listarTodos();
+        assertTrue(lista.stream().noneMatch(p -> Objects.equals(p.getPropuesta_id(), generatedId)));
+
     }
 }

@@ -7,6 +7,7 @@ import pe.edu.pucp.softpac.model.FacturasDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class DetallesFacturaDAOImpl extends DAOImplBase implements DetallesFacturaDAO  {
 
@@ -16,6 +17,8 @@ public class DetallesFacturaDAOImpl extends DAOImplBase implements DetallesFactu
         super("PA_DETALLES_FACTURA");
         this.retornarLlavePrimaria=true;
         this.esDetalle=true;
+        this.seEliminaLogicamente=true;
+        this.incluirColumnasDeEliminacionLogica();
     }
 
     public DetallesFacturaDAOImpl(Connection conexion) {
@@ -23,6 +26,8 @@ public class DetallesFacturaDAOImpl extends DAOImplBase implements DetallesFactu
         this.retornarLlavePrimaria=true;
         this.esDetalle=true;
         this.conexion=conexion;
+        this.seEliminaLogicamente=true;
+        this.incluirColumnasDeEliminacionLogica();
     }
 
     @Override
@@ -70,6 +75,13 @@ public class DetallesFacturaDAOImpl extends DAOImplBase implements DetallesFactu
     }
 
     @Override
+    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
+        this.statement.setTimestamp(1, Timestamp.valueOf(this.detalleFactura.getFecha_eliminacion()));
+        this.statement.setInt(2,this.detalleFactura.getUsuario_eliminacion().getUsuario_id());
+        this.statement.setInt(3,this.detalleFactura.getDetalle_factura_id());
+    }
+
+    @Override
     public Integer insertar(DetallesFacturaDTO detalleFactura) {
         this.detalleFactura=detalleFactura;
         return super.insertar();
@@ -93,5 +105,11 @@ public class DetallesFacturaDAOImpl extends DAOImplBase implements DetallesFactu
     public Integer eliminar(DetallesFacturaDTO detalleFactura) {
         this.detalleFactura=detalleFactura;
         return super.eliminar();
+    }
+
+    @Override
+    public Integer eliminarLogico(DetallesFacturaDTO detalleFactura) {
+        this.detalleFactura=detalleFactura;
+        return super.eliminarLogico();
     }
 }

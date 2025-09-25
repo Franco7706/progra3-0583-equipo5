@@ -1,6 +1,7 @@
 package pe.edu.pucp.softpac.daoImpl;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.CuentasPropiasDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
@@ -16,6 +17,8 @@ public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropias
     public CuentasPropiasDAOImpl() {
         super("PA_CUENTAS_PROPIAS");
         this.retornarLlavePrimaria = true;
+        this.seEliminaLogicamente = true;
+        super.incluirColumnasDeEliminacionLogica();
     }
 
     @Override
@@ -137,7 +140,14 @@ public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropias
             cuentasPropias.add(cuenta);
         }
     }
-    
+
+    @Override
+    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
+        this.statement.setTimestamp(1, Timestamp.valueOf(this.cuentaPropia.getFecha_eliminacion()));
+        this.statement.setInt(2,this.cuentaPropia.getUsuario_eliminacion().getUsuario_id());
+        this.statement.setInt(3,this.cuentaPropia.getCuenta_bancaria_id());
+    }
+
     @Override
     public Integer insertar(CuentasPropiasDTO cuentaPropia) {
         this.cuentaPropia = cuentaPropia;
@@ -167,5 +177,11 @@ public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropias
     public Integer eliminar(CuentasPropiasDTO cuentaPropia) {
         this.cuentaPropia = cuentaPropia;
         return super.eliminar();
+    }
+
+    @Override
+    public Integer eliminarLogico(CuentasPropiasDTO cuentaPropia) {
+        this.cuentaPropia = cuentaPropia;
+        return super.eliminarLogico();
     }
 }

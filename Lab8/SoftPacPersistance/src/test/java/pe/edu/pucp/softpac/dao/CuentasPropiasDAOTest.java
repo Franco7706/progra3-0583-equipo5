@@ -2,9 +2,12 @@ package pe.edu.pucp.softpac.dao;
 
 import org.junit.jupiter.api.*;
 import pe.edu.pucp.softpac.daoImpl.*;
+import pe.edu.pucp.softpac.dao.UsuariosDAO;
+import pe.edu.pucp.softpac.daoImpl.UsuariosDAOImpl;
 import pe.edu.pucp.softpac.model.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static pe.edu.pucp.softpac.dao.CuentasAcreedorDAOTest.entidadesDAO;
@@ -31,6 +34,9 @@ public class CuentasPropiasDAOTest {
     protected static EntidadesBancariasDAO entidadesDAO;
     protected static EntidadesBancariasDTO testEntidad;
 
+    protected static UsuariosDAO usuariosDAO;
+    protected static UsuariosDTO testUsuarioEliminacion;
+
     @BeforeAll
     static void init() {
         // País
@@ -51,6 +57,17 @@ public class CuentasPropiasDAOTest {
         testEntidad.setCodigo_swift("SWCA");
         testEntidad.setPais(testPais);
         testEntidad.setEntidad_bancaria_id(entidadesDAO.insertar(testEntidad));
+
+        // Usuario genérico para eliminación lógica
+        usuariosDAO = new UsuariosDAOImpl();
+        testUsuarioEliminacion = new UsuariosDTO();
+        testUsuarioEliminacion.setUsuario_id(1003);
+        testUsuarioEliminacion.setCorreo_electronico("eliminacion@softpac.test");
+        testUsuarioEliminacion.setNombre_de_usuario("Usuario de eliminación");
+        testUsuarioEliminacion.setActivo(true);
+        testUsuarioEliminacion.setSuperusuario(true);
+        testUsuarioEliminacion.setPassword_hash("elim123");
+        usuariosDAO.insertar(testUsuarioEliminacion);
     }
 
     @BeforeEach
@@ -84,18 +101,10 @@ public class CuentasPropiasDAOTest {
     @AfterAll
     static void cleanup() {
         // Intentar borrar dependencias (si no hay referencias). Si hay FK, se ignora.
-        try {
-            entidadesDAO.eliminar(testEntidad);
-        } catch (Exception ignored) {
-        }
-        try {
-            monedasDAO.eliminar(testMoneda);
-        } catch (Exception ignored) {
-        }
-        try {
-            paisesDAO.eliminar(testPais);
-        } catch (Exception ignored) {
-        }
+        try { entidadesDAO.eliminar(testEntidad); } catch (Exception ignored) {}
+        try { monedasDAO.eliminar(testMoneda); } catch (Exception ignored) {}
+        try { paisesDAO.eliminar(testPais); } catch (Exception ignored) {}
+        try { usuariosDAO.eliminar(testUsuarioEliminacion); } catch (Exception ignored) {}
     }
 
     @Test
@@ -151,6 +160,26 @@ public class CuentasPropiasDAOTest {
                 lista.stream().anyMatch(c -> c.getCuenta_bancaria_id() != null && c.getCuenta_bancaria_id().equals(generatedId)),
                 "listarTodos no contiene la cuenta insertada"
         );
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("Debe eliminar lógicamente una cuenta propia")
+    void testEliminarLogico() {
+        generatedId = dao.insertar(testCuenta);
+        testCuenta.setCuenta_bancaria_id(generatedId);
+        testCuenta.setFecha_eliminacion(java.time.LocalDateTime.now());
+        testCuenta.setUsuario_eliminacion(testUsuarioEliminacion);
+
+        Integer res = dao.eliminarLogico(testCuenta);
+        assertTrue(res > 0);
+
+        CuentasPropiasDTO cuenta = dao.obtenerPorId(generatedId);
+        assertNotNull(cuenta);
+        // Debe excluirse de listarTodos
+        ArrayList<CuentasPropiasDTO> lista = dao.listarTodos();
+        assertTrue(lista.stream().noneMatch(c -> Objects.equals(c.getCuenta_bancaria_id(), generatedId)));
+
     }
 
 }

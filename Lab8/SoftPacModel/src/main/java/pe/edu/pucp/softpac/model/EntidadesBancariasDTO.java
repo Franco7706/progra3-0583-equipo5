@@ -1,6 +1,6 @@
 package pe.edu.pucp.softpac.model;
 
-public class EntidadesBancariasDTO extends EliminableDTOBase {
+public class EntidadesBancariasDTO {
     private Integer entidad_bancaria_id;
     private String nombre;
     private String formato_aceptado;
@@ -8,7 +8,6 @@ public class EntidadesBancariasDTO extends EliminableDTOBase {
     private PaisesDTO pais;
 
     public EntidadesBancariasDTO() {
-        super();
         entidad_bancaria_id=null;
         nombre=null;
         pais=null;
@@ -23,7 +22,6 @@ public class EntidadesBancariasDTO extends EliminableDTOBase {
     }
     
     public EntidadesBancariasDTO(EntidadesBancariasDTO entidad_bancaria){
-        super(entidad_bancaria);
         this.entidad_bancaria_id = entidad_bancaria.getEntidad_bancaria_id();
         this.nombre = entidad_bancaria.getNombre();
         this.pais = new PaisesDTO(entidad_bancaria.getPais());

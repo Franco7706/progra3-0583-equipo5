@@ -6,6 +6,8 @@ import pe.edu.pucp.softpac.daoImpl.MonedasDAOImpl;
 import pe.edu.pucp.softpac.daoImpl.PaisesDAOImpl;
 import pe.edu.pucp.softpac.daoImpl.AcreedoresDAOImpl;
 import pe.edu.pucp.softpac.daoImpl.FacturasDAOImpl;
+import pe.edu.pucp.softpac.dao.UsuariosDAO;
+import pe.edu.pucp.softpac.daoImpl.UsuariosDAOImpl;
 import pe.edu.pucp.softpac.model.*;
 
 import java.time.LocalDateTime;
@@ -27,6 +29,9 @@ public class FacturasDAOTest {
     protected static AcreedoresDAO acreedoresDAO;
     protected static PaisesDTO testPais;
     protected static PaisesDAO paisesDAO;
+
+    protected static UsuariosDAO usuariosDAO;
+    protected static UsuariosDTO testUsuarioEliminacion;
 
     @BeforeAll
     public static void init() {
@@ -60,7 +65,47 @@ public class FacturasDAOTest {
         testAcreedor.setPais(testPais);
         testAcreedor.setAcreedor_id(acreedoresDAO.insertar(testAcreedor));
 
+        // Usuario genérico para eliminación lógica
+        usuariosDAO = new UsuariosDAOImpl();
+        testUsuarioEliminacion = new UsuariosDTO();
+        testUsuarioEliminacion.setUsuario_id(1004);
+        testUsuarioEliminacion.setCorreo_electronico("eliminacion@softpac.test");
+        testUsuarioEliminacion.setNombre_de_usuario("Usuario de eliminación");
+        testUsuarioEliminacion.setActivo(true);
+        testUsuarioEliminacion.setSuperusuario(true);
+        testUsuarioEliminacion.setPassword_hash("elim123");
+        usuariosDAO.insertar(testUsuarioEliminacion);
+
         generateId = 0;
+    }
+
+    // ====== Limpieza de dependencias (último test) ======
+    @AfterAll
+    static void deleteDependencies() {
+        try {
+            if (testAcreedor != null && testAcreedor.getAcreedor_id() != null) {
+                acreedoresDAO.eliminar(testAcreedor);
+                testAcreedor = null;
+            }
+        } catch (Exception ignored) {
+        }
+
+        try {
+            if (testMoneda != null && testMoneda.getMoneda_id() != null) {
+                monedasDAO.eliminar(testMoneda);
+                testMoneda = null;
+            }
+        } catch (Exception ignored) {
+        }
+
+        try {
+            if (testPais != null && testPais.getPais_id() != null) {
+                paisesDAO.eliminar(testPais);
+                testPais = null;
+            }
+        } catch (Exception ignored) {
+        }
+        try { if (testUsuarioEliminacion != null) usuariosDAO.eliminar(testUsuarioEliminacion); } catch (Exception ignored) {}
     }
 
     // ===== Objeto base por test =====
@@ -181,31 +226,26 @@ public class FacturasDAOTest {
         generateId = 0;
     }
 
-    // ====== Limpieza de dependencias (último test) ======
-    @AfterAll
-    static void deleteDependencies() {
-        try {
-            if (testAcreedor != null && testAcreedor.getAcreedor_id() != null) {
-                acreedoresDAO.eliminar(testAcreedor);
-                testAcreedor = null;
-            }
-        } catch (Exception ignored) {
-        }
+    @Test
+    @Order(5)
+    @DisplayName("Contrato: debe eliminar lógicamente una factura")
+    void testEliminarLogico() {
+        generateId = dao.insertar(testFactura);
+        assertTrue(generateId > 0);
 
-        try {
-            if (testMoneda != null && testMoneda.getMoneda_id() != null) {
-                monedasDAO.eliminar(testMoneda);
-                testMoneda = null;
-            }
-        } catch (Exception ignored) {
-        }
+        testFactura.setFactura_id(generateId);
+        testFactura.setFecha_eliminacion(LocalDateTime.now());
+        testFactura.setUsuario_eliminacion(testUsuarioEliminacion);
 
-        try {
-            if (testPais != null && testPais.getPais_id() != null) {
-                paisesDAO.eliminar(testPais);
-                testPais = null;
-            }
-        } catch (Exception ignored) {
-        }
+        Integer res = dao.eliminarLogico(testFactura);
+        assertTrue(res > 0);
+
+        FacturasDTO fz = dao.obtenerPorId(generateId);
+        assertNotNull(fz);
+        // Debe excluirse de listarTodos
+        ArrayList<FacturasDTO> lista = dao.listarTodos();
+        assertTrue(lista.stream().noneMatch(f -> Objects.equals(f.getFactura_id(), generateId)));
+
     }
+
 }

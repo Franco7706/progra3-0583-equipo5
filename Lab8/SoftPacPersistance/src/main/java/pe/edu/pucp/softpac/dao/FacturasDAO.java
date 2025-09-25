@@ -2,6 +2,7 @@ package pe.edu.pucp.softpac.dao;
 
 import java.util.ArrayList;
 import pe.edu.pucp.softpac.model.FacturasDTO;
+import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 public interface FacturasDAO {
     public Integer insertar(FacturasDTO factura);
@@ -13,4 +14,6 @@ public interface FacturasDAO {
     public Integer modificar(FacturasDTO factura);
     
     public Integer eliminar(FacturasDTO factura);
+
+    public Integer eliminarLogico(FacturasDTO factura);
 }

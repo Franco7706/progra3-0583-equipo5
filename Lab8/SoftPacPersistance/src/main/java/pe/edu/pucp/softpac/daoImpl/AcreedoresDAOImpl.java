@@ -1,6 +1,7 @@
 package pe.edu.pucp.softpac.daoImpl;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.AcreedoresDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
@@ -15,6 +16,8 @@ public class AcreedoresDAOImpl extends DAOImplBase implements AcreedoresDAO {
     public AcreedoresDAOImpl() {
         super("PA_ACREEDORES");
         this.retornarLlavePrimaria=true;
+        this.seEliminaLogicamente=true;
+        super.incluirColumnasDeEliminacionLogica();
     }
 
     @Override
@@ -113,6 +116,13 @@ public class AcreedoresDAOImpl extends DAOImplBase implements AcreedoresDAO {
     }
 
     @Override
+    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
+        this.statement.setTimestamp(1, Timestamp.valueOf(this.acreedor.getFecha_eliminacion()));
+        this.statement.setInt(2,this.acreedor.getUsuario_eliminacion().getUsuario_id());
+        this.statement.setInt(3,this.acreedor.getAcreedor_id());
+    }
+
+    @Override
     public Integer insertar(AcreedoresDTO acreedor) {
         this.acreedor=acreedor;
         return super.insertar();
@@ -142,5 +152,11 @@ public class AcreedoresDAOImpl extends DAOImplBase implements AcreedoresDAO {
     public Integer eliminar(AcreedoresDTO acreedor) {
         this.acreedor=acreedor;
         return super.eliminar();
+    }
+
+    @Override
+    public Integer eliminarLogico(AcreedoresDTO acreedor) {
+        this.acreedor=acreedor;
+        return super.eliminarLogico();
     }
 }

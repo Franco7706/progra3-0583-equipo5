@@ -21,6 +21,8 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
         super("PA_FACTURAS");
         this.retornarLlavePrimaria = true;
         this.ejecutaOperacionesEnCascada = true;
+        this.seEliminaLogicamente = true;
+        super.incluirColumnasDeEliminacionLogica();
     }
 
     @Override
@@ -205,44 +207,12 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
             facturas.add(f);
         }
     }
-    @Override
-    protected void ejecutarCascadaParaInsercion(){
-        try{
-            DetallesFacturaDAO daoDetalle = new DetallesFacturaDAOImpl(this.getConexion());
-            for(DetallesFacturaDTO detalle : this.factura.getDetalles_Factura()){
-                daoDetalle.insertar(detalle);
-            }
-        }
-        catch(DAODetalleException e){
-            throw e;
-        }
-    }
 
     @Override
-    protected void ejecutarCascadaParaModificacion(){
-        try{
-            DetallesFacturaDAO daoDetalle = new DetallesFacturaDAOImpl(this.getConexion());
-            for(DetallesFacturaDTO detalle : this.factura.getDetalles_Factura()){
-                daoDetalle.modificar(detalle);
-            }
-        }
-        catch(DAODetalleException e){
-            throw e;
-        }
-    }
-
-
-    @Override
-    protected void ejecutarCascadaParaEliminacion(){
-        try{
-            DetallesFacturaDAO daoDetalle = new DetallesFacturaDAOImpl(this.getConexion());
-            for(DetallesFacturaDTO detalle : this.factura.getDetalles_Factura()){
-                daoDetalle.eliminar(detalle);
-            }
-        }
-        catch(DAODetalleException e){
-            throw e;
-        }
+    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
+        this.statement.setTimestamp(1,Timestamp.valueOf(this.factura.getFecha_eliminacion()));
+        this.statement.setInt(2,this.factura.getUsuario_eliminacion().getUsuario_id());
+        this.statement.setInt(3,this.factura.getFactura_id());
     }
 
     @Override
@@ -275,5 +245,54 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     public Integer eliminar(FacturasDTO factura) {
         this.factura = factura;
         return super.eliminar();
+    }
+
+    @Override
+    public Integer eliminarLogico(FacturasDTO factura) {
+        this.factura = factura;
+        return super.eliminarLogico();
+    }
+
+    @Override
+    protected void ejecutarCascadaParaInsercion(){
+        try{
+            DetallesFacturaDAO daoDetalle = new DetallesFacturaDAOImpl(this.getConexion());
+            for(DetallesFacturaDTO detalle : this.factura.getDetalles_Factura()){
+                daoDetalle.insertar(detalle);
+            }
+        }
+        catch(DAODetalleException e){
+            throw e;
+        }
+    }
+
+    @Override
+    protected void ejecutarCascadaParaModificacion(){
+        try{
+            DetallesFacturaDAO daoDetalle = new DetallesFacturaDAOImpl(this.getConexion());
+            for(DetallesFacturaDTO detalle : this.factura.getDetalles_Factura()){
+                daoDetalle.modificar(detalle);
+                if(detalle.getFecha_eliminacion()!=null){
+                    daoDetalle.eliminar(detalle);
+                }
+            }
+        }
+        catch(DAODetalleException e){
+            throw e;
+        }
+    }
+
+
+    @Override
+    protected void ejecutarCascadaParaEliminacion(){
+        try{
+            DetallesFacturaDAO daoDetalle = new DetallesFacturaDAOImpl(this.getConexion());
+            for(DetallesFacturaDTO detalle : this.factura.getDetalles_Factura()){
+                daoDetalle.eliminar(detalle);
+            }
+        }
+        catch(DAODetalleException e){
+            throw e;
+        }
     }
 }

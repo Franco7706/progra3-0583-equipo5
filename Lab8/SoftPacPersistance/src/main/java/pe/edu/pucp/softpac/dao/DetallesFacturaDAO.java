@@ -1,6 +1,7 @@
 package pe.edu.pucp.softpac.dao;
 
 import pe.edu.pucp.softpac.model.DetallesFacturaDTO;
+import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 public interface DetallesFacturaDAO {
     public Integer insertar(DetallesFacturaDTO detallePropuesta);
@@ -10,4 +11,6 @@ public interface DetallesFacturaDAO {
     public Integer modificar(DetallesFacturaDTO detallePropuesta);
 
     public Integer eliminar(DetallesFacturaDTO detallePropuesta);
+
+    public Integer eliminarLogico(DetallesFacturaDTO detalleFactura);
 }

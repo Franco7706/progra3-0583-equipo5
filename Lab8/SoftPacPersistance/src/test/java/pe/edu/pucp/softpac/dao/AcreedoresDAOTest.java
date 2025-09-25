@@ -2,9 +2,12 @@ package pe.edu.pucp.softpac.dao;
 
 import org.junit.jupiter.api.*;
 import pe.edu.pucp.softpac.daoImpl.AcreedoresDAOImpl;
+import pe.edu.pucp.softpac.daoImpl.UsuariosDAOImpl;
 import pe.edu.pucp.softpac.daoImpl.PaisesDAOImpl;
 import pe.edu.pucp.softpac.model.AcreedoresDTO;
 import pe.edu.pucp.softpac.model.PaisesDTO;
+import pe.edu.pucp.softpac.model.UsuariosDTO;
+import pe.edu.pucp.softpac.dao.UsuariosDAO;
 
 import java.util.ArrayList;
 
@@ -20,17 +23,32 @@ public class AcreedoresDAOTest {
     protected static PaisesDTO testPais;
     protected static PaisesDAO paisesDAO;
 
+    protected static UsuariosDAO usuariosDAO;
+    protected static UsuariosDTO testUsuarioEliminacion;
+
     @BeforeAll
     static void init(){
         paisesDAO = new PaisesDAOImpl();
         testPais = new PaisesDTO(0,"PaisPruebaAcreedor","XA","+");
         Integer idPais = paisesDAO.insertar(testPais);
         testPais.setPais_id(idPais);
+
+        usuariosDAO = new UsuariosDAOImpl();
+        testUsuarioEliminacion = new UsuariosDTO();
+        testUsuarioEliminacion.setUsuario_id(1002);
+        testUsuarioEliminacion.setCorreo_electronico("eliminacion@softpac.test");
+        testUsuarioEliminacion.setNombre_de_usuario("Usuario de eliminación");
+        testUsuarioEliminacion.setActivo(true);
+        testUsuarioEliminacion.setSuperusuario(true);
+        testUsuarioEliminacion.setPassword_hash("elim123");
+        usuariosDAO.insertar(testUsuarioEliminacion);
     }
     @AfterAll
-    static void deleteDependencies(){
-        paisesDAO.eliminar(testPais);
+    static void cleanup(){
+        try { usuariosDAO.eliminar(testUsuarioEliminacion); } catch (Exception ignored) {}
+        try { paisesDAO.eliminar(testPais); } catch (Exception ignored) {};
     }
+
     @BeforeEach
     void setUp() {
         dao = new AcreedoresDAOImpl();
@@ -126,5 +144,25 @@ public class AcreedoresDAOTest {
         assertNull(eliminado, "Después de eliminar, obtenerPorId debe devolver null");
 
         generatedId = 0; // para que tearDown no intente eliminar de nuevo
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("Contrato: debe realizar eliminación lógica de un acreedor")
+    void testEliminarLogico() {
+        generatedId = dao.insertar(testAcreedor);
+        testAcreedor.setAcreedor_id(generatedId);
+        testAcreedor.setFecha_eliminacion(java.time.LocalDateTime.now());
+        testAcreedor.setUsuario_eliminacion(testUsuarioEliminacion);
+
+        Integer res = dao.eliminarLogico(testAcreedor);
+        assertTrue(res > 0);
+
+        AcreedoresDTO acreedor = dao.obtenerPorId(generatedId);
+        assertNotNull(acreedor);
+
+        // Debe excluirse de listarTodos
+        ArrayList<AcreedoresDTO> lista = dao.listarTodos();
+        assertTrue(lista.stream().noneMatch(a -> a.getAcreedor_id() == generatedId));
     }
 }

@@ -92,6 +92,13 @@ public abstract class DAOImplBase {
     }
 
     protected Integer eliminarLogico() {
+        if (this.esDetalle){
+            try{
+                return this.ejecutaDetalle_DML(Tipo_Operacion.ELIMINAR_LOGICO);
+            } catch (DAODetalleException e){
+                throw e;
+            }
+        }
         return this.ejecuta_DML(Tipo_Operacion.ELIMINAR_LOGICO);
     }
 
@@ -189,7 +196,7 @@ public abstract class DAOImplBase {
         }
     }
 
-    protected void ejecutarOperacionesEnCascada(Tipo_Operacion tipo_operacion) throws SQLException {
+    private void ejecutarOperacionesEnCascada(Tipo_Operacion tipo_operacion) throws SQLException {
         if (this.ejecutaOperacionesEnCascada == false) return;
         try {
             switch (tipo_operacion) {
@@ -506,6 +513,7 @@ public abstract class DAOImplBase {
                     sql_predicado = sql_predicado.concat(" AND ");
                 }
                 sql_predicado = sql_predicado.concat(columna.getNombre());
+                sql_predicado = sql_predicado.concat(" IS NULL");
             }
             sql = sql.concat(" WHERE ");
             sql = sql.concat(sql_predicado);
