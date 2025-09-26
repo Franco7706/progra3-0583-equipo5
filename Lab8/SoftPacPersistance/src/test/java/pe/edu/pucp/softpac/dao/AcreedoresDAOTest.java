@@ -122,7 +122,7 @@ public class AcreedoresDAOTest {
     @DisplayName("Contrato: debe listar todos los acreedores")
     void testListarTodos() {
         generatedId = dao.insertar(testAcreedor);
-        ArrayList<AcreedoresDTO> lista = dao.listarTodos();
+        ArrayList<AcreedoresDTO> lista = (ArrayList<AcreedoresDTO>) dao.listarTodos();
 
         assertNotNull(lista, "La lista no debe ser null");
         assertFalse(lista.isEmpty(), "La lista no debe estar vacía");
@@ -162,7 +162,7 @@ public class AcreedoresDAOTest {
         assertNotNull(acreedor);
 
         // Debe excluirse de listarTodos
-        ArrayList<AcreedoresDTO> lista = dao.listarTodos();
+        ArrayList<AcreedoresDTO> lista = (ArrayList<AcreedoresDTO>) dao.listarTodos();
         assertTrue(lista.stream().noneMatch(a -> a.getAcreedor_id() == generatedId));
     }
 }

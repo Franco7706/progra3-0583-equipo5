@@ -1,6 +1,8 @@
 package pe.edu.pucp.softpac.dao;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import pe.edu.pucp.softpac.model.EntidadesBancariasDTO;
 
 public interface EntidadesBancariasDAO {
@@ -8,7 +10,7 @@ public interface EntidadesBancariasDAO {
     
     public EntidadesBancariasDTO obtenerPorId(Integer entidadBancariaId);
     
-    public ArrayList<EntidadesBancariasDTO> listarTodos();
+    public List<EntidadesBancariasDTO> listarTodos();
     
     public Integer modificar(EntidadesBancariasDTO entidadBancaria);
     

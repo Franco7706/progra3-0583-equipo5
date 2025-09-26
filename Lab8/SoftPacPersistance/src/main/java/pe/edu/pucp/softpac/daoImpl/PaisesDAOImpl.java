@@ -5,12 +5,14 @@ import pe.edu.pucp.softpac.dao.PaisesDAO;
 import pe.edu.pucp.softpac.model.PaisesDTO;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 
 public class PaisesDAOImpl extends DAOImplBase implements PaisesDAO {
 
     private PaisesDTO pais;
-    private ArrayList<PaisesDTO> paises;
+    private List<PaisesDTO> paises;
 
     public PaisesDAOImpl() {
         super("PA_PAISES");
@@ -91,7 +93,7 @@ public class PaisesDAOImpl extends DAOImplBase implements PaisesDAO {
     }
 
     @Override
-    public ArrayList<PaisesDTO> listarTodos() {
+    public List<PaisesDTO> listarTodos() {
         super.listarTodosQuery();
         return this.paises;
     }

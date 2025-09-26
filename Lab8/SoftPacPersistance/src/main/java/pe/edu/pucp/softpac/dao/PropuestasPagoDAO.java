@@ -1,6 +1,8 @@
 package pe.edu.pucp.softpac.dao;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import pe.edu.pucp.softpac.model.PropuestasPagoDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
@@ -9,7 +11,7 @@ public interface PropuestasPagoDAO {
     
     public PropuestasPagoDTO obtenerPorId(Integer propuestaPagoId);
     
-    public ArrayList<PropuestasPagoDTO> listarTodos();
+    public List<PropuestasPagoDTO> listarTodos();
     
     public Integer modificar(PropuestasPagoDTO propuestaPago);
     

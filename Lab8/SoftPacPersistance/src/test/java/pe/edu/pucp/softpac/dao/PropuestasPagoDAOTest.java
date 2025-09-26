@@ -151,7 +151,7 @@ public class PropuestasPagoDAOTest {
     void testListarTodos() {
         generatedId = dao.insertar(testPropuesta);
 
-        ArrayList<PropuestasPagoDTO> lista = dao.listarTodos();
+        ArrayList<PropuestasPagoDTO> lista = (ArrayList<PropuestasPagoDTO>) dao.listarTodos();
         assertNotNull(lista, "La lista no debe ser null");
         assertFalse(lista.isEmpty(), "La lista no debe estar vacía");
         assertTrue(lista.stream().anyMatch(p -> Objects.equals(p.getPropuesta_id(), generatedId)),
@@ -189,7 +189,7 @@ public class PropuestasPagoDAOTest {
         assertNotNull(propuesta, "La propuesta debe existir tras eliminación lógica");
 
         // Debe excluirse de listarTodos
-        ArrayList<PropuestasPagoDTO> lista = dao.listarTodos();
+        ArrayList<PropuestasPagoDTO> lista = (ArrayList<PropuestasPagoDTO>) dao.listarTodos();
         assertTrue(lista.stream().noneMatch(p -> Objects.equals(p.getPropuesta_id(), generatedId)));
 
     }

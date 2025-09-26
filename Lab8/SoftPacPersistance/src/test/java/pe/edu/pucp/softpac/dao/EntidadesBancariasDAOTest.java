@@ -97,7 +97,7 @@ public class EntidadesBancariasDAOTest {
     @DisplayName("Contrato: debe listar todas las entidades bancarias")
     void testListarTodos() {
         generatedId = dao.insertar(testEntidad);
-        ArrayList<EntidadesBancariasDTO> lista = dao.listarTodos();
+        ArrayList<EntidadesBancariasDTO> lista = (ArrayList<EntidadesBancariasDTO>) dao.listarTodos();
         assertNotNull(lista);
         assertFalse(lista.isEmpty());
         assertTrue(lista.stream().anyMatch(e -> e.getEntidad_bancaria_id() == generatedId));

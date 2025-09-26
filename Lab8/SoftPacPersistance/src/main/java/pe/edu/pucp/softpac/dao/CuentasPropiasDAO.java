@@ -1,6 +1,8 @@
 package pe.edu.pucp.softpac.dao;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import pe.edu.pucp.softpac.model.CuentasPropiasDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
@@ -9,7 +11,7 @@ public interface CuentasPropiasDAO {
     
     public CuentasPropiasDTO obtenerPorId(Integer cuentaPropiaId);
     
-    public ArrayList<CuentasPropiasDTO> listarTodos();
+    public List<CuentasPropiasDTO> listarTodos();
     
     public Integer modificar(CuentasPropiasDTO cuentaPropia);
     

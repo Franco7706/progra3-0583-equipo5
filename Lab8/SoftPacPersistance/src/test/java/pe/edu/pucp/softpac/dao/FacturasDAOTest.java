@@ -178,7 +178,7 @@ public class FacturasDAOTest {
         generateId = dao.insertar(testFactura);
         assertTrue(generateId > 0);
 
-        ArrayList<FacturasDTO> all = dao.listarTodos();
+        ArrayList<FacturasDTO> all = (ArrayList<FacturasDTO>) dao.listarTodos();
         assertNotNull(all);
         assertTrue(
                 all.stream().anyMatch(f -> f.getFactura_id() != null && f.getFactura_id().equals(generateId)),
@@ -243,7 +243,7 @@ public class FacturasDAOTest {
         FacturasDTO fz = dao.obtenerPorId(generateId);
         assertNotNull(fz);
         // Debe excluirse de listarTodos
-        ArrayList<FacturasDTO> lista = dao.listarTodos();
+        ArrayList<FacturasDTO> lista = (ArrayList<FacturasDTO>) dao.listarTodos();
         assertTrue(lista.stream().noneMatch(f -> Objects.equals(f.getFactura_id(), generateId)));
 
     }

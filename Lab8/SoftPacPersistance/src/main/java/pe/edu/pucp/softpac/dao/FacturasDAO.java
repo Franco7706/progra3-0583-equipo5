@@ -1,6 +1,8 @@
 package pe.edu.pucp.softpac.dao;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import pe.edu.pucp.softpac.model.FacturasDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
@@ -9,7 +11,7 @@ public interface FacturasDAO {
     
     public FacturasDTO obtenerPorId(Integer facturaId);
     
-    public ArrayList<FacturasDTO> listarTodos();
+    public List<FacturasDTO> listarTodos();
     
     public Integer modificar(FacturasDTO factura);
     

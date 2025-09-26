@@ -82,7 +82,7 @@ public class MonedasDAOTest {
     @DisplayName("Contrato: debe listar todas las monedas")
     void testListarTodos() {
         generatedId = dao.insertar(testMoneda);
-        ArrayList<MonedasDTO> lista = dao.listarTodos();
+        ArrayList<MonedasDTO> lista = (ArrayList<MonedasDTO>) dao.listarTodos();
         assertNotNull(lista);
         assertFalse(lista.isEmpty());
         assertTrue(lista.stream().anyMatch(m -> m.getMoneda_id() == generatedId));

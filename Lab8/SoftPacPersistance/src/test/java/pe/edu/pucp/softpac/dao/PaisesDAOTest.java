@@ -83,7 +83,7 @@ public class PaisesDAOTest {
     @DisplayName("Contrato: debe listar todos los países e incluir a Perú")
     void testListarTodos() {
         generatedId = dao.insertar(testPais);
-        ArrayList<PaisesDTO> lista = dao.listarTodos();
+        ArrayList<PaisesDTO> lista = (ArrayList<PaisesDTO>) dao.listarTodos();
 
         assertNotNull(lista, "La lista no debe ser null");
         assertFalse(lista.isEmpty(), "La lista no debe estar vacía");

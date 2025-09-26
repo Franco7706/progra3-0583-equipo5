@@ -3,13 +3,14 @@ package pe.edu.pucp.softpac.dao;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface UsuariosDAO {
     public Integer insertar(UsuariosDTO usuario);
 
     public UsuariosDTO obtenerPorId(Integer usuarioId);
 
-    public ArrayList<UsuariosDTO> listarTodos();
+    public List<UsuariosDTO> listarTodos();
 
     public Integer modificar(UsuariosDTO usuario);
 

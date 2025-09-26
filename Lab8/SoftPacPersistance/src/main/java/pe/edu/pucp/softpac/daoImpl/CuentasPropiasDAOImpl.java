@@ -3,6 +3,8 @@ package pe.edu.pucp.softpac.daoImpl;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
+
 import pe.edu.pucp.softpac.dao.CuentasPropiasDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.model.CuentasPropiasDTO;
@@ -12,7 +14,7 @@ import pe.edu.pucp.softpac.model.MonedasDTO;
 public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropiasDAO {
 
     private CuentasPropiasDTO cuentaPropia;
-    private ArrayList<CuentasPropiasDTO> cuentasPropias;
+    private List<CuentasPropiasDTO> cuentasPropias;
     
     public CuentasPropiasDAOImpl() {
         super("PA_CUENTAS_PROPIAS");
@@ -163,7 +165,7 @@ public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropias
     }
 
     @Override
-    public ArrayList<CuentasPropiasDTO> listarTodos() {
+    public List<CuentasPropiasDTO> listarTodos() {
         super.listarTodosQuery();
         return this.cuentasPropias;
     }

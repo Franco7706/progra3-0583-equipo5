@@ -12,11 +12,12 @@ import pe.edu.pucp.softpac.daoImpl.exception.DAODetalleException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
     private UsuariosDTO usuario;
-    private ArrayList<UsuariosDTO> usuarios;
+    private List<UsuariosDTO> usuarios;
 
     public UsuariosDAOImpl() {
         super("PA_USUARIOS");
@@ -179,7 +180,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     }
 
     @Override
-    public ArrayList<UsuariosDTO> listarTodos() {
+    public List<UsuariosDTO> listarTodos() {
         super.listarTodosQuery();
         return usuarios;
     }

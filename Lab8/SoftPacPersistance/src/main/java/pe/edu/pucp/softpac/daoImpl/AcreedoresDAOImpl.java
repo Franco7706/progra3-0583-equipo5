@@ -3,6 +3,8 @@ package pe.edu.pucp.softpac.daoImpl;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
+
 import pe.edu.pucp.softpac.dao.AcreedoresDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.model.AcreedoresDTO;
@@ -11,7 +13,7 @@ import pe.edu.pucp.softpac.model.PaisesDTO;
 public class AcreedoresDAOImpl extends DAOImplBase implements AcreedoresDAO {
 
     private AcreedoresDTO acreedor;
-    private ArrayList<AcreedoresDTO> acreedores;
+    private List<AcreedoresDTO> acreedores;
 
     public AcreedoresDAOImpl() {
         super("PA_ACREEDORES");
@@ -137,7 +139,7 @@ public class AcreedoresDAOImpl extends DAOImplBase implements AcreedoresDAO {
     }
 
     @Override
-    public ArrayList<AcreedoresDTO> listarTodos() {
+    public List<AcreedoresDTO> listarTodos() {
         super.listarTodosQuery();
         return this.acreedores;
     }

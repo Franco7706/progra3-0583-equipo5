@@ -115,7 +115,7 @@ public class TiposDeCambioDAOTest {
     void testListarTodos() {
         generatedId = dao.insertar(testTipoCambio);
 
-        ArrayList<TiposDeCambioDTO> lista = dao.listarTodos();
+        ArrayList<TiposDeCambioDTO> lista = (ArrayList<TiposDeCambioDTO>) dao.listarTodos();
         assertNotNull(lista, "La lista no debe ser null");
         assertFalse(lista.isEmpty(), "La lista no debe estar vacía");
         assertTrue(lista.stream().anyMatch(tc -> Objects.equals(tc.getTipo_cambio_id(), generatedId)),

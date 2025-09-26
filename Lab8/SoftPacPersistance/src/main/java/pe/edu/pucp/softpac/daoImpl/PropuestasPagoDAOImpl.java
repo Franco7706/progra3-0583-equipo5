@@ -3,6 +3,7 @@ package pe.edu.pucp.softpac.daoImpl;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 import pe.edu.pucp.softpac.dao.CuentasAcreedorDAO;
 import pe.edu.pucp.softpac.dao.DetallesPropuestaDAO;
@@ -14,7 +15,7 @@ import pe.edu.pucp.softpac.model.*;
 public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPagoDAO {
 
     private PropuestasPagoDTO propuestaPago;
-    private ArrayList<PropuestasPagoDTO> propuestasPago;
+    private List<PropuestasPagoDTO> propuestasPago;
 
     public PropuestasPagoDAOImpl() {
         super("PA_PROPUESTAS_DE_PAGO");
@@ -381,7 +382,7 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
     }
 
     @Override
-    public ArrayList<PropuestasPagoDTO> listarTodos() {
+    public List<PropuestasPagoDTO> listarTodos() {
         super.listarTodosQuery();
         return propuestasPago;
     }

@@ -1,6 +1,8 @@
 package pe.edu.pucp.softpac.dao;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import pe.edu.pucp.softpac.model.CuentasAcreedorDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
@@ -9,7 +11,7 @@ public interface CuentasAcreedorDAO {
     
     public CuentasAcreedorDTO obtenerPorId(Integer cuentaAcreedorId);
     
-    public ArrayList<CuentasAcreedorDTO> listarTodos();
+    public List<CuentasAcreedorDTO> listarTodos();
     
     public Integer modificar(CuentasAcreedorDTO cuentaAcreedor);
     

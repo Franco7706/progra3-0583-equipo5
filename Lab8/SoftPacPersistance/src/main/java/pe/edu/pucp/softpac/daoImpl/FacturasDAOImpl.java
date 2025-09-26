@@ -9,13 +9,15 @@ import pe.edu.pucp.softpac.daoImpl.exception.DAODetalleException;
 import pe.edu.pucp.softpac.model.FacturasDTO;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
+
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.model.*;
 
 public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
 
     private FacturasDTO factura;
-    private ArrayList<FacturasDTO> facturas;
+    private List<FacturasDTO> facturas;
 
     public FacturasDAOImpl() {
         super("PA_FACTURAS");
@@ -230,7 +232,7 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     }
 
     @Override
-    public ArrayList<FacturasDTO> listarTodos() {
+    public List<FacturasDTO> listarTodos() {
         super.listarTodosQuery();
         return facturas;
     }

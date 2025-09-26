@@ -59,9 +59,9 @@ public abstract class DAOImplBase {
     protected abstract void configurarListaDeColumnas();
 
     protected Integer insertar() {
-        if (this.esDetalle) {
+        if (this.esDetalle==true) {
             try {
-                this.ejecutaDetalle_DML(Tipo_Operacion.INSERTAR);
+                return this.ejecutaDetalle_DML(Tipo_Operacion.INSERTAR);
             } catch (DAODetalleException e) {
                 throw e;
             }
@@ -70,9 +70,9 @@ public abstract class DAOImplBase {
     }
 
     protected Integer modificar() {
-        if (this.esDetalle) {
+        if (this.esDetalle==true) {
             try {
-                this.ejecutaDetalle_DML(Tipo_Operacion.MODIFICAR);
+                return this.ejecutaDetalle_DML(Tipo_Operacion.MODIFICAR);
             } catch (DAODetalleException e) {
                 throw e;
             }
@@ -81,9 +81,9 @@ public abstract class DAOImplBase {
     }
 
     protected Integer eliminar() {
-        if (this.esDetalle) {
+        if (this.esDetalle==true) {
             try {
-                this.ejecutaDetalle_DML(Tipo_Operacion.ELIMINAR);
+                return this.ejecutaDetalle_DML(Tipo_Operacion.ELIMINAR);
             } catch (DAODetalleException e) {
                 throw e;
             }
@@ -92,7 +92,7 @@ public abstract class DAOImplBase {
     }
 
     protected Integer eliminarLogico() {
-        if (this.esDetalle){
+        if (this.esDetalle==true){
             try{
                 return this.ejecutaDetalle_DML(Tipo_Operacion.ELIMINAR_LOGICO);
             } catch (DAODetalleException e){
@@ -239,7 +239,7 @@ public abstract class DAOImplBase {
             }
             return resultado;
         } catch (SQLException ex) {
-            System.err.println("Error al intentar ejecutar DML - " + ex);
+            System.err.println("Error al intentar ejecutar DML en Detalle - " + ex);
             throw new DAODetalleException(" Error al ejecutar operación de detalle: " + tipo_operacion, ex);
         }
     }

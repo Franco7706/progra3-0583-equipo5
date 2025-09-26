@@ -158,7 +158,7 @@ public class CuentasAcreedorDAOTest {
     void testListarTodos() {
         generatedId = dao.insertar(testCuenta);
 
-        ArrayList<CuentasAcreedorDTO> lista = dao.listarTodos();
+        ArrayList<CuentasAcreedorDTO> lista =(ArrayList<CuentasAcreedorDTO>) dao.listarTodos();
         assertNotNull(lista);
         assertFalse(lista.isEmpty());
         assertTrue(lista.stream().anyMatch(c -> Objects.equals(c.getCuenta_bancaria_id(), generatedId)));
@@ -194,7 +194,7 @@ public class CuentasAcreedorDAOTest {
         assertNotNull(cuenta);
 
         // Debe excluirse de listarTodos
-        ArrayList<CuentasAcreedorDTO> lista = dao.listarTodos();
+        ArrayList<CuentasAcreedorDTO> lista = (ArrayList<CuentasAcreedorDTO>) dao.listarTodos();
         assertTrue(lista.stream().noneMatch(c -> Objects.equals(c.getCuenta_bancaria_id(), generatedId)));
     }
 }

@@ -27,9 +27,9 @@ public class UsuarioPaisAccesoDAOImpl extends DAOImplBase implements UsuarioPais
 
     @Override
     protected void configurarListaDeColumnas() {
-        this.listaColumnas.add(new Columna("USUARIO_ID", true, true));
+        this.listaColumnas.add(new Columna("USUARIO_ID", true, false));
         this.listaColumnas.add(new Columna("ACCESO", false, false));
-        this.listaColumnas.add(new Columna("PAIS_ID", false, false));
+        this.listaColumnas.add(new Columna("PAIS_ID", true, false));
     }
 
     @Override
@@ -66,6 +66,7 @@ public class UsuarioPaisAccesoDAOImpl extends DAOImplBase implements UsuarioPais
     @Override
     protected void incluirValorDeParametrosParaEliminacion() throws SQLException {
         this.statement.setInt(1,this.usuarioPaisAcceso.getUsuario().getUsuario_id());
+        this.statement.setInt(2,this.usuarioPaisAcceso.getPais().getPais_id());
     }
 
     @Override

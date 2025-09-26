@@ -1,6 +1,8 @@
 package pe.edu.pucp.softpac.dao;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import pe.edu.pucp.softpac.model.MonedasDTO;
 
 public interface MonedasDAO {
@@ -8,7 +10,7 @@ public interface MonedasDAO {
     
     public MonedasDTO obtenerPorId(Integer monedaId);
     
-    public ArrayList<MonedasDTO> listarTodos();
+    public List<MonedasDTO> listarTodos();
     
     public Integer modificar(MonedasDTO moneda);
     

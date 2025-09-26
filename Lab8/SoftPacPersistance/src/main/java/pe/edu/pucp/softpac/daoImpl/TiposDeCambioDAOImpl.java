@@ -8,11 +8,12 @@ import pe.edu.pucp.softpac.model.TiposDeCambioDTO;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TiposDeCambioDAOImpl extends DAOImplBase implements TiposDeCambioDAO {
 
     private TiposDeCambioDTO tipoDeCambio;
-    private ArrayList<TiposDeCambioDTO> tiposDeCambio;
+    private List<TiposDeCambioDTO> tiposDeCambio;
 
     public TiposDeCambioDAOImpl() {
         super("PA_TIPOS_DE_CAMBIO");
@@ -115,7 +116,7 @@ public class TiposDeCambioDAOImpl extends DAOImplBase implements TiposDeCambioDA
     }
 
     @Override
-    public ArrayList<TiposDeCambioDTO> listarTodos() {
+    public List<TiposDeCambioDTO> listarTodos() {
         super.listarTodosQuery();
         return this.tiposDeCambio;
     }

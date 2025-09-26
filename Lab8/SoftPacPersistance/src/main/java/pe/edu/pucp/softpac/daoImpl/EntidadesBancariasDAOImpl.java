@@ -2,6 +2,8 @@ package pe.edu.pucp.softpac.daoImpl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
 import pe.edu.pucp.softpac.dao.EntidadesBancariasDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.model.EntidadesBancariasDTO;
@@ -10,7 +12,7 @@ import pe.edu.pucp.softpac.model.PaisesDTO;
 public class EntidadesBancariasDAOImpl extends DAOImplBase implements EntidadesBancariasDAO {
 
     private EntidadesBancariasDTO entidadBancaria;
-    private ArrayList<EntidadesBancariasDTO> entidadesBancarias;
+    private List<EntidadesBancariasDTO> entidadesBancarias;
 
     public EntidadesBancariasDAOImpl() {
         super("PA_ENTIDADES_BANCARIAS");
@@ -112,7 +114,7 @@ public class EntidadesBancariasDAOImpl extends DAOImplBase implements EntidadesB
     }
 
     @Override
-    public ArrayList<EntidadesBancariasDTO> listarTodos() {
+    public List<EntidadesBancariasDTO> listarTodos() {
         super.listarTodosQuery();
         return this.entidadesBancarias;
     }
