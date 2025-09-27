@@ -46,6 +46,9 @@ public class DBManagerMySQL extends DBManager {
             System.err.println("Error al leer archivo de propiedades MySQL - " + ex);
         }
     }
-
-
+    
+     @Override
+    public String retornarSQLParaUltimoAutoGenerado() {
+        return "select @@last_insert_id as id";
+    }
 }

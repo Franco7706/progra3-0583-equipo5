@@ -9,22 +9,18 @@ public class DBManagerTest {
     public DBManagerTest() {
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testGetInstance() {
-        //La linea de abajo no funciona pues el DBManager 
-        //es un Singleton (constructor privado)
-        //DBManager dbManager = new DBManager();
-        System.out.println("testGetInstance");
-        DBManager dbManager = DBManager.getInstance();
-        assertNotNull(dbManager);
+        System.out.println("getInstance");                
+        DBManager dBManager = DBManager.getInstance();
+        assertNotNull(dBManager);
     }
-    
-    @Test
-    public void testGetConnection() {        
-        System.out.println("testGetConnection");
-        DBManager dbManager = DBManager.getInstance();
-        
-        Connection conexion = dbManager.getConnection();
+
+    @org.junit.jupiter.api.Test
+    public void testGetConnection() {
+        System.out.println("getConnection");                
+        DBManager dBManager = DBManager.getInstance();
+        Connection conexion = dBManager.getConnection();
         assertNotNull(conexion);
     }
     

@@ -98,4 +98,6 @@ public abstract class DBManager {
         }
         return null;
     }
+    
+    public abstract String retornarSQLParaUltimoAutoGenerado();
 }
