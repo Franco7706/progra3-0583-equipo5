@@ -196,11 +196,12 @@ public abstract class DAOImplBase {
         }
     }
 
-    private void ejecutarOperacionesEnCascada(Tipo_Operacion tipo_operacion) throws SQLException {
+    private void ejecutarOperacionesEnCascada(Tipo_Operacion tipo_operacion,Integer resultado) throws SQLException {
         if (this.ejecutaOperacionesEnCascada == false) return;
         try {
             switch (tipo_operacion) {
                 case Tipo_Operacion.INSERTAR:
+                    this.recuperarAutoGeneradoParaInsercionDeDetalle(resultado);
                     this.ejecutarCascadaParaInsercion();
                     break;
                 case Tipo_Operacion.MODIFICAR:
@@ -215,6 +216,9 @@ public abstract class DAOImplBase {
                 throw new SQLException("Error en operación en cascada", e);
             }
         }
+    }
+
+    protected void recuperarAutoGeneradoParaInsercionDeDetalle(Integer resultado) {
     }
 
 
@@ -256,7 +260,7 @@ public abstract class DAOImplBase {
             if (this.retornarLlavePrimaria && tipo_operacion == Tipo_Operacion.INSERTAR) {
                 resultado = this.retornarUltimoAutoGenerado();
             }
-            this.ejecutarOperacionesEnCascada(tipo_operacion);
+            this.ejecutarOperacionesEnCascada(tipo_operacion,resultado);
             this.commitTransaccion();
         } catch (SQLException ex) {
             System.err.println("Error al intentar ejecutar DML - " + ex);

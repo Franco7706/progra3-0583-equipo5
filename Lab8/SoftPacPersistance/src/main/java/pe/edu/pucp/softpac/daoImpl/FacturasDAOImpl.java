@@ -256,6 +256,10 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     }
 
     @Override
+    protected void recuperarAutoGeneradoParaInsercionDeDetalle(Integer resultado) {
+        this.factura.setFactura_id(resultado);
+    }
+    @Override
     protected void ejecutarCascadaParaInsercion(){
         try{
             DetallesFacturaDAO daoDetalle = new DetallesFacturaDAOImpl(this.getConexion());
@@ -273,9 +277,14 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
         try{
             DetallesFacturaDAO daoDetalle = new DetallesFacturaDAOImpl(this.getConexion());
             for(DetallesFacturaDTO detalle : this.factura.getDetalles_Factura()){
-                daoDetalle.modificar(detalle);
-                if(detalle.getFecha_eliminacion()!=null){
-                    daoDetalle.eliminar(detalle);
+                if(detalle.getDetalle_factura_id()==null){
+                    daoDetalle.insertar(detalle);
+                }
+                else{
+                    daoDetalle.modificar(detalle);
+                    if(detalle.getFecha_eliminacion()!=null){
+                        daoDetalle.eliminarLogico(detalle);
+                    }
                 }
             }
         }
@@ -289,9 +298,7 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     protected void ejecutarCascadaParaEliminacion(){
         try{
             DetallesFacturaDAO daoDetalle = new DetallesFacturaDAOImpl(this.getConexion());
-            for(DetallesFacturaDTO detalle : this.factura.getDetalles_Factura()){
-                daoDetalle.eliminar(detalle);
-            }
+            daoDetalle.eliminarPorFactura(this.factura.getFactura_id());
         }
         catch(DAODetalleException e){
             throw e;

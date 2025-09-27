@@ -406,6 +406,11 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
     }
 
     @Override
+    protected void recuperarAutoGeneradoParaInsercionDeDetalle(Integer resultado) {
+        this.propuestaPago.setPropuesta_id(resultado);
+    }
+
+    @Override
     protected void ejecutarCascadaParaInsercion(){
         try{
             DetallesPropuestaDAO daoDetalle =  new DetallesPropuestaDAOImpl(this.getConexion());
@@ -423,9 +428,14 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         try{
             DetallesPropuestaDAO daoDetalle =  new DetallesPropuestaDAOImpl(this.getConexion());
             for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
-                daoDetalle.modificar(detalle);
-                if(detalle.getFecha_eliminacion()!=null){
-                    daoDetalle.eliminarLogico(detalle);
+                if(detalle.getDetalle_propuesta_id()==null){
+                    daoDetalle.insertar(detalle);
+                }
+                else{
+                    daoDetalle.modificar(detalle);
+                    if(detalle.getFecha_eliminacion()!=null){
+                        daoDetalle.eliminarLogico(detalle);
+                    }
                 }
             }
         }
@@ -439,9 +449,7 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
     protected void ejecutarCascadaParaEliminacion(){
         try{
             DetallesPropuestaDAO daoDetalle =  new DetallesPropuestaDAOImpl(this.getConexion());
-            for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
-                daoDetalle.eliminar(detalle);
-            }
+            daoDetalle.eliminarPorPropuesta(this.propuestaPago.getPropuesta_id());
         }
         catch(DAODetalleException e){
             throw e;

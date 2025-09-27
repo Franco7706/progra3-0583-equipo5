@@ -52,8 +52,12 @@ public class DetallesFacturaDAOImpl extends DAOImplBase implements DetallesFactu
         this.statement.setInt(4,this.detalleFactura.getDetalle_factura_id());
     }
     @Override
+    protected String generarSQLParaEliminacion() {
+        return "DELETE FROM PA_DETALLES_FACTURA WHERE FACTURA_ID=?";
+    }
+    @Override
     protected void incluirValorDeParametrosParaEliminacion() throws SQLException{
-        this.statement.setInt(1,this.detalleFactura.getDetalle_factura_id());
+        this.statement.setInt(1,this.detalleFactura.getFactura().getFactura_id());
     }
     @Override
     protected void incluirValorDeParametrosParaObtenerPorId() throws SQLException{
@@ -102,8 +106,11 @@ public class DetallesFacturaDAOImpl extends DAOImplBase implements DetallesFactu
     }
 
     @Override
-    public Integer eliminar(DetallesFacturaDTO detalleFactura) {
-        this.detalleFactura=detalleFactura;
+    public Integer eliminarPorFactura(Integer facturaId) {
+        this.detalleFactura=new DetallesFacturaDTO();
+        FacturasDTO factura=new FacturasDTO();
+        factura.setFactura_id(facturaId);
+        this.detalleFactura.setFactura(factura);
         return super.eliminar();
     }
 

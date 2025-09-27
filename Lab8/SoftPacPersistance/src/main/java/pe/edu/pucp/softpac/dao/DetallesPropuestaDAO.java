@@ -10,7 +10,7 @@ public interface DetallesPropuestaDAO {
 
     public Integer modificar(DetallesPropuestaDTO detallePropuesta);
 
-    public Integer eliminar(DetallesPropuestaDTO detallePropuesta);
+    public Integer eliminarPorPropuesta(Integer propuestaId);
 
     public Integer eliminarLogico(DetallesPropuestaDTO detallePropuesta);
 }

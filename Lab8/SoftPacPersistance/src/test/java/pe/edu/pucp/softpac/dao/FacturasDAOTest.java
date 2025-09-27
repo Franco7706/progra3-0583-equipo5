@@ -247,5 +247,179 @@ public class FacturasDAOTest {
         assertTrue(lista.stream().noneMatch(f -> Objects.equals(f.getFactura_id(), generateId)));
 
     }
+    // ===================== TESTS DE CASCADA CON DETALLES =====================
+    @Test
+    @Order(6)
+    @DisplayName("Cascada: al insertar con detalles se insertan en PA_DETALLES_FACTURA")
+    void testCascada_InsertarConDetalles() {
+
+        // 1) Preparamos 2 detalles nuevos (IDs nulos) y los asociamos a la factura
+        DetallesFacturaDTO d1 = new DetallesFacturaDTO();
+        d1.setDetalle_factura_id(null);
+        d1.setSubtotal(new java.math.BigDecimal("500.00"));
+        d1.setDescripcion("Servicio 1");
+        d1.setFactura(testFactura);
+
+        DetallesFacturaDTO d2 = new DetallesFacturaDTO();
+        d2.setDetalle_factura_id(null);
+        d2.setSubtotal(new java.math.BigDecimal("200.00"));
+        d2.setDescripcion("Servicio 2");
+        d2.setFactura(testFactura);
+        ArrayList<DetallesFacturaDTO> detalles = new ArrayList<>();
+        detalles.add(d1);
+        detalles.add(d2);
+        testFactura.setDetalles_Factura(detalles);
+
+        // 2) Insertamos la factura para insertarla con sus detalles
+        generateId = dao.insertar(testFactura);
+        assertTrue(generateId > 0);
+        testFactura.setFactura_id(generateId);
+
+        // 3) Verificamos que obtenerPorId regrese los detalles (no eliminados lógicamente)
+        FacturasDTO fx = dao.obtenerPorId(generateId);
+        assertNotNull(fx);
+        assertNotNull(fx.getDetalles_Factura());
+        assertEquals(2, fx.getDetalles_Factura().size(), "Deben insertarse 2 detalles");
+    }
+
+    @Test
+    @Order(7)
+    @DisplayName("Cascada: modificar con detalles se insertan en PA_DETALLES_FACTURA")
+    void testCascada_InsertarDetalles() {
+        // 1) Insertamos la factura sin detalles inicialmente
+        generateId = dao.insertar(testFactura);
+        assertTrue(generateId > 0);
+        testFactura.setFactura_id(generateId);
+
+        // 2) Preparamos 2 detalles nuevos (IDs nulos) y los asociamos a la factura
+        DetallesFacturaDTO d1 = new DetallesFacturaDTO();
+        d1.setDetalle_factura_id(null);
+        d1.setSubtotal(new java.math.BigDecimal("500.00"));
+        d1.setDescripcion("Servicio 1");
+        d1.setFactura(testFactura);
+
+        DetallesFacturaDTO d2 = new DetallesFacturaDTO();
+        d2.setDetalle_factura_id(null);
+        d2.setSubtotal(new java.math.BigDecimal("200.00"));
+        d2.setDescripcion("Servicio 2");
+        d2.setFactura(testFactura);
+
+        ArrayList<DetallesFacturaDTO> detalles = new ArrayList<>();
+        detalles.add(d1);
+        detalles.add(d2);
+        testFactura.setDetalles_Factura(detalles);
+
+        // 3) Disparamos la cascada de inserción de detalles mediante modificar (id null => insertar)
+        assertTrue(dao.modificar(testFactura) >= 0);
+
+        // 4) Verificamos que obtenerPorId regrese los detalles (no eliminados lógicamente)
+        FacturasDTO fx = dao.obtenerPorId(generateId);
+        assertNotNull(fx);
+        assertNotNull(fx.getDetalles_Factura());
+        assertEquals(2, fx.getDetalles_Factura().size(), "Deben insertarse 2 detalles");
+    }
+
+    @Test
+    @Order(8)
+    @DisplayName("Cascada: al modificar, detalles existentes se actualizan y con fecha_eliminacion se eliminan lógicamente; y los nuevos (id null) se insertan")
+    void testCascada_Modificar_Actualizar_Insertar_EliminarLogico() {
+        // Insertamos factura base
+        generateId = dao.insertar(testFactura);
+        assertTrue(generateId > 0);
+        testFactura.setFactura_id(generateId);
+
+        // Insertamos inicialmente 2 detalles (vía modificar)
+        DetallesFacturaDTO d1 = new DetallesFacturaDTO();
+        d1.setSubtotal(new java.math.BigDecimal("120.00"));
+        d1.setDescripcion("Item A");
+        d1.setFactura(testFactura);
+
+        DetallesFacturaDTO d2 = new DetallesFacturaDTO();
+        d2.setSubtotal(new java.math.BigDecimal("80.00"));
+        d2.setDescripcion("Item B");
+        d2.setFactura(testFactura);
+
+        ArrayList<DetallesFacturaDTO> detalles = new ArrayList<>();
+        detalles.add(d1);
+        detalles.add(d2);
+        testFactura.setDetalles_Factura(detalles);
+        assertTrue(dao.modificar(testFactura) >= 0);
+
+        // Obtenemos para conocer los IDs generados de los detalles
+        FacturasDTO withDetails = dao.obtenerPorId(generateId);
+        assertNotNull(withDetails);
+        assertNotNull(withDetails.getDetalles_Factura());
+        assertEquals(2, withDetails.getDetalles_Factura().size());
+
+        DetallesFacturaDTO ed1 = withDetails.getDetalles_Factura().get(0);
+        DetallesFacturaDTO ed2 = withDetails.getDetalles_Factura().get(1);
+
+        // Preparamos modificación: ed1 se actualiza, ed2 se marca para eliminación lógica
+        ed1.setDescripcion("Item A Mod");
+        ed1.setSubtotal(new java.math.BigDecimal("130.00"));
+        ed1.setFactura(testFactura);
+
+        ed2.setFactura(testFactura);
+        ed2.setFecha_eliminacion(java.time.LocalDateTime.now());
+        ed2.setUsuario_eliminacion(testUsuarioEliminacion);
+
+        // Además, añadimos un nuevo detalle (id null) para que inserte
+        DetallesFacturaDTO d3 = new DetallesFacturaDTO();
+        d3.setDetalle_factura_id(null);
+        d3.setSubtotal(new java.math.BigDecimal("50.00"));
+        d3.setDescripcion("Item C Nuevo");
+        d3.setFactura(testFactura);
+
+        ArrayList<DetallesFacturaDTO> nuevos = new ArrayList<>();
+        nuevos.add(ed1);
+        nuevos.add(ed2);
+        nuevos.add(d3);
+        testFactura.setDetalles_Factura(nuevos);
+
+        assertTrue(dao.modificar(testFactura) >= 0);
+
+        // Verificamos: obtenerPorId debe traer sólo los no eliminados (ed1 modificado y d3 nuevo)
+        FacturasDTO ver = dao.obtenerPorId(generateId);
+        assertNotNull(ver);
+        assertNotNull(ver.getDetalles_Factura());
+        assertEquals(2, ver.getDetalles_Factura().size(), "Debe haber 2 detalles activos tras la modificación");
+        assertTrue(ver.getDetalles_Factura().stream().anyMatch(df -> "Item A Mod".equals(df.getDescripcion())));
+        assertTrue(ver.getDetalles_Factura().stream().anyMatch(df -> "Item C Nuevo".equals(df.getDescripcion())));
+    }
+
+    @Test
+    @Order(9)
+    @DisplayName("Cascada: al eliminar físicamente la factura, se eliminan físicamente sus detalles")
+    void testCascada_EliminarFisico() {
+        // Creamos factura con 2 detalles
+        generateId = dao.insertar(testFactura);
+        assertTrue(generateId > 0);
+        testFactura.setFactura_id(generateId);
+
+        DetallesFacturaDTO d1 = new DetallesFacturaDTO();
+        d1.setSubtotal(new java.math.BigDecimal("10.00"));
+        d1.setDescripcion("Del A");
+        d1.setFactura(testFactura);
+        DetallesFacturaDTO d2 = new DetallesFacturaDTO();
+        d2.setSubtotal(new java.math.BigDecimal("20.00"));
+        d2.setDescripcion("Del B");
+        d2.setFactura(testFactura);
+        ArrayList<DetallesFacturaDTO> detalles = new ArrayList<>();
+        detalles.add(d1); detalles.add(d2);
+        testFactura.setDetalles_Factura(detalles);
+        assertTrue(dao.modificar(testFactura) >= 0);
+
+        // Poblamos la lista con los detalles actuales (necesario para cascada de eliminación)
+        FacturasDTO withDet = dao.obtenerPorId(generateId);
+        assertNotNull(withDet);
+        testFactura.setDetalles_Factura(withDet.getDetalles_Factura());
+
+        // Eliminación física en cascada
+        assertTrue(dao.eliminar(testFactura) > 0);
+        assertNull(dao.obtenerPorId(generateId));
+
+        // Evitar doble delete
+        generateId = 0;
+    }
 
 }

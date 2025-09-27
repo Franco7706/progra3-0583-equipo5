@@ -59,10 +59,13 @@ public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPro
         this.statement.setInt(6,this.detallePropuesta.getCuenta_propia().getCuenta_bancaria_id());
         this.statement.setInt(7,this.detallePropuesta.getDetalle_propuesta_id());
     }
-
+    @Override
+    protected String generarSQLParaEliminacion(){
+        return "DELETE FROM PA_DETALLES_PROPUESTA WHERE PROPUESTA_DE_PAGO_ID=?";
+    }
     @Override
     protected void incluirValorDeParametrosParaEliminacion() throws SQLException{
-        this.statement.setInt(1,this.detallePropuesta.getDetalle_propuesta_id());
+        this.statement.setInt(1,this.detallePropuesta.getPropuesta_pago().getPropuesta_id());
     }
 
     @Override
@@ -293,8 +296,11 @@ public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPro
     }
 
     @Override
-    public Integer eliminar(DetallesPropuestaDTO detallePropuesta) {
-        this.detallePropuesta=detallePropuesta;
+    public Integer eliminarPorPropuesta(Integer propuestaId) {
+        PropuestasPagoDTO propuesta=new PropuestasPagoDTO();
+        propuesta.setPropuesta_id(propuestaId);
+        this.detallePropuesta=new DetallesPropuestaDTO();
+        this.detallePropuesta.setPropuesta_pago(propuesta);
         return super.eliminar();
     }
 

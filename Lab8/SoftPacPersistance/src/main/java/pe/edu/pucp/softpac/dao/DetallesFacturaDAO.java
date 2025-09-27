@@ -10,7 +10,7 @@ public interface DetallesFacturaDAO {
 
     public Integer modificar(DetallesFacturaDTO detallePropuesta);
 
-    public Integer eliminar(DetallesFacturaDTO detallePropuesta);
+    public Integer eliminarPorFactura(Integer facturaId);
 
     public Integer eliminarLogico(DetallesFacturaDTO detalleFactura);
 }
