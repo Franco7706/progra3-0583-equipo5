@@ -99,5 +99,13 @@ public abstract class DBManager {
         return null;
     }
     
-    public abstract String retornarSQLParaUltimoAutoGenerado();
+    public static String retornarSQLParaUltimoAutoGenerado() {
+    if (dbManager instanceof DBManagerMySQL) {
+        return "select @@last_insert_id as id";
+    } else if (dbManager instanceof DBManagerMSSQL) {
+        return "select @@IDENTITY as id";
+    } else {
+        throw new UnsupportedOperationException("Motor de base de datos no soportado");
+    }
+}
 }

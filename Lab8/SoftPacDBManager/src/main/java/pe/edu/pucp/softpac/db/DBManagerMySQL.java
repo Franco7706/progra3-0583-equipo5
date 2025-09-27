@@ -47,8 +47,8 @@ public class DBManagerMySQL extends DBManager {
         }
     }
     
-     @Override
-    public String retornarSQLParaUltimoAutoGenerado() {
-        return "select @@last_insert_id as id";
-    }
+//     @Override
+//    public String retornarSQLParaUltimoAutoGenerado() {
+//        return "select @@last_insert_id as id";
+//    }
 }

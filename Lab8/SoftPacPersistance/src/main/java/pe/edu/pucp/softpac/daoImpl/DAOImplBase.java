@@ -593,7 +593,7 @@ public abstract class DAOImplBase {
     public Integer retornarUltimoAutoGenerado() {
         Integer resultado = null;
         try {
-            String sql = "select @@last_insert_id as id";
+            String sql = DBManager.retornarSQLParaUltimoAutoGenerado();
             this.statement = this.conexion.prepareCall(sql);
             this.resultSet = this.statement.executeQuery();
             if (this.resultSet.next()) {

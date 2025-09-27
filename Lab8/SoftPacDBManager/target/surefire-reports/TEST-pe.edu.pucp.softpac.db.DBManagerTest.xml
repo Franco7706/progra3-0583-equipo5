@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="pe.edu.pucp.softpac.db.DBManagerTest" time="1.369" tests="2" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="pe.edu.pucp.softpac.db.DBManagerTest" time="1.501" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="24"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="user.country" value="ES"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Apache NetBeans\jdk\bin"/>
-    <property name="sun.java.command" value="C:\Users\USUARIO\AppData\Local\Temp\surefire16405374033998354711\surefirebooter-20250927142818124_3.jar C:\Users\USUARIO\AppData\Local\Temp\surefire16405374033998354711 2025-09-27T14-28-18_016-jvmRun1 surefire-20250927142818124_1tmp surefire_0-20250927142818124_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\USUARIO\AppData\Local\Temp\surefire10588518141558422412\surefirebooter-20250927150008158_3.jar C:\Users\USUARIO\AppData\Local\Temp\surefire10588518141558422412 2025-09-27T15-00-08_062-jvmRun1 surefire-20250927150008158_1tmp surefire_0-20250927150008158_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\USUARIO\Desktop\ahora\progra3-0583-equipo5\Lab8\SoftPacDBManager\target\test-classes;C:\Users\USUARIO\Desktop\ahora\progra3-0583-equipo5\Lab8\SoftPacDBManager\target\classes;C:\Users\USUARIO\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.3\junit-jupiter-api-5.10.3.jar;C:\Users\USUARIO\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\USUARIO\.m2\repository\org\junit\platform\junit-platform-commons\1.10.3\junit-platform-commons-1.10.3.jar;C:\Users\USUARIO\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\USUARIO\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.3\junit-jupiter-params-5.10.3.jar;C:\Users\USUARIO\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.3\junit-jupiter-engine-5.10.3.jar;C:\Users\USUARIO\.m2\repository\org\junit\platform\junit-platform-engine\1.10.3\junit-platform-engine-1.10.3.jar;C:\Users\USUARIO\.m2\repository\com\mysql\mysql-connector-j\9.2.0\mysql-connector-j-9.2.0.jar;C:\Users\USUARIO\.m2\repository\com\google\protobuf\protobuf-java\4.29.0\protobuf-java-4.29.0.jar;C:\Users\USUARIO\.m2\repository\commons-codec\commons-codec\1.18.0\commons-codec-1.18.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\USUARIO\AppData\Local\Temp\surefire16405374033998354711\surefirebooter-20250927142818124_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\USUARIO\AppData\Local\Temp\surefire10588518141558422412\surefirebooter-20250927150008158_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="24.0.2+12"/>
@@ -60,7 +60,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="68.0"/>
   </properties>
-  <testcase name="testGetConnection" classname="pe.edu.pucp.softpac.db.DBManagerTest" time="1.349">
+  <testcase name="testGetConnection" classname="pe.edu.pucp.softpac.db.DBManagerTest" time="1.48">
     <system-out><![CDATA[getConnection
 ]]></system-out>
   </testcase>

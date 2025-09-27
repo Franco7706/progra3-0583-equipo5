@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="55.9" tests="9" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="55.341" tests="9" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="24"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="user.country" value="ES"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Apache NetBeans\jdk\bin"/>
-    <property name="sun.java.command" value="C:\Users\USUARIO\AppData\Local\Temp\surefire9261285328838469338\surefirebooter-20250927143446266_3.jar C:\Users\USUARIO\AppData\Local\Temp\surefire9261285328838469338 2025-09-27T14-34-46_162-jvmRun1 surefire-20250927143446266_1tmp surefire_0-20250927143446266_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\USUARIO\AppData\Local\Temp\surefire11570376307240470396\surefirebooter-20250927151414408_3.jar C:\Users\USUARIO\AppData\Local\Temp\surefire11570376307240470396 2025-09-27T15-14-14_302-jvmRun1 surefire-20250927151414408_1tmp surefire_0-20250927151414408_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\USUARIO\Desktop\ahora\progra3-0583-equipo5\Lab8\SoftPacPersistance\target\test-classes;C:\Users\USUARIO\Desktop\ahora\progra3-0583-equipo5\Lab8\SoftPacPersistance\target\classes;C:\Users\USUARIO\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.3\junit-jupiter-api-5.10.3.jar;C:\Users\USUARIO\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\USUARIO\.m2\repository\org\junit\platform\junit-platform-commons\1.10.3\junit-platform-commons-1.10.3.jar;C:\Users\USUARIO\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\USUARIO\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.3\junit-jupiter-params-5.10.3.jar;C:\Users\USUARIO\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.3\junit-jupiter-engine-5.10.3.jar;C:\Users\USUARIO\.m2\repository\org\junit\platform\junit-platform-engine\1.10.3\junit-platform-engine-1.10.3.jar;C:\Users\USUARIO\.m2\repository\pe\edu\pucp\softpac\SoftPacDBManager\1.0-SNAPSHOT\SoftPacDBManager-1.0-SNAPSHOT.jar;C:\Users\USUARIO\.m2\repository\com\mysql\mysql-connector-j\9.2.0\mysql-connector-j-9.2.0.jar;C:\Users\USUARIO\.m2\repository\com\google\protobuf\protobuf-java\4.29.0\protobuf-java-4.29.0.jar;C:\Users\USUARIO\.m2\repository\commons-codec\commons-codec\1.18.0\commons-codec-1.18.0.jar;C:\Users\USUARIO\.m2\repository\pe\edu\pucp\softpac\SoftPacModel\1.0-SNAPSHOT\SoftPacModel-1.0-SNAPSHOT.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\USUARIO\AppData\Local\Temp\surefire9261285328838469338\surefirebooter-20250927143446266_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\USUARIO\AppData\Local\Temp\surefire11570376307240470396\surefirebooter-20250927151414408_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="24.0.2+12"/>
@@ -60,13 +60,13 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="68.0"/>
   </properties>
-  <testcase name="testCascada_EliminarFisico" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="6.28"/>
-  <testcase name="testCascada_InsertarDetalles" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="5.175"/>
-  <testcase name="testCascada_InsertarConDetalles" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="4.38"/>
-  <testcase name="testModificar" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="4.913"/>
-  <testcase name="testEliminar" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="3.685"/>
-  <testcase name="testInsertarYObtenerPorId" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="3.781"/>
-  <testcase name="testEliminarLogico" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="5.749"/>
-  <testcase name="testListarTodos" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="3.542"/>
-  <testcase name="testCascada_Modificar_Actualizar_Insertar_EliminarLogico" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="7.98"/>
+  <testcase name="testCascada_EliminarFisico" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="6.082"/>
+  <testcase name="testCascada_InsertarDetalles" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="5.179"/>
+  <testcase name="testCascada_InsertarConDetalles" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="4.026"/>
+  <testcase name="testModificar" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="4.915"/>
+  <testcase name="testEliminar" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="3.559"/>
+  <testcase name="testInsertarYObtenerPorId" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="3.564"/>
+  <testcase name="testEliminarLogico" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="6.026"/>
+  <testcase name="testListarTodos" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="3.647"/>
+  <testcase name="testCascada_Modificar_Actualizar_Insertar_EliminarLogico" classname="pe.edu.pucp.softpac.dao.FacturasDAOTest" time="8.005"/>
 </testsuite>

@@ -47,9 +47,9 @@ public class DBManagerMSSQL extends DBManager{
     }
     
     
-    @Override
-    public String retornarSQLParaUltimoAutoGenerado() {
-        return "select @@IDENTITY as id";
-    }
+//    @Override
+//    public String retornarSQLParaUltimoAutoGenerado() {
+//        return "select @@IDENTITY as id";
+//    }
     
 }

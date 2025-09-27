@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: pe.edu.pucp.softpac.dao.PropuestasPagoDAOTest
 -------------------------------------------------------------------------------
-Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 78.69 s -- in pe.edu.pucp.softpac.dao.PropuestasPagoDAOTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 76.40 s -- in pe.edu.pucp.softpac.dao.PropuestasPagoDAOTest
