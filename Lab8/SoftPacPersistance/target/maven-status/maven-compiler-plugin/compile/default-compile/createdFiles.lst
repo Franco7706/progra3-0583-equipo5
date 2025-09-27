@@ -1,6 +1,7 @@
 pe\edu\pucp\softpac\daoImpl\DAOImplBase$1.class
 pe\edu\pucp\softpac\daoImpl\util\Columna.class
 pe\edu\pucp\softpac\dao\EntidadesBancariasDAO.class
+pe\edu\pucp\softpac\daoImpl\util\ReporteFacturasPendientesParametrosBuilder.class
 pe\edu\pucp\softpac\daoImpl\DetallesPropuestaDAOImpl.class
 pe\edu\pucp\softpac\dao\AcreedoresDAO.class
 pe\edu\pucp\softpac\dao\CuentasPropiasDAO.class
@@ -18,6 +19,8 @@ pe\edu\pucp\softpac\daoImpl\CuentasPropiasDAOImpl.class
 pe\edu\pucp\softpac\dao\UsuarioPaisAccesoDAO.class
 pe\edu\pucp\softpac\daoImpl\exception\DAODetalleException.class
 pe\edu\pucp\softpac\daoImpl\FacturasDAOImpl.class
+pe\edu\pucp\softpac\daoImpl\util\ReporteFacturasPendientesParametros.class
+pe\edu\pucp\softpac\daoImpl\ReporteFactPendDAOImpl.class
 pe\edu\pucp\softpac\dao\MonedasDAO.class
 pe\edu\pucp\softpac\daoImpl\TiposDeCambioDAOImpl.class
 pe\edu\pucp\softpac\daoImpl\util\Tipo_Query.class
@@ -30,3 +33,4 @@ pe\edu\pucp\softpac\daoImpl\MonedasDAOImpl.class
 pe\edu\pucp\softpac\daoImpl\UsuariosDAOImpl.class
 pe\edu\pucp\softpac\dao\UsuariosDAO.class
 pe\edu\pucp\softpac\daoImpl\EntidadesBancariasDAOImpl.class
+pe\edu\pucp\softpac\dao\ReporteFactPendDAO.class

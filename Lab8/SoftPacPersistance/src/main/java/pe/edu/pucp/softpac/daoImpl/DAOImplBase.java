@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 public abstract class DAOImplBase {
 
@@ -363,7 +364,48 @@ public abstract class DAOImplBase {
             }
         }
     }
+    public void ejecutarProcedimientoAlmacenado(String sql,
+                                                Boolean conTransaccion) {
+        Consumer incluirValorDeParametros = null;
+        Object parametros = null;
+        this.ejecutarProcedimientoAlmacenado(sql, incluirValorDeParametros, parametros, conTransaccion);
+    }
 
+    public void ejecutarProcedimientoAlmacenado(String sql,
+                                                Consumer incluirValorDeParametros,
+                                                Object parametros,
+                                                Boolean conTransaccion) {
+        try {
+            if (conTransaccion) {
+                this.iniciarTransaccion();
+            } else {
+                this.abrirConexion();
+            }
+            this.colocarSQLEnStatement(sql);
+            if (incluirValorDeParametros != null) {
+                incluirValorDeParametros.accept(parametros);
+            }
+            this.ejecutarDMLenBD();
+            if (conTransaccion) {
+                this.commitTransaccion();
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error al intentar ejecutar procedimiento almacenado: " + ex);
+            try {
+                if (conTransaccion) {
+                    this.rollbackTransaccion();
+                }
+            } catch (SQLException ex1) {
+                System.err.println("Error al hacer rollback - " + ex);
+            }
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión - " + ex);
+            }
+        }
+    }
 
     protected String generarSQLParaInsercion() {
         //La sentencia que se generará es similiar a

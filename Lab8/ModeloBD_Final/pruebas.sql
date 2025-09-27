@@ -11,6 +11,8 @@ delete from pa_cuentas_acreedor;
 delete from pa_cuentas_propias;
 delete from pa_acreedores;
 delete from pa_facturas;
+delete from pa_detalles_propuesta;
+delete from pa_detalles_factura;
 SET SQL_SAFE_UPDATES = 0;
 SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION,
                  p.PAIS_ID, p.NOMBRE, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO
