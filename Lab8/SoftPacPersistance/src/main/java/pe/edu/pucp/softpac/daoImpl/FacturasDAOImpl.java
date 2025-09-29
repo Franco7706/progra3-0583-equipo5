@@ -75,7 +75,6 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
         this.statement.setString(9, this.factura.getRegimen_fiscal());
         this.statement.setBigDecimal(10, this.factura.getTasa_iva());
         this.statement.setBigDecimal(11, this.factura.getOtros_tributos());
-        this.statement.setInt(12, this.factura.getMoneda().getMoneda_id());
         this.statement.setInt(13, this.factura.getAcreedor().getAcreedor_id());
         this.statement.setInt(14, this.factura.getFactura_id());
     }

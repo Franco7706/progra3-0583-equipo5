@@ -1,4 +1,52 @@
 -------------------------------------------------------------------------------
 Test set: pe.edu.pucp.softpac.dao.UsuariosDAOTest
 -------------------------------------------------------------------------------
-Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.661 s -- in pe.edu.pucp.softpac.dao.UsuariosDAOTest
+Tests run: 11, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 2.368 s <<< FAILURE! -- in pe.edu.pucp.softpac.dao.UsuariosDAOTest
+pe.edu.pucp.softpac.dao.UsuariosDAOTest.testInsercionConDetalles -- Time elapsed: 0.765 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Debe existir el acceso para el país A ==> expected: not <null>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertNotNull.failNull(AssertNotNull.java:49)
+	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
+	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:312)
+	at pe.edu.pucp.softpac.dao.UsuariosDAOTest.testInsercionConDetalles(UsuariosDAOTest.java:200)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+pe.edu.pucp.softpac.dao.UsuariosDAOTest.testModificacionConDetalles -- Time elapsed: 0.268 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Modificar usuario con detalles debe afectar al menos 1 fila ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at pe.edu.pucp.softpac.dao.UsuariosDAOTest.testModificacionConDetalles(UsuariosDAOTest.java:232)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+pe.edu.pucp.softpac.dao.UsuariosDAOTest.testEliminacionConDetalles -- Time elapsed: 0.148 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Eliminar usuario con detalles debe afectar al menos 1 fila ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at pe.edu.pucp.softpac.dao.UsuariosDAOTest.testEliminacionConDetalles(UsuariosDAOTest.java:262)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+pe.edu.pucp.softpac.dao.UsuariosDAOTest.testObtenerPorIdIncluyeDetalles -- Time elapsed: 0.075 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Debe obtener el usuario ==> expected: not <null>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertNotNull.failNull(AssertNotNull.java:49)
+	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
+	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:312)
+	at pe.edu.pucp.softpac.dao.UsuariosDAOTest.testObtenerPorIdIncluyeDetalles(UsuariosDAOTest.java:293)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+

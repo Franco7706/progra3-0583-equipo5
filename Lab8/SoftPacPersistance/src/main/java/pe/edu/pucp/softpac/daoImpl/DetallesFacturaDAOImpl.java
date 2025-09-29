@@ -44,6 +44,7 @@ public class DetallesFacturaDAOImpl extends DAOImplBase implements DetallesFactu
         this.statement.setString(2,this.detalleFactura.getDescripcion());
         this.statement.setInt(3,this.detalleFactura.getFactura().getFactura_id());
     }
+    
     @Override
     protected void incluirValorDeParametrosParaModificacion() throws SQLException{
         this.statement.setBigDecimal(1,this.detalleFactura.getSubtotal());
