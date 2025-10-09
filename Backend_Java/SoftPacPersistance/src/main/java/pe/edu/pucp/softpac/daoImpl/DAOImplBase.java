@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class DAOImplBase {
@@ -650,4 +651,56 @@ public abstract class DAOImplBase {
     protected void abrirConexion() {
         this.conexion = DBManager.getInstance().getConnection();
     }
+    
+    //NUEVO/////////////////////////////////////////////////////////////////////
+    
+    public List listarTodos() {
+        String sql = null;
+        Consumer incluirValorDeParametros = null;
+        Object parametros = null;
+        return this.listarTodos(sql, incluirValorDeParametros, parametros);
+    }
+
+    public List listarTodos(String sql,
+            Consumer incluirValorDeParametros,
+            Object parametros) {
+        List lista = new ArrayList<>();
+        try {
+            this.abrirConexion();
+            if (sql == null) {
+                sql = this.generarSQLParaListarTodos();
+            }
+            this.colocarSQLEnStatement(sql);
+            if (incluirValorDeParametros != null) {
+                incluirValorDeParametros.accept(parametros);
+            }
+            this.ejecutarSelectEnDB();
+            while (this.resultSet.next()) {
+                agregarObjetoALaLista(lista);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error al intentar listarTodos - " + ex);
+        } finally {
+            try {
+                this.cerrarConexion();
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar la conexión - " + ex);
+            }
+        }
+        return lista;
+    }
+    
+    protected void ejecutarSelectEnDB() throws SQLException {
+        this.resultSet = this.statement.executeQuery();
+    }
+    
+    protected void agregarObjetoALaLista(List lista) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    protected void instanciarObjetoDelResultSet() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    
 }

@@ -52,7 +52,7 @@ public abstract class DBManager {
             this.conexion = DriverManager.getConnection(
                     getURL(),
                     this.usuario,
-                    Cifrado.descifrarMD5(this.contraseña)
+                    this.contraseña
             );
         } catch (ClassNotFoundException | SQLException ex) {
             System.err.println("Error al generar la conexión - " + ex);
