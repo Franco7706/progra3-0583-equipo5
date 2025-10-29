@@ -1,0 +1,64 @@
+-------------------------------------------------------------------------------
+Test set: pe.edu.pucp.softpac.dao.PaisesDAOTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 5, Errors: 0, Skipped: 0, Time elapsed: 0.110 s <<< FAILURE! -- in pe.edu.pucp.softpac.dao.PaisesDAOTest
+pe.edu.pucp.softpac.dao.PaisesDAOTest.testInsertar -- Time elapsed: 0.017 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: El ID insertado debe ser mayor que 0 ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at pe.edu.pucp.softpac.dao.PaisesDAOTest.testInsertar(PaisesDAOTest.java:47)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+pe.edu.pucp.softpac.dao.PaisesDAOTest.testObtenerPorId -- Time elapsed: 0.015 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: El país obtenido no debe ser null ==> expected: not <null>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertNotNull.failNull(AssertNotNull.java:49)
+	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
+	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:312)
+	at pe.edu.pucp.softpac.dao.PaisesDAOTest.testObtenerPorId(PaisesDAOTest.java:58)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+pe.edu.pucp.softpac.dao.PaisesDAOTest.testModificar -- Time elapsed: 0.021 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Modificar debe afectar al menos una fila ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at pe.edu.pucp.softpac.dao.PaisesDAOTest.testModificar(PaisesDAOTest.java:74)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+pe.edu.pucp.softpac.dao.PaisesDAOTest.testListarTodos -- Time elapsed: 0.022 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: La lista debe contener a Perú ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at pe.edu.pucp.softpac.dao.PaisesDAOTest.testListarTodos(PaisesDAOTest.java:90)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+pe.edu.pucp.softpac.dao.PaisesDAOTest.testEliminar -- Time elapsed: 0.028 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Eliminar debe afectar al menos una fila ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at pe.edu.pucp.softpac.dao.PaisesDAOTest.testEliminar(PaisesDAOTest.java:102)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+

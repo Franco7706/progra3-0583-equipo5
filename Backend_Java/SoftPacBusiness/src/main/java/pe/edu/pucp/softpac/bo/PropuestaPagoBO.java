@@ -104,15 +104,12 @@ public class PropuestaPagoBO {
         return propuestasActividad;
     }
     
-    public ArrayList<PropuestasPagoDTO> ListarConFiltros(Integer paisId, Integer bancoId, String estado) {
-        ArrayList<PropuestasPagoDTO> propuestas = (ArrayList<PropuestasPagoDTO>) propuestasDAO.listarConPais();
+    public ArrayList<PropuestasPagoDTO> ListarConFiltros(Integer bancoId, String estado) {
+        ArrayList<PropuestasPagoDTO> propuestas = (ArrayList<PropuestasPagoDTO>) propuestasDAO.listarTodos();
         ArrayList<PropuestasPagoDTO> propuestasFiltros = new ArrayList<>();
         
         for(PropuestasPagoDTO propuesta: propuestas){
-            if((paisId == null || (propuesta.getEntidad_bancaria() != null &&
-                    propuesta.getEntidad_bancaria().getPais() != null &&
-                    propuesta.getEntidad_bancaria().getPais().getPais_id().equals(paisId))) &&
-                    (bancoId == null || (propuesta.getEntidad_bancaria() != null &&
+            if((bancoId == null || (propuesta.getEntidad_bancaria() != null &&
                     propuesta.getEntidad_bancaria().getEntidad_bancaria_id().equals(bancoId))) &&
                     (estado.isEmpty() || propuesta.getEstado().equals(estado))){
                 propuestasFiltros.add(propuesta);

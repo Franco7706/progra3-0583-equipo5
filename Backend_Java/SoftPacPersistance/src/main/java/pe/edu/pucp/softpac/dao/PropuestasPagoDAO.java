@@ -13,7 +13,7 @@ public interface PropuestasPagoDAO {
     
     public List<PropuestasPagoDTO> listarTodos();
     
-    public List<PropuestasPagoDTO> listarConPais();
+    //public List<PropuestasPagoDTO> listarConPais();
     
     public Integer modificar(PropuestasPagoDTO propuestaPago);
     

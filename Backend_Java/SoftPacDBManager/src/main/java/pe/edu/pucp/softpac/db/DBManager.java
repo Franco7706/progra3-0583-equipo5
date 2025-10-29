@@ -11,7 +11,7 @@ import pe.edu.pucp.softpac.db.util.MotorDeBaseDeDatos;
 
 public abstract class DBManager {
 
-    protected static final String ARCHIVO_CONFIGURACION = "jdbc2.properties";   //CAMBIO
+    protected static final String ARCHIVO_CONFIGURACION = "jdbc.properties";   //CAMBIO
 
     private Connection conexion;
     protected String driver;
@@ -69,7 +69,8 @@ public abstract class DBManager {
             String nmArchivoConf = "/" + ARCHIVO_CONFIGURACION;
             properties.load(this.getClass().getResourceAsStream(nmArchivoConf));
             this.base_de_datos = properties.getProperty("base_de_datos");
-            this.contraseña = Cifrado.descifrarMD5(properties.getProperty("contrasenha")); //CAMBIO
+            //this.contraseña = Cifrado.descifrarMD5(properties.getProperty("contrasenha")); //CAMBIO
+            this.contraseña = properties.getProperty("contrasenha");
             
         } catch (FileNotFoundException ex) {
             System.err.println("Error al leer el archivo de propiedades - " + ex);

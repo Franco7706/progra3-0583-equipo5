@@ -367,20 +367,20 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         }
     }
     
-    @Override
-    protected String generarSQLCustom1() {
-        return "SELECT p.PROPUESTA_DE_PAGO_ID, p.FECHA_HORA_CREACION, p.ESTADO, p.ENTIDAD_BANCARIA_ID, e.PAIS_ID\n" +
-                "FROM pa_propuestas_de_pago p join pa_entidades_bancarias e on e.ENTIDAD_BANCARIA_ID = p.ENTIDAD_BANCARIA_ID\n" +
-                "WHERE p.ENTIDAD_BANCARIA_ID = 1;";
-    }
+//    @Override
+//    protected String generarSQLCustom1() {
+//        return "SELECT p.PROPUESTA_DE_PAGO_ID, p.FECHA_HORA_CREACION, p.ESTADO, p.ENTIDAD_BANCARIA_ID, e.PAIS_ID\n" +
+//                "FROM pa_propuestas_de_pago p join pa_entidades_bancarias e on e.ENTIDAD_BANCARIA_ID = p.ENTIDAD_BANCARIA_ID\n" +
+//                "WHERE p.ENTIDAD_BANCARIA_ID = 1;";
+//    }
     
 
-    @Override
-    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException{
-        this.statement.setTimestamp(1,Timestamp.valueOf(this.propuestaPago.getFecha_eliminacion()));
-        this.statement.setInt(2,this.propuestaPago.getUsuario_eliminacion().getUsuario_id());
-        this.statement.setInt(3,this.propuestaPago.getPropuesta_id());
-    }
+//    @Override
+//    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException{
+//        this.statement.setTimestamp(1,Timestamp.valueOf(this.propuestaPago.getFecha_eliminacion()));
+//        this.statement.setInt(2,this.propuestaPago.getUsuario_eliminacion().getUsuario_id());
+//        this.statement.setInt(3,this.propuestaPago.getPropuesta_id());
+//    }
 
     @Override
     public Integer insertar(PropuestasPagoDTO propuestaPago) {
@@ -402,31 +402,31 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         return propuestasPago;
     }
 
-    @Override
-    public List<PropuestasPagoDTO> listarConPais() {
-        super.queryCustom1();
-        return propuestasPago;
-    }
+//    @Override
+//    public List<PropuestasPagoDTO> listarConPais() {
+//        super.queryCustom1();
+//        return propuestasPago;
+//    }
 
-    @Override
-    protected void extraerResultSetCustom1() throws SQLException {
-        propuestasPago=new ArrayList<>();
-        EntidadesBancariasDTO entidadBancaria=null;
-        while(this.resultSet.next()){
-            PropuestasPagoDTO p=new PropuestasPagoDTO();
-            p.setPropuesta_id(this.resultSet.getInt(1));
-            p.setFecha_hora_creacion(this.resultSet.getTimestamp(2).toLocalDateTime());
-            p.setEstado(this.resultSet.getString(3));
-            entidadBancaria=new EntidadesBancariasDTO();
-            entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(4));
-            /*Añadido*/
-            PaisesDTO pais = new PaisesDTO();
-            pais.setPais_id(this.resultSet.getInt(5));
-            entidadBancaria.setPais(pais);
-            p.setEntidad_bancaria(entidadBancaria);
-            propuestasPago.add(p);
-        }
-    }
+//    @Override
+//    protected void extraerResultSetCustom1() throws SQLException {
+//        propuestasPago=new ArrayList<>();
+//        EntidadesBancariasDTO entidadBancaria=null;
+//        while(this.resultSet.next()){
+//            PropuestasPagoDTO p=new PropuestasPagoDTO();
+//            p.setPropuesta_id(this.resultSet.getInt(1));
+//            p.setFecha_hora_creacion(this.resultSet.getTimestamp(2).toLocalDateTime());
+//            p.setEstado(this.resultSet.getString(3));
+//            entidadBancaria=new EntidadesBancariasDTO();
+//            entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(4));
+//            /*Añadido*/
+//            PaisesDTO pais = new PaisesDTO();
+//            pais.setPais_id(this.resultSet.getInt(5));
+//            entidadBancaria.setPais(pais);
+//            p.setEntidad_bancaria(entidadBancaria);
+//            propuestasPago.add(p);
+//        }
+//    }
     
     @Override
     public Integer modificar(PropuestasPagoDTO propuestaPago) {
