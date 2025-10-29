@@ -1,0 +1,13 @@
+pe\edu\pucp\transisoft\persistance\softpacws\PaisesWS.class
+pe\edu\pucp\transisoft\persistance\softpacws\CuentasAcreedorWS.class
+pe\edu\pucp\transisoft\persistance\softpacws\JakartaRestConfiguration.class
+pe\edu\pucp\transisoft\persistance\softpacws\EntidadesBancariasWS.class
+pe\edu\pucp\transisoft\persistance\softpacws\CuentasPropiasWS.class
+pe\edu\pucp\transisoft\persistance\softpacws\resources\JakartaEE10Resource.class
+pe\edu\pucp\transisoft\persistance\softpacws\TiposDeCambioWS.class
+pe\edu\pucp\transisoft\persistance\softpacws\AcreedoresWS.class
+pe\edu\pucp\transisoft\persistance\softpacws\FacturasWS.class
+pe\edu\pucp\transisoft\persistance\softpacws\PropuestaPagoWS.class
+pe\edu\pucp\transisoft\persistance\softpacws\ReporteFactPendWS.class
+pe\edu\pucp\transisoft\persistance\softpacws\MonedasWS.class
+pe\edu\pucp\transisoft\persistance\softpacws\UsuariosWS.class
