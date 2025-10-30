@@ -6,6 +6,7 @@ pe\edu\pucp\softpac\bo\CuentasPropiasBO.class
 pe\edu\pucp\softpac\bo\UsuariosBO.class
 pe\edu\pucp\softpac\bo\ReporteFactPendBO.class
 pe\edu\pucp\softpac\bo\MonedasBO.class
+pe\edu\pucp\softpac\bo\util\PasswordUtil.class
 pe\edu\pucp\softpac\bo\AcreedoresBO.class
 pe\edu\pucp\softpac\bo\EntidadesBancariasBO.class
 pe\edu\pucp\softpac\bo\PropuestaPagoBO.class
