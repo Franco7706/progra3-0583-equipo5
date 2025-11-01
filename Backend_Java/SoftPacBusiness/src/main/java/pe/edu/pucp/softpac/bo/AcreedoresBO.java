@@ -1,8 +1,8 @@
 
 package pe.edu.pucp.softpac.bo;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import pe.edu.pucp.softpac.dao.AcreedoresDAO;
 import pe.edu.pucp.softpac.daoImpl.AcreedoresDAOImpl;
 import pe.edu.pucp.softpac.model.AcreedoresDTO;
@@ -63,7 +63,7 @@ public class AcreedoresBO {
            throw new IllegalArgumentException("El acreedor no existe o no tiene ID válido.");
        }
 
-       acreedor.setFecha_eliminacion(LocalDateTime.now());
+       acreedor.setFecha_eliminacion(new Date());
        acreedor.setUsuario_eliminacion(usuarioActual);
        
        return acreedorDAO.eliminarLogico(acreedor);

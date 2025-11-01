@@ -80,7 +80,7 @@ public class DetallesFacturaDAOImpl extends DAOImplBase implements DetallesFactu
 
     @Override
     protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
-        this.statement.setTimestamp(1, Timestamp.valueOf(this.detalleFactura.getFecha_eliminacion()));
+        this.statement.setTimestamp(1, new Timestamp(this.detalleFactura.getFecha_eliminacion().getTime()));
         this.statement.setInt(2,this.detalleFactura.getUsuario_eliminacion().getUsuario_id());
         this.statement.setInt(3,this.detalleFactura.getDetalle_factura_id());
     }

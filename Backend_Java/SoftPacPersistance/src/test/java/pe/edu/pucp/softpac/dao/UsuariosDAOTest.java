@@ -7,6 +7,7 @@ import pe.edu.pucp.softpac.model.UsuarioPaisAccesoDTO;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -150,7 +151,7 @@ public class UsuariosDAOTest {
     @DisplayName("Contrato: debe eliminar un usuario")
     void testEliminarLogico() {
         dao.insertar(testUsuario);
-        testUsuario.setFecha_eliminacion(LocalDateTime.now());
+        testUsuario.setFecha_eliminacion(new Date());
         testUsuario.setUsuario_eliminacion(testUsuarioEliminacion);
         int resultado = dao.eliminarLogico(testUsuario);
         assertTrue(resultado > 0);

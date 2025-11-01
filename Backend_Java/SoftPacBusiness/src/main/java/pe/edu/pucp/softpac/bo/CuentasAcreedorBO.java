@@ -1,13 +1,10 @@
 package pe.edu.pucp.softpac.bo;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import pe.edu.pucp.softpac.dao.CuentasAcreedorDAO;
 import pe.edu.pucp.softpac.daoImpl.CuentasAcreedorDAOImpl;
-import pe.edu.pucp.softpac.model.AcreedoresDTO;
 import pe.edu.pucp.softpac.model.CuentasAcreedorDTO;
-import pe.edu.pucp.softpac.model.EntidadesBancariasDTO;
-import pe.edu.pucp.softpac.model.MonedasDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 public class CuentasAcreedorBO {
@@ -60,7 +57,7 @@ public class CuentasAcreedorBO {
     }
     
     public Integer eliminarLogico(CuentasAcreedorDTO cuenta, UsuariosDTO usuarioActual){
-        cuenta.setFecha_eliminacion(LocalDateTime.now());
+        cuenta.setFecha_eliminacion(new Date());
         cuenta.setUsuario_eliminacion(usuarioActual);
         return cuentaAcreedorDAO.eliminarLogico(cuenta);
     }

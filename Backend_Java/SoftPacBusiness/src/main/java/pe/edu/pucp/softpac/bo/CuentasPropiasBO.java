@@ -1,8 +1,8 @@
 package pe.edu.pucp.softpac.bo;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import pe.edu.pucp.softpac.dao.CuentasPropiasDAO;
 import pe.edu.pucp.softpac.daoImpl.CuentasPropiasDAOImpl;
 import pe.edu.pucp.softpac.model.CuentasPropiasDTO;
@@ -116,7 +116,7 @@ public class CuentasPropiasBO {
             throw new IllegalArgumentException("El usuario actual es obligatorio.");
         }
         
-        cuenta.setFecha_eliminacion(LocalDateTime.now());
+        cuenta.setFecha_eliminacion(new Date());
         cuenta.setUsuario_eliminacion(usuarioActual);
         
         return cuentasPropiasDAO.eliminarLogico(cuenta);

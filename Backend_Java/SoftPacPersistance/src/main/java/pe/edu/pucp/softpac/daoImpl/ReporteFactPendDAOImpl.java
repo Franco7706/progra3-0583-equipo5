@@ -141,7 +141,7 @@ public class ReporteFactPendDAOImpl extends DAOImplBase implements ReporteFactPe
       FacturasDTO factura = new FacturasDTO();
       factura.setFactura_id(this.resultSet.getInt("FACTURA_ID"));
       factura.setNumero_factura(this.resultSet.getString("NUMERO_FACTURA"));
-      factura.setFecha_limite_pago(this.resultSet.getTimestamp("FECHA_LIMITE_PAGO").toLocalDateTime());
+      factura.setFecha_limite_pago(this.resultSet.getTime("FECHA_LIMITE_PAGO"));
       this.reporte.setFactura(factura);
 
     }

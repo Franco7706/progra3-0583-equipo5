@@ -78,7 +78,7 @@ public class ReportePropPagoDAOImpl extends DAOImplBase implements ReportePropPa
                 propuesta = new ReportePropPagoDTO();
                 propuesta.setIdPropuesta(idPropuesta);
                 propuesta.setEstado(resultSet.getString("estado"));
-                propuesta.setFechaCreacion(resultSet.getTimestamp("fechaCreacion").toLocalDateTime());
+                propuesta.setFechaCreacion(resultSet.getTime("fechaCreacion"));
                 propuesta.setUsuarioCreador(resultSet.getString("usuarioCreador"));
                 propuesta.setCorreoUsuarioCreador(resultSet.getString("correoUsuarioCreador"));
                 propuesta.setPais(resultSet.getString("pais"));

@@ -4,7 +4,7 @@ import jakarta.jws.WebService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 import pe.edu.pucp.softpac.bo.TiposDeCambioBO;
 import pe.edu.pucp.softpac.model.TiposDeCambioDTO;
 
@@ -19,7 +19,7 @@ public class TiposDeCambioWS {
     
     @WebMethod(operationName = "insertarTipoDeCambio")
     public Integer insertarTipoDeCambio(
-            @WebParam(name = "fecha") LocalDateTime fecha,
+            @WebParam(name = "fecha") Date fecha,
             @WebParam(name = "tasa_de_cambio") BigDecimal tasa_de_cambio,
             @WebParam(name = "moneda_origen_id") Integer moneda_origen_id,
             @WebParam(name = "moneda_destino_id") Integer moneda_destino_id) {
@@ -30,7 +30,7 @@ public class TiposDeCambioWS {
     @WebMethod(operationName = "modificarTipoDeCambio")
     public Integer modificarTipoDeCambio(
             @WebParam(name = "tipo_cambio_id") Integer tipo_cambio_id,
-            @WebParam(name = "fecha") LocalDateTime fecha,
+            @WebParam(name = "fecha") Date fecha,
             @WebParam(name = "tasa_de_cambio") BigDecimal tasa_de_cambio,
             @WebParam(name = "moneda_origen_id") Integer moneda_origen_id,
             @WebParam(name = "moneda_destino_id") Integer moneda_destino_id) {

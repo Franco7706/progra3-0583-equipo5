@@ -154,7 +154,7 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
 
     @Override
     protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
-        this.statement.setTimestamp(1, Timestamp.valueOf(this.cuentaAcreedor.getFecha_eliminacion()));
+        this.statement.setTimestamp(1, new Timestamp(this.cuentaAcreedor.getFecha_eliminacion().getTime()));
         this.statement.setInt(2,this.cuentaAcreedor.getUsuario_eliminacion().getUsuario_id());
         this.statement.setInt(3,this.cuentaAcreedor.getCuenta_bancaria_id());
     }

@@ -3,7 +3,6 @@ package pe.edu.pucp.softpac.daoImpl;
 import java.util.ArrayList;
 
 import pe.edu.pucp.softpac.dao.DetallesFacturaDAO;
-import pe.edu.pucp.softpac.dao.DetallesPropuestaDAO;
 import pe.edu.pucp.softpac.dao.FacturasDAO;
 import pe.edu.pucp.softpac.daoImpl.exception.DAODetalleException;
 import pe.edu.pucp.softpac.model.FacturasDTO;
@@ -48,9 +47,9 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     @Override
     protected void incluirValorDeParametrosParaInsercion() throws SQLException {
         this.statement.setString(1, this.factura.getNumero_factura());
-        this.statement.setTimestamp(2,Timestamp.valueOf(this.factura.getFecha_emision()));
-        this.statement.setTimestamp(3,Timestamp.valueOf(this.factura.getFecha_recepcion()));
-        this.statement.setTimestamp(4,Timestamp.valueOf(this.factura.getFecha_limite_pago()));
+        this.statement.setTimestamp(2,new Timestamp(this.factura.getFecha_emision().getTime()));
+        this.statement.setTimestamp(3,new Timestamp(this.factura.getFecha_recepcion().getTime()));
+        this.statement.setTimestamp(4,new Timestamp(this.factura.getFecha_limite_pago().getTime()));
         this.statement.setString(5, this.factura.getEstado());
         this.statement.setBigDecimal(6, this.factura.getMonto_total());
         this.statement.setBigDecimal(7, this.factura.getMonto_igv());
@@ -65,9 +64,9 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     @Override
     protected void incluirValorDeParametrosParaModificacion() throws SQLException {
         this.statement.setString(1, this.factura.getNumero_factura());
-        this.statement.setTimestamp(2,Timestamp.valueOf(this.factura.getFecha_emision()));
-        this.statement.setTimestamp(3,Timestamp.valueOf(this.factura.getFecha_recepcion()));
-        this.statement.setTimestamp(4,Timestamp.valueOf(this.factura.getFecha_limite_pago()));
+        this.statement.setTimestamp(2,new Timestamp(this.factura.getFecha_emision().getTime()));
+        this.statement.setTimestamp(3,new Timestamp(this.factura.getFecha_recepcion().getTime()));
+        this.statement.setTimestamp(4,new Timestamp(this.factura.getFecha_limite_pago().getTime()));
         this.statement.setString(5, this.factura.getEstado());
         this.statement.setBigDecimal(6, this.factura.getMonto_total());
         this.statement.setBigDecimal(7, this.factura.getMonto_igv());
@@ -141,9 +140,9 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
                 this.factura = new FacturasDTO();
                 this.factura.setFactura_id(this.resultSet.getInt(1));
                 this.factura.setNumero_factura(this.resultSet.getString(2));
-                this.factura.setFecha_emision(this.resultSet.getTimestamp(3).toLocalDateTime());
-                this.factura.setFecha_recepcion(this.resultSet.getTimestamp(4).toLocalDateTime());
-                this.factura.setFecha_limite_pago(this.resultSet.getTimestamp(5).toLocalDateTime());
+                this.factura.setFecha_emision(this.resultSet.getTime(3));
+                this.factura.setFecha_recepcion(this.resultSet.getTime(4));
+                this.factura.setFecha_limite_pago(this.resultSet.getTime(5));
                 this.factura.setEstado(this.resultSet.getString(6));
                 this.factura.setMonto_total(this.resultSet.getBigDecimal(7));
                 this.factura.setMonto_igv(this.resultSet.getBigDecimal(8));
@@ -190,9 +189,9 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
             FacturasDTO f = new FacturasDTO();
             f.setFactura_id(this.resultSet.getInt(1));
             f.setNumero_factura(this.resultSet.getString(2));
-            f.setFecha_emision(this.resultSet.getTimestamp(3).toLocalDateTime());
-            f.setFecha_recepcion(this.resultSet.getTimestamp(4).toLocalDateTime());
-            f.setFecha_limite_pago(this.resultSet.getTimestamp(5).toLocalDateTime());
+            f.setFecha_emision(this.resultSet.getTime(3));
+            f.setFecha_recepcion(this.resultSet.getTime(4));
+            f.setFecha_limite_pago(this.resultSet.getTime(5));
             f.setEstado(this.resultSet.getString(6));
             f.setMonto_total(this.resultSet.getBigDecimal(7));
             f.setMonto_igv(this.resultSet.getBigDecimal(8));
@@ -212,7 +211,7 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
 
     @Override
     protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
-        this.statement.setTimestamp(1,Timestamp.valueOf(this.factura.getFecha_eliminacion()));
+        this.statement.setTimestamp(1,new Timestamp(this.factura.getFecha_eliminacion().getTime()));
         this.statement.setInt(2,this.factura.getUsuario_eliminacion().getUsuario_id());
         this.statement.setInt(3,this.factura.getFactura_id());
     }

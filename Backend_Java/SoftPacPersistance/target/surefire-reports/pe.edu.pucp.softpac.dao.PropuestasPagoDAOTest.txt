@@ -1,16 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: pe.edu.pucp.softpac.dao.PropuestasPagoDAOTest
 -------------------------------------------------------------------------------
-Tests run: 10, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.495 s <<< FAILURE! -- in pe.edu.pucp.softpac.dao.PropuestasPagoDAOTest
-pe.edu.pucp.softpac.dao.PropuestasPagoDAOTest.testEliminarLogico -- Time elapsed: 0.080 s <<< ERROR!
-java.lang.UnsupportedOperationException: Not supported yet.
-	at pe.edu.pucp.softpac.daoImpl.DAOImplBase.incluirValorDeParametrosParaEliminacionLogica(DAOImplBase.java:584)
-	at pe.edu.pucp.softpac.daoImpl.DAOImplBase.incluirValorDeParametrosParaDML(DAOImplBase.java:188)
-	at pe.edu.pucp.softpac.daoImpl.DAOImplBase.ejecuta_DML(DAOImplBase.java:259)
-	at pe.edu.pucp.softpac.daoImpl.DAOImplBase.eliminarLogico(DAOImplBase.java:104)
-	at pe.edu.pucp.softpac.daoImpl.PropuestasPagoDAOImpl.eliminarLogico(PropuestasPagoDAOImpl.java:446)
-	at pe.edu.pucp.softpac.dao.PropuestasPagoDAOTest.testEliminarLogico(PropuestasPagoDAOTest.java:323)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 74.59 s -- in pe.edu.pucp.softpac.dao.PropuestasPagoDAOTest

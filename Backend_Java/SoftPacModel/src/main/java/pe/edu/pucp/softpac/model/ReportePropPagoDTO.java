@@ -4,7 +4,7 @@
  */
 package pe.edu.pucp.softpac.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ReportePropPagoDTO {
     private int idPropuesta;
     private String estado;
-    private LocalDateTime fechaCreacion;
+    private Date fechaCreacion;
     private String usuarioCreador;
     private String correoUsuarioCreador;
     private String pais;
@@ -51,11 +51,11 @@ public class ReportePropPagoDTO {
         this.estado = estado;
     }
 
-    public LocalDateTime getFechaCreacion() {
+    public Date getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+    public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

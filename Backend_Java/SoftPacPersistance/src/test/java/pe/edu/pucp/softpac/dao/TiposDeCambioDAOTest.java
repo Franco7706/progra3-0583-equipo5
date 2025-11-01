@@ -9,6 +9,7 @@ import pe.edu.pucp.softpac.model.TiposDeCambioDTO;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,7 +49,7 @@ public class TiposDeCambioDAOTest {
         dao = new TiposDeCambioDAOImpl();
 
         testTipoCambio = new TiposDeCambioDTO();
-        testTipoCambio.setFecha(LocalDateTime.now());
+        testTipoCambio.setFecha(new Date(2025,11,1,15,9));
         testTipoCambio.setTasa_de_cambio(BigDecimal.valueOf(3.50));
         testTipoCambio.setMoneda_origen(monedaOrigen);
         testTipoCambio.setMoneda_destino(monedaDestino);

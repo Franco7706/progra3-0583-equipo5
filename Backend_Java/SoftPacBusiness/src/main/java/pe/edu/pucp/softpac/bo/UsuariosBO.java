@@ -1,7 +1,7 @@
 package pe.edu.pucp.softpac.bo;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,7 +10,6 @@ import pe.edu.pucp.softpac.dao.UsuarioPaisAccesoDAO;
 import pe.edu.pucp.softpac.dao.UsuariosDAO;
 import pe.edu.pucp.softpac.daoImpl.UsuarioPaisAccesoDAOImpl;
 import pe.edu.pucp.softpac.daoImpl.UsuariosDAOImpl;
-import pe.edu.pucp.softpac.db.util.Cifrado;
 import pe.edu.pucp.softpac.model.PaisesDTO;
 import pe.edu.pucp.softpac.model.UsuarioPaisAccesoDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
@@ -140,7 +139,7 @@ public class UsuariosBO {
     
     public Integer eliminarUsuario(UsuariosDTO usuario, UsuariosDTO usuarioActual){
         
-        usuario.setFecha_eliminacion(LocalDateTime.now());
+        usuario.setFecha_eliminacion(new Date());
         usuario.setUsuario_eliminacion(usuarioActual);
         
         return usuariosDAO.eliminarLogico(usuario);
