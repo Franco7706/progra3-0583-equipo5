@@ -1,5 +1,6 @@
 pe\edu\pucp\transisoft\persistance\softpacws\PaisesWS.class
 pe\edu\pucp\transisoft\persistance\softpacws\CuentasAcreedorWS.class
+pe\edu\pucp\transisoft\persistance\softpacws\ReportePropPagoWS.class
 pe\edu\pucp\transisoft\persistance\softpacws\JakartaRestConfiguration.class
 pe\edu\pucp\transisoft\persistance\softpacws\EntidadesBancariasWS.class
 pe\edu\pucp\transisoft\persistance\softpacws\CuentasPropiasWS.class

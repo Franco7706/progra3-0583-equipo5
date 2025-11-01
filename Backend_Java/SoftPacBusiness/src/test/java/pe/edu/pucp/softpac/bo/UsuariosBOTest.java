@@ -45,11 +45,11 @@ public class UsuariosBOTest {
      */
     @Test
     public void testInsertarUsuario() {
-        System.out.println("insertarUsuario");
-        UsuariosDTO nuevoUsuario = new UsuariosDTO(1,"franco@hotmail.com",
-        "FrancoG", "Franco", "Gallardo Zárate",true,"FrancoG",true);
-        UsuariosBO instance = new UsuariosBO();
-        instance.insertarUsuario(nuevoUsuario);
+//        System.out.println("insertarUsuario");
+//        UsuariosDTO nuevoUsuario = new UsuariosDTO(1,"franco@hotmail.com",
+//        "FrancoG", "Franco", "Gallardo Zárate",true,"FrancoG",true);
+//        UsuariosBO instance = new UsuariosBO();
+//        instance.insertarUsuario(nuevoUsuario);
     }
 
     

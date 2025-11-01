@@ -88,13 +88,8 @@ public class ReporteFactPendDAOImpl extends DAOImplBase implements ReporteFactPe
         sql = sql.concat("r.RAZON_SOCIAL ");
 
         sql = sql.concat("FROM PA_REPORTES_FACTURAS r ");
-        sql = sql.concat("JOIN PA_FACTURAS f ON f.FACTURA_ID = r.FACTURA_ID ");
-        sql = sql.concat("JOIN PA_ACREEDORES a ON a.ACREEDOR_ID = f.ACREEDOR_ID ");
-        sql = sql.concat("JOIN PA_PAISES p ON p.PAIS_ID = a.PAIS_ID ");
-        sql = sql.concat("JOIN PA_MONEDAS m ON m.MONEDA_ID = f.MONEDA_ID ");
 
-        sql = sql.concat("WHERE 1=1 ");
-        sql = sql.concat("AND r.ACREEDOR_ID = ? ");
+        sql = sql.concat("WHERE r.ACREEDOR_ID = ? ");
         sql = sql.concat("AND r.PAIS_ID = ? ");
         sql = sql.concat("AND r.MONEDA_ID = ? ");
 
