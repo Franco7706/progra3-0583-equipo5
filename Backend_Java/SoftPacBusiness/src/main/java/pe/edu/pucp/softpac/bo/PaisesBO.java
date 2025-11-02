@@ -18,4 +18,8 @@ public class PaisesBO {
         return (ArrayList<PaisesDTO>) this.paisDAO.listarTodos();
     }
     
+    public PaisesDTO obtenerPorId(Integer pais_id){
+        return this.paisDAO.obtenerPorId(pais_id);
+    }
+    
 }

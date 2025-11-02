@@ -1,12 +1,12 @@
 
 package pe.edu.pucp.softpac.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public abstract class EliminableDTOBase {
     
     private UsuariosDTO usuario_eliminacion;
-    private LocalDateTime fecha_eliminacion;
+    private Date fecha_eliminacion;
     
     public EliminableDTOBase(){
         usuario_eliminacion = null;
@@ -35,14 +35,14 @@ public abstract class EliminableDTOBase {
     /**
      * @return the fecha_eliminacion
      */
-    public LocalDateTime getFecha_eliminacion() {
+    public Date getFecha_eliminacion() {
         return fecha_eliminacion;
     }
 
     /**
      * @param fecha_eliminacion the fecha_eliminacion to set
      */
-    public void setFecha_eliminacion(LocalDateTime fecha_eliminacion) {
+    public void setFecha_eliminacion(Date fecha_eliminacion) {
         this.fecha_eliminacion = fecha_eliminacion;
     }
      

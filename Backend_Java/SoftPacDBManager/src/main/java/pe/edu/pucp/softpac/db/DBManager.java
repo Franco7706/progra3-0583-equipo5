@@ -69,9 +69,8 @@ public abstract class DBManager {
             String nmArchivoConf = "/" + ARCHIVO_CONFIGURACION;
             properties.load(this.getClass().getResourceAsStream(nmArchivoConf));
             this.base_de_datos = properties.getProperty("base_de_datos");
-            //this.contraseña = Cifrado.descifrarMD5(properties.getProperty("contrasenha")); //CAMBIO
+            //this.contraseña = Cifrado.descifrarMD5(properties.getProperty("contrasenha"));
             this.contraseña = properties.getProperty("contrasenha");
-            
         } catch (FileNotFoundException ex) {
             System.err.println("Error al leer el archivo de propiedades - " + ex);
         } catch (IOException ex) {

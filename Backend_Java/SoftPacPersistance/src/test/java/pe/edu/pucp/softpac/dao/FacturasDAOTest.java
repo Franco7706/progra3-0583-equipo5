@@ -12,6 +12,7 @@ import pe.edu.pucp.softpac.model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -122,9 +123,9 @@ public class FacturasDAOTest {
         testFactura.setFactura_id(0);
 
         testFactura.setNumero_factura("F001-TEST-" + System.nanoTime());
-        testFactura.setFecha_emision(LocalDateTime.of(2025, 1, 10, 9, 0, 0));
-        testFactura.setFecha_recepcion(LocalDateTime.of(2025, 1, 11, 10, 30, 0));
-        testFactura.setFecha_limite_pago(LocalDateTime.of(2025, 2, 10, 23, 59, 0));
+        testFactura.setFecha_emision(new Date(2025, 1, 10, 9, 0, 0));
+        testFactura.setFecha_recepcion(new Date(2025, 1, 11, 10, 30, 0));
+        testFactura.setFecha_limite_pago(new Date(2025, 2, 10, 23, 59, 0));
         testFactura.setEstado("PENDIENTE");
         testFactura.setMonto_total(montoTotal);
         testFactura.setMonto_igv(montoIgv);
@@ -234,7 +235,7 @@ public class FacturasDAOTest {
         assertTrue(generateId > 0);
 
         testFactura.setFactura_id(generateId);
-        testFactura.setFecha_eliminacion(LocalDateTime.now());
+        testFactura.setFecha_eliminacion(new Date());
         testFactura.setUsuario_eliminacion(testUsuarioEliminacion);
 
         Integer res = dao.eliminarLogico(testFactura);
@@ -360,7 +361,7 @@ public class FacturasDAOTest {
         ed1.setFactura(testFactura);
 
         ed2.setFactura(testFactura);
-        ed2.setFecha_eliminacion(java.time.LocalDateTime.now());
+        ed2.setFecha_eliminacion(new Date());
         ed2.setUsuario_eliminacion(testUsuarioEliminacion);
 
         // Además, añadimos un nuevo detalle (id null) para que inserte

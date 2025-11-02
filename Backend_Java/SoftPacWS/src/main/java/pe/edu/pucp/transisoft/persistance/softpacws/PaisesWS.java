@@ -7,6 +7,7 @@ import jakarta.xml.ws.WebServiceException;
 import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.softpac.bo.PaisesBO;
+import pe.edu.pucp.softpac.model.MonedasDTO;
 import pe.edu.pucp.softpac.model.PaisesDTO;
 
 
@@ -26,5 +27,11 @@ public class PaisesWS {
     public ArrayList<PaisesDTO> listarPaises() {
         return paisesBO.listarTodos();
     }
+    
+    @WebMethod(operationName = "obtenerPaisPorId")
+    public PaisesDTO obtenerPaisPorId(@WebParam(name = "pais_id") Integer pais_id) {
+        return this.paisesBO.obtenerPorId(pais_id);
+    }
+    
     
 }

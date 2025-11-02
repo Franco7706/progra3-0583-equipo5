@@ -2,7 +2,7 @@
 package pe.edu.pucp.softpac.bo;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 import pe.edu.pucp.softpac.dao.TiposDeCambioDAO;
 import pe.edu.pucp.softpac.daoImpl.TiposDeCambioDAOImpl;
 import pe.edu.pucp.softpac.model.MonedasDTO;
@@ -15,7 +15,7 @@ public class TiposDeCambioBO {
         tiposDeCambioDAO = new TiposDeCambioDAOImpl();
     }
     
-    public Integer insertar(LocalDateTime fecha, BigDecimal tasa_de_cambio, 
+    public Integer insertar(Date fecha, BigDecimal tasa_de_cambio, 
             Integer moneda_origen_id, Integer moneda_destino_id){
         if (fecha == null) {
             throw new IllegalArgumentException("La fecha es obligatoria");
@@ -48,7 +48,7 @@ public class TiposDeCambioBO {
         
     }
     
-    public Integer modificar(Integer tipo_cambio_id, LocalDateTime fecha, BigDecimal tasa_de_cambio, 
+    public Integer modificar(Integer tipo_cambio_id, Date fecha, BigDecimal tasa_de_cambio, 
             Integer moneda_origen_id, Integer moneda_destino_id){
         TiposDeCambioDTO tiposDeCambioDTO = new TiposDeCambioDTO();
         tiposDeCambioDTO.setTipo_cambio_id(tipo_cambio_id);

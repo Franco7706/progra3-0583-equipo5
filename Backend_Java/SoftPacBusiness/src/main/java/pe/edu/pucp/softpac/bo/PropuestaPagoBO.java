@@ -1,10 +1,17 @@
 package pe.edu.pucp.softpac.bo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import pe.edu.pucp.softpac.dao.CuentasPropiasDAO;
 import pe.edu.pucp.softpac.dao.PropuestasPagoDAO;
+import pe.edu.pucp.softpac.daoImpl.CuentasPropiasDAOImpl;
 import pe.edu.pucp.softpac.daoImpl.PropuestasPagoDAOImpl;
 import pe.edu.pucp.softpac.model.CuentasAcreedorDTO;
+import pe.edu.pucp.softpac.model.CuentasPropiasDTO;
 import pe.edu.pucp.softpac.model.DetallesPropuestaDTO;
 import pe.edu.pucp.softpac.model.FacturasDTO;
 import pe.edu.pucp.softpac.model.PropuestasPagoDTO;
@@ -68,6 +75,10 @@ public class PropuestaPagoBO {
         }
         
         return propuestasUsuarios;
+    }
+    
+    public PropuestasPagoDTO obtenerPorId(Integer propuesta_id){
+        return this.propuestasDAO.obtenerPorId(propuesta_id);
     }
     
     public ArrayList<PropuestasPagoDTO> listarActividadPorUsuario(Integer usuarioId){
@@ -151,6 +162,76 @@ public class PropuestaPagoBO {
         }
 
         return propuestaParcial;
+    }
+    
+    public PropuestasPagoDTO GenerarDetallesPropuesta(PropuestasPagoDTO propuestaPagoParcial, ArrayList<Integer> cuentasSeleccionadas){
+        CuentasPropiasDAO cuentasPropiasDAO = new CuentasPropiasDAOImpl();
+            // 1️ Obtener las cuentas seleccionadas
+            var cuentas = new ArrayList<CuentasPropiasDTO>();
+            for (Integer id : cuentasSeleccionadas)
+            {
+                var cuenta = cuentasPropiasDAO.obtenerPorId(id);
+                if (cuenta.getActiva()) cuentas.add(new CuentasPropiasDTO(cuenta));
+            }
+
+            // 2️ Limpiar cualquier asignación previa
+            for (var detalle : propuestaPagoParcial.getDetalles_propuesta())
+            {
+                detalle.setCuenta_propia(null);
+            }
+
+            // 3️ Agrupar los pagos por moneda
+            //var pagosPorMoneda = propuestaPagoParcial.getDetalles_propuesta().stream().collect(Collectors.groupingBy(d -> d.getFactura().getMoneda().getCodigo_iso()));
+              Map<String, List<DetallesPropuestaDTO>> pagosPorMoneda = propuestaPagoParcial.getDetalles_propuesta().stream()
+                .collect(Collectors.groupingBy(
+                    // d => d.Factura.Moneda.CodigoIso
+                    d -> d.getFactura().getMoneda().getCodigo_iso()
+                ));  
+
+            // 4️ Aplicar algoritmo greedy por moneda
+
+            for (Map.Entry<String, List<DetallesPropuestaDTO>> grupoEntry : pagosPorMoneda.entrySet()) {
+
+                String codigoIsoMoneda = grupoEntry.getKey();
+                List<DetallesPropuestaDTO> pagosDelGrupo = grupoEntry.getValue();
+
+                // Filtra las cuentas por la Moneda y las ordena por SaldoDisponible (descendente)
+                List<CuentasPropiasDTO> cuentasMoneda = cuentas.stream()
+                    .filter(c -> c.getMoneda().getCodigo_iso().equals(codigoIsoMoneda))
+                    // Ordena descendente por SaldoDisponible: Comparator.reverseOrder()
+                    .sorted(Comparator.comparing(CuentasPropiasDTO::getSaldo_disponible).reversed())
+                    .collect(Collectors.toList());
+
+
+                // Ordena los pagos del grupo por MontoPago (descendente)
+                List<DetallesPropuestaDTO> pagosOrdenados = pagosDelGrupo.stream()
+                    .sorted(Comparator.comparing(DetallesPropuestaDTO::getMonto_pago).reversed())
+                    .collect(Collectors.toList());
+
+                for (DetallesPropuestaDTO pago : pagosOrdenados) {
+
+                    // 4. Equivalente a: var cuenta = cuentasMoneda.FirstOrDefault(c => c.SaldoDisponible >= pago.MontoPago);
+
+                    // Busca la primera cuenta que pueda cubrir el monto del pago
+                    CuentasPropiasDTO cuentaAsignada = cuentas.stream().filter(c -> c.getSaldo_disponible().compareTo(pago.getMonto_pago()) >= 0).findFirst().orElse(null);      
+
+                    // 5. Asignación y actualización del saldo
+                    if (cuentaAsignada != null) {
+
+                        // pago.CuentaPropia = cuenta;
+                        pago.setCuenta_propia(cuentaAsignada); 
+
+                        // cuenta.SaldoDisponible -= pago.MontoPago;
+                        BigDecimal nuevoSaldo = cuentaAsignada.getSaldo_disponible().subtract(pago.getMonto_pago());
+                        cuentaAsignada.setSaldo_disponible(nuevoSaldo);
+
+
+                    }
+                }
+            }
+
+
+            return propuestaPagoParcial;
     }
     
     

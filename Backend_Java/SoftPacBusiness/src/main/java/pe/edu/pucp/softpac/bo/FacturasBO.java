@@ -1,9 +1,8 @@
 package pe.edu.pucp.softpac.bo;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import pe.edu.pucp.softpac.dao.FacturasDAO;
 import pe.edu.pucp.softpac.daoImpl.FacturasDAOImpl;
 import pe.edu.pucp.softpac.model.AcreedoresDTO;
@@ -27,7 +26,7 @@ public class FacturasBO {
     }
     
     public Integer eliminarLogico(FacturasDTO factura, UsuariosDTO usuarioActual){
-        factura.setFecha_eliminacion(LocalDateTime.now());
+        factura.setFecha_eliminacion(new Date());
         factura.setUsuario_eliminacion(usuarioActual);
         
         return facturasDAO.eliminarLogico(factura);
@@ -42,7 +41,7 @@ public class FacturasBO {
     }
     
     public Integer eliminarDetalle(DetallesFacturaDTO detalle, UsuariosDTO usuarioActual){
-        detalle.getFactura().setFecha_eliminacion(LocalDateTime.now());
+        detalle.getFactura().setFecha_eliminacion(new Date());
         detalle.getFactura().setUsuario_eliminacion(usuarioActual);
         return this.facturasDAO.eliminarLogico(detalle.getFactura());
     }   
@@ -63,7 +62,7 @@ public class FacturasBO {
         ArrayList<FacturasDTO> facturasPendientes = new ArrayList<>();
         ArrayList<FacturasDTO> facturasGenerales = (ArrayList<FacturasDTO>) facturasDAO.listarTodos();
         for(FacturasDTO factura : facturasGenerales){
-            if(factura.getEstado().equals("Pendiente")){
+            if(factura.getEstado().equals("PENDIENTE")){
                 facturasPendientes.add(factura);
             }
         }
@@ -82,20 +81,20 @@ public class FacturasBO {
         return this.facturasDAO.obtenerPorId(factura_id);
     }
     
-    public ArrayList<FacturasDTO> listarPendientesPorCriterios(Integer paisId, LocalDateTime fechaLimite) {
+    public ArrayList<FacturasDTO> listarPendientesPorCriterios(Integer paisId, Date fechaLimite) {
     ArrayList<FacturasDTO> resultado = new ArrayList<>();
 
-        ArrayList<FacturasDTO> facturasGenerales = (ArrayList<FacturasDTO>) facturasDAO.listarTodos();
+        ArrayList<FacturasDTO> facturasGenerales = (ArrayList<FacturasDTO>) facturasDAO.listarFiltros();
 
         for (FacturasDTO factura : facturasGenerales) {
             if (
                 factura != null
-                && "Pendiente".equals(factura.getEstado())
+                && "PENDIENTE".equals(factura.getEstado())
                 && factura.getAcreedor() != null
                 && factura.getAcreedor().getPais() != null
-                && factura.getAcreedor().getPais().getPais_id()== paisId
+                && factura.getAcreedor().getPais().getPais_id().equals(paisId)
                 && factura.getFecha_limite_pago() != null
-                && ( !factura.getFecha_limite_pago().isAfter(fechaLimite) )
+                && ( !factura.getFecha_limite_pago().after(fechaLimite) )
             ) {
                 resultado.add(factura);
             }

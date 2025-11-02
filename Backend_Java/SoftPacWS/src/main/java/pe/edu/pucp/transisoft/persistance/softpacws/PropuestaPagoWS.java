@@ -38,6 +38,12 @@ public class PropuestaPagoWS {
         return propuestaPagoBO.modificarDetalle(detalle);
     }
     
+    @WebMethod(operationName = "obtenerPropuesta")
+    public PropuestasPagoDTO obtenerPropuesta(@WebParam(name = "propuesta_id") Integer propuesta_id) {
+        return propuestaPagoBO.obtenerPorId(propuesta_id);
+    }
+    
+    
     @WebMethod(operationName = "listarUltimasPropuestasPorUsuario")
     public ArrayList<PropuestasPagoDTO> listarUltimasPropuestasPorUsuario(
             @WebParam(name = "usuarioId") Integer usuarioId,
@@ -67,6 +73,11 @@ public class PropuestaPagoWS {
         return propuestaPagoBO.GenerarDetallesParciales(facturasSeleccionadas, bancoId);
     }
     
+    @WebMethod(operationName = "generarDetallesPropuesta")
+    public PropuestasPagoDTO GenerarDetallesPropuesta(@WebParam(name = "propuestaPagoParcial")PropuestasPagoDTO propuestaPagoParcial
+                ,@WebParam(name = "cuentasSeleccionadas") ArrayList<Integer> cuentasSeleccionadas){
+        return propuestaPagoBO.GenerarDetallesPropuesta(propuestaPagoParcial,cuentasSeleccionadas);
+    }
     
 
     

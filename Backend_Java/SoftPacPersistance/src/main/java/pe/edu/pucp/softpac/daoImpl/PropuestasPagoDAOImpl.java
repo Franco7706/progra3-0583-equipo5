@@ -38,20 +38,20 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
 
     @Override
     protected void incluirValorDeParametrosParaInsercion() throws SQLException {
-        this.statement.setTimestamp(1, Timestamp.valueOf(this.propuestaPago.getFecha_hora_creacion()));
+        this.statement.setTimestamp(1, new Timestamp(this.propuestaPago.getFecha_hora_creacion().getTime()));
         this.statement.setString(2,this.propuestaPago.getEstado());
         this.statement.setInt(3,this.propuestaPago.getEntidad_bancaria().getEntidad_bancaria_id());
-        this.statement.setTimestamp(4, Timestamp.valueOf(this.propuestaPago.getFecha_hora_modificacion()));
+        this.statement.setTimestamp(4, new Timestamp(this.propuestaPago.getFecha_hora_modificacion().getTime()));
         this.statement.setInt(5,this.propuestaPago.getUsuario_modificacion().getUsuario_id());
         this.statement.setInt(6,this.propuestaPago.getUsuario_creacion().getUsuario_id());
     }
 
     @Override
     protected void incluirValorDeParametrosParaModificacion() throws SQLException {
-        this.statement.setTimestamp(1,java.sql.Timestamp.valueOf(this.propuestaPago.getFecha_hora_creacion()));
+        this.statement.setTimestamp(1,new Timestamp(this.propuestaPago.getFecha_hora_creacion().getTime()));
         this.statement.setString(2,this.propuestaPago.getEstado());
         this.statement.setInt(3,this.propuestaPago.getEntidad_bancaria().getEntidad_bancaria_id());
-        this.statement.setTimestamp(4, Timestamp.valueOf(this.propuestaPago.getFecha_hora_modificacion()));
+        this.statement.setTimestamp(4, new Timestamp(this.propuestaPago.getFecha_hora_modificacion().getTime()));
         this.statement.setInt(5,this.propuestaPago.getUsuario_modificacion().getUsuario_id());
         this.statement.setInt(6,this.propuestaPago.getUsuario_creacion().getUsuario_id());
         this.statement.setInt(7,this.propuestaPago.getPropuesta_id());
@@ -150,9 +150,9 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
 
         factura.setFactura_id(this.resultSet.getInt("F1_FACTURA_ID"));
         factura.setNumero_factura(resultSet.getString("F2_NUMERO_FACTURA"));
-        factura.setFecha_emision(resultSet.getTimestamp("F3_FECHA_EMISION").toLocalDateTime());
-        factura.setFecha_recepcion(resultSet.getTimestamp("F4_FECHA_RECEPCION").toLocalDateTime());
-        factura.setFecha_limite_pago(resultSet.getTimestamp("F5_FECHA_LIMITE_PAGO").toLocalDateTime());
+        factura.setFecha_emision(resultSet.getTimestamp("F3_FECHA_EMISION"));
+        factura.setFecha_recepcion(resultSet.getTimestamp("F4_FECHA_RECEPCION"));
+        factura.setFecha_limite_pago(resultSet.getTimestamp("F5_FECHA_LIMITE_PAGO"));
         factura.setEstado(this.resultSet.getString("F6_ESTADO_FACTURA"));
         factura.setMonto_total(this.resultSet.getBigDecimal("F7_MONTO_TOTAL"));
         factura.setMonto_igv(this.resultSet.getBigDecimal("F8_MONTO_IGV"));
@@ -308,8 +308,8 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
                 // Crear propuesta de pago
                 this.propuestaPago = new PropuestasPagoDTO();
                 this.propuestaPago.setPropuesta_id(this.resultSet.getInt("P1_PROPUESTA_DE_PAGO_ID"));
-                this.propuestaPago.setFecha_hora_creacion(this.resultSet.getTimestamp("P2_FECHA_HORA_CREACION").toLocalDateTime());
-                this.propuestaPago.setFecha_hora_modificacion(this.resultSet.getTimestamp("P3_FECHA_HORA_MODIFICACION").toLocalDateTime());
+                this.propuestaPago.setFecha_hora_creacion(this.resultSet.getTime("P2_FECHA_HORA_CREACION"));
+                this.propuestaPago.setFecha_hora_modificacion(this.resultSet.getTime("P3_FECHA_HORA_MODIFICACION"));
 
 
                 // Insertar usuarios
@@ -351,7 +351,7 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         while(this.resultSet.next()){
             PropuestasPagoDTO p=new PropuestasPagoDTO();
             p.setPropuesta_id(this.resultSet.getInt(1));
-            p.setFecha_hora_creacion(this.resultSet.getTimestamp(2).toLocalDateTime());
+            p.setFecha_hora_creacion(this.resultSet.getTimestamp(2));
             p.setEstado(this.resultSet.getString(3));
             entidadBancaria=new EntidadesBancariasDTO();
             entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(4));
@@ -375,12 +375,6 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
 //    }
     
 
-//    @Override
-//    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException{
-//        this.statement.setTimestamp(1,Timestamp.valueOf(this.propuestaPago.getFecha_eliminacion()));
-//        this.statement.setInt(2,this.propuestaPago.getUsuario_eliminacion().getUsuario_id());
-//        this.statement.setInt(3,this.propuestaPago.getPropuesta_id());
-//    }
 
     @Override
     public Integer insertar(PropuestasPagoDTO propuestaPago) {
@@ -446,6 +440,12 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         return super.eliminarLogico();
     }
 
+    @Override
+    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException{
+        this.statement.setTimestamp(1,new Timestamp(this.propuestaPago.getFecha_eliminacion().getTime()));
+        this.statement.setInt(2,this.propuestaPago.getUsuario_eliminacion().getUsuario_id());
+        this.statement.setInt(3,this.propuestaPago.getPropuesta_id());
+    }
     @Override
     protected void recuperarAutoGeneradoParaInsercionDeDetalle(Integer resultado) {
         this.propuestaPago.setPropuesta_id(resultado);

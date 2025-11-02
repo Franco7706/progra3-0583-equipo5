@@ -119,7 +119,7 @@ public class AcreedoresDAOImpl extends DAOImplBase implements AcreedoresDAO {
 
     @Override
     protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
-        this.statement.setTimestamp(1, Timestamp.valueOf(this.acreedor.getFecha_eliminacion()));
+        this.statement.setTimestamp(1, new Timestamp(this.acreedor.getFecha_eliminacion().getTime()));
         this.statement.setInt(2,this.acreedor.getUsuario_eliminacion().getUsuario_id());
         this.statement.setInt(3,this.acreedor.getAcreedor_id());
     }

@@ -1,16 +1,16 @@
 package pe.edu.pucp.softpac.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.ArrayList;
 
 public class PropuestasPagoDTO extends EliminableDTOBase{
     private Integer propuesta_id;
     private UsuariosDTO usuario_creacion;
-    private LocalDateTime fecha_hora_creacion;
+    private Date fecha_hora_creacion;
     private String estado;
     private EntidadesBancariasDTO entidad_bancaria;
     private ArrayList<DetallesPropuestaDTO> detalles_propuesta;
-    private LocalDateTime fecha_hora_modificacion;
+    private Date fecha_hora_modificacion;
     private UsuariosDTO usuario_modificacion;
 
     public PropuestasPagoDTO() {
@@ -24,8 +24,8 @@ public class PropuestasPagoDTO extends EliminableDTOBase{
         fecha_hora_modificacion=null;
         usuario_modificacion=null;
     }
-    public PropuestasPagoDTO(Integer propuesta_id, LocalDateTime fecha_hora_creacion,UsuariosDTO usuario_creacion, String estado,
-                             EntidadesBancariasDTO entidad_bancaria, LocalDateTime fecha_hora_modificacion, UsuariosDTO usuario_modificacion) {
+    public PropuestasPagoDTO(Integer propuesta_id, Date fecha_hora_creacion,UsuariosDTO usuario_creacion, String estado,
+                             EntidadesBancariasDTO entidad_bancaria, Date fecha_hora_modificacion, UsuariosDTO usuario_modificacion) {
         this.propuesta_id=propuesta_id;
         this.fecha_hora_creacion=fecha_hora_creacion;
         this.usuario_creacion=new UsuariosDTO(usuario_creacion);
@@ -35,9 +35,9 @@ public class PropuestasPagoDTO extends EliminableDTOBase{
         this.fecha_hora_modificacion=fecha_hora_modificacion;
         this.usuario_modificacion=new UsuariosDTO(usuario_modificacion);
     }
-    public PropuestasPagoDTO(Integer propuesta_id, LocalDateTime fecha_hora_creacion,UsuariosDTO usuario_creacion, String estado,
+    public PropuestasPagoDTO(Integer propuesta_id, Date fecha_hora_creacion,UsuariosDTO usuario_creacion, String estado,
                              EntidadesBancariasDTO entidad_bancaria, ArrayList<DetallesPropuestaDTO> detalles_propuesta,
-                             LocalDateTime fecha_hora_modificacion, UsuariosDTO usuario_modificacion) {
+                             Date fecha_hora_modificacion, UsuariosDTO usuario_modificacion) {
         this.propuesta_id=propuesta_id;
         this.fecha_hora_creacion=fecha_hora_creacion;
         this.usuario_creacion=new UsuariosDTO(usuario_modificacion);
@@ -66,11 +66,11 @@ public class PropuestasPagoDTO extends EliminableDTOBase{
         this.propuesta_id = propuesta_id;
     }
 
-    public LocalDateTime getFecha_hora_creacion() {
+    public Date getFecha_hora_creacion() {
         return fecha_hora_creacion;
     }
 
-    public void setFecha_hora_creacion(LocalDateTime fecha_hora_creacion) {
+    public void setFecha_hora_creacion(Date fecha_hora_creacion) {
         this.fecha_hora_creacion = fecha_hora_creacion;
     }
 
@@ -126,14 +126,14 @@ public class PropuestasPagoDTO extends EliminableDTOBase{
     /**
      * @return the fecha_hora_modificacion
      */
-    public LocalDateTime getFecha_hora_modificacion() {
+    public Date getFecha_hora_modificacion() {
         return fecha_hora_modificacion;
     }
 
     /**
      * @param fecha_hora_modificacion the fecha_hora_modificacion to set
      */
-    public void setFecha_hora_modificacion(LocalDateTime fecha_hora_modificacion) {
+    public void setFecha_hora_modificacion(Date fecha_hora_modificacion) {
         this.fecha_hora_modificacion = fecha_hora_modificacion;
     }
 

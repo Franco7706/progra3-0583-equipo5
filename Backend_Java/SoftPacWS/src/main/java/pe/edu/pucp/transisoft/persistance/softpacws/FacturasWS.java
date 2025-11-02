@@ -3,8 +3,8 @@ package pe.edu.pucp.transisoft.persistance.softpacws;
 import jakarta.jws.WebService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import pe.edu.pucp.softpac.bo.FacturasBO;
 import pe.edu.pucp.softpac.model.DetallesFacturaDTO;
 import pe.edu.pucp.softpac.model.FacturasDTO;
@@ -69,7 +69,7 @@ public class FacturasWS {
     }
     
     @WebMethod(operationName = "listarPendientesPorCriterios")
-    public ArrayList<FacturasDTO> listarPendientesPorCriterios(@WebParam(name = "pais_id")Integer paisId,@WebParam(name = "fechaLimite") LocalDateTime fechaLimite){
+    public ArrayList<FacturasDTO> listarPendientesPorCriterios(@WebParam(name = "pais_id")Integer paisId,@WebParam(name = "fechaLimite") Date fechaLimite){
         return facturasBO.listarPendientesPorCriterios(paisId, fechaLimite);
     }
     

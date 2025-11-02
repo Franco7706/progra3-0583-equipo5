@@ -1,15 +1,15 @@
 package pe.edu.pucp.softpac.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class FacturasDTO extends EliminableDTOBase{
     private Integer factura_id;
     private String numero_factura;
-    private LocalDateTime fecha_emision;
-    private LocalDateTime fecha_recepcion;
-    private LocalDateTime fecha_limite_pago;
+    private Date fecha_emision;
+    private Date fecha_recepcion;
+    private Date fecha_limite_pago;
     private String estado;
     private BigDecimal monto_total;
     private BigDecimal monto_igv;
@@ -35,8 +35,8 @@ public class FacturasDTO extends EliminableDTOBase{
         detalles_factura = new ArrayList<>();
     }
 
-    public FacturasDTO(Integer factura_id, String numero_factura, LocalDateTime fecha_emision,
-                       LocalDateTime fecha_recepcion, LocalDateTime fecha_limite_pago, String estado,
+    public FacturasDTO(Integer factura_id, String numero_factura, Date fecha_emision,
+                       Date fecha_recepcion, Date fecha_limite_pago, String estado,
                        BigDecimal monto_total, BigDecimal monto_igv, BigDecimal monto_restante,
                        String regimen_fiscal, BigDecimal tasa_iva, BigDecimal otros_tributos,
                        AcreedoresDTO acreedor, MonedasDTO moneda) {
@@ -57,8 +57,8 @@ public class FacturasDTO extends EliminableDTOBase{
         this.detalles_factura = new ArrayList<>();
     }
 
-    public FacturasDTO(Integer factura_id, String numero_factura, LocalDateTime fecha_emision,
-                       LocalDateTime fecha_recepcion, LocalDateTime fecha_limite_pago, String estado,
+    public FacturasDTO(Integer factura_id, String numero_factura, Date fecha_emision,
+                       Date fecha_recepcion, Date fecha_limite_pago, String estado,
                        BigDecimal monto_total, BigDecimal monto_igv, BigDecimal monto_restante,
                        String regimen_fiscal, BigDecimal tasa_iva, BigDecimal otros_tributos,
                        AcreedoresDTO acreedor, MonedasDTO moneda,  ArrayList<DetallesFacturaDTO> detalles_factura) {
@@ -114,27 +114,27 @@ public class FacturasDTO extends EliminableDTOBase{
         this.numero_factura = numero_factura;
     }
 
-    public LocalDateTime getFecha_emision() {
+    public Date getFecha_emision() {
         return fecha_emision;
     }
 
-    public void setFecha_emision(LocalDateTime fecha_emision) {
+    public void setFecha_emision(Date fecha_emision) {
         this.fecha_emision = fecha_emision;
     }
 
-    public LocalDateTime getFecha_recepcion() {
+    public Date getFecha_recepcion() {
         return fecha_recepcion;
     }
 
-    public void setFecha_recepcion(LocalDateTime fecha_recepcion) {
+    public void setFecha_recepcion(Date fecha_recepcion) {
         this.fecha_recepcion = fecha_recepcion;
     }
 
-    public LocalDateTime getFecha_limite_pago() {
+    public Date getFecha_limite_pago() {
         return fecha_limite_pago;
     }
 
-    public void setFecha_limite_pago(LocalDateTime fecha_limite_pago) {
+    public void setFecha_limite_pago(Date fecha_limite_pago) {
         this.fecha_limite_pago = fecha_limite_pago;
     }
 
