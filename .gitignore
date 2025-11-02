@@ -1,1 +1,5 @@
 /Backend_Java/SoftPacBusiness/nbproject/
+email.properties
+/Servidor_Email/SoftPacEmail/target/
+/Servidor_Email/SoftPacEmailDTO/target/
+/Servidor_Email/SoftPacEmailWS/target/
