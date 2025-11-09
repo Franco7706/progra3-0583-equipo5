@@ -18,25 +18,8 @@ public class CuentasAcreedorBO {
         if (acreedor_id == null || acreedor_id <= 0) {
             throw new IllegalArgumentException("El ID del acreedor es obligatorio");
         }
-        
-        ArrayList<CuentasAcreedorDTO> todas = (ArrayList<CuentasAcreedorDTO>) cuentaAcreedorDAO.listarTodos();
-        ArrayList<CuentasAcreedorDTO> cuentasPorAcrredor = new ArrayList<>();
-        
-        for(CuentasAcreedorDTO cuenta : todas){
-            if(cuenta.getAcreedor() != null && cuenta.getAcreedor().getAcreedor_id().equals(acreedor_id)){
-                //Añadimos a la lista
-                cuentasPorAcrredor.add(cuenta);
-            }
-            
-        }
-        return cuentasPorAcrredor;
-        
-    } 
-    
-    public ArrayList<CuentasAcreedorDTO> ObtenerPorAcreedor(Integer acreedor_id){
-        
-        return obtenerPorAcreedor(acreedor_id);     
-    } 
+        return cuentaAcreedorDAO.obtenerPorAcreedor(acreedor_id);
+    }
     
     public ArrayList<CuentasAcreedorDTO> listarTodos(){
         return (ArrayList<CuentasAcreedorDTO>) cuentaAcreedorDAO.listarTodos();

@@ -120,7 +120,7 @@ public class PropuestaPagoBO {
         ArrayList<PropuestasPagoDTO> propuestasFiltros = new ArrayList<>();
         
         for(PropuestasPagoDTO propuesta: propuestas){
-            if((bancoId == null || (propuesta.getEntidad_bancaria() != null &&
+            if((bancoId == 0 || (propuesta.getEntidad_bancaria() != null &&
                     propuesta.getEntidad_bancaria().getEntidad_bancaria_id().equals(bancoId))) &&
                     (estado.isEmpty() || propuesta.getEstado().equals(estado))){
                 propuestasFiltros.add(propuesta);

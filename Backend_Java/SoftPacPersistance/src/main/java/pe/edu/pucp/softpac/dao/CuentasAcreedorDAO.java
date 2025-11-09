@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pe.edu.pucp.softpac.model.CuentasAcreedorDTO;
-import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 public interface CuentasAcreedorDAO {
     public Integer insertar(CuentasAcreedorDTO cuentaAcreedor);
@@ -18,4 +17,6 @@ public interface CuentasAcreedorDAO {
     public Integer eliminar(CuentasAcreedorDTO cuentaAcreedor);
 
     public Integer eliminarLogico(CuentasAcreedorDTO cuentaAcreedor);
+
+    public ArrayList<CuentasAcreedorDTO> obtenerPorAcreedor(Integer acreedor_id);
 }
