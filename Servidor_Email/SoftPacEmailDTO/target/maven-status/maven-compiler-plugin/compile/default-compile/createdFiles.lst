@@ -1,0 +1,6 @@
+pe\edu\pucp\softpac\email\model\RespuestaDTO.class
+pe\edu\pucp\softpac\email\model\EmailCompletoDTO.class
+pe\edu\pucp\softpac\email\model\EmailMultipleDTO.class
+pe\edu\pucp\softpac\email\model\EmailConBCCDTO.class
+pe\edu\pucp\softpac\email\model\EmailConCCDTO.class
+pe\edu\pucp\softpac\email\model\EmailDTO.class

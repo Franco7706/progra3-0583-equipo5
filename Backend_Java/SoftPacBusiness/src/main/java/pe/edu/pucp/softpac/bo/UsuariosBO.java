@@ -29,13 +29,13 @@ public class UsuariosBO {
         UsuariosDTO usuario = this.usuariosDAO.obtenerPorNombreDeUsuario(nombreUsuario.trim());
         
         if(usuario == null){
-            return null; //Usuario no encontrado
+            return new UsuariosDTO(); //Usuario no encontrado
         }
         
         
         Boolean esValido = PasswordUtil.checkPassword(password.trim(), usuario.getPassword_hash());
         
-        if(esValido){
+        if(esValido && usuario.getFecha_eliminacion()==null){
             //PARA SERIALIZACIÓN:
             for(UsuarioPaisAccesoDTO upa : usuario.getUsuario_pais()){
                 upa.setUsuario(null);
@@ -103,6 +103,9 @@ public class UsuariosBO {
         }
         String hashedPassword = PasswordUtil.hashPassword(nuevoUsuario.getPassword_hash());
         nuevoUsuario.setPassword_hash(hashedPassword);
+        for(UsuarioPaisAccesoDTO acceso : nuevoUsuario.getUsuario_pais()){
+            acceso.setUsuario(nuevoUsuario);
+        }
         return usuariosDAO.insertar(nuevoUsuario);
         
     }
@@ -141,7 +144,9 @@ public class UsuariosBO {
         
         usuario.setFecha_eliminacion(new Date());
         usuario.setUsuario_eliminacion(usuarioActual);
-        
+        for(UsuarioPaisAccesoDTO acceso : usuario.getUsuario_pais()){
+            acceso.setUsuario(usuario);
+        }
         return usuariosDAO.eliminarLogico(usuario);
         
     }

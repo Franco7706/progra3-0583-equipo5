@@ -25,7 +25,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
         this.retornarLlavePrimaria = true;
         this.ejecutaOperacionesEnCascada = true;
         this.seEliminaLogicamente = true;
-        this.listarEliminados = true;
+        this.listarEliminados = false;
         super.incluirColumnasDeEliminacionLogica();
     }
 
@@ -222,12 +222,16 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
             throw e;
         }
     }
-
+    @Override
+    protected void recuperarAutoGeneradoParaInsercionDeDetalle(Integer resultado) {
+        this.usuario.setUsuario_id(resultado);
+    }
     @Override
     protected void ejecutarCascadaParaInsercion() {
         try {
             UsuarioPaisAccesoDAO usuarioPaisAccesoDAO = new UsuarioPaisAccesoDAOImpl(this.getConexion());
             for(UsuarioPaisAccesoDTO usu_pais_acceso : this.usuario.getUsuario_pais()){
+                usu_pais_acceso.setUsuario(this.usuario);
                 usuarioPaisAccesoDAO.insertar(usu_pais_acceso);
             }
         }
