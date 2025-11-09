@@ -2,7 +2,6 @@ package pe.edu.pucp.softpac.daoImpl;
 
 import pe.edu.pucp.softpac.dao.UsuariosDAO;
 import pe.edu.pucp.softpac.dao.UsuarioPaisAccesoDAO;
-import pe.edu.pucp.softpac.daoImpl.util.Tipo_Operacion;
 import pe.edu.pucp.softpac.model.PaisesDTO;
 import pe.edu.pucp.softpac.model.UsuarioPaisAccesoDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
@@ -13,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
@@ -22,7 +22,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     public UsuariosDAOImpl() {
         super("PA_USUARIOS");
         this.usuario = null;
-        this.retornarLlavePrimaria = false; // USUARIO_ID no es auto_increment
+        this.retornarLlavePrimaria = true;
         this.ejecutaOperacionesEnCascada = true;
         this.seEliminaLogicamente = true;
         this.listarEliminados = true;
@@ -31,7 +31,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
     @Override
     protected void configurarListaDeColumnas() {
-        this.listaColumnas.add(new Columna("USUARIO_ID", true, false)); // PK, no auto_increment
+        this.listaColumnas.add(new Columna("USUARIO_ID", true, true));
         this.listaColumnas.add(new Columna("CORREO_ELECTRONICO", false, false));
         this.listaColumnas.add(new Columna("NOMBRE_DE_USUARIO", false, false));
         this.listaColumnas.add(new Columna("NOMBRE", false, false));
@@ -43,14 +43,13 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
     @Override
     protected void incluirValorDeParametrosParaInsercion() throws SQLException {
-        this.statement.setInt(1, this.usuario.getUsuario_id());
-        this.statement.setString(2, this.usuario.getCorreo_electronico());
-        this.statement.setString(3, this.usuario.getNombre_de_usuario());
-        this.statement.setString(4, this.usuario.getNombre());
-        this.statement.setString(5, this.usuario.getApellidos());
-        this.statement.setString(6, this.usuario.getActivo() ? "S" : "N");
-        this.statement.setString(7, this.usuario.getPassword_hash());
-        this.statement.setString(8, this.usuario.getSuperusuario() ? "S" : "N");
+        this.statement.setString(1, this.usuario.getCorreo_electronico());
+        this.statement.setString(2, this.usuario.getNombre_de_usuario());
+        this.statement.setString(3, this.usuario.getNombre());
+        this.statement.setString(4, this.usuario.getApellidos());
+        this.statement.setString(5, this.usuario.getActivo() ? "S" : "N");
+        this.statement.setString(6, this.usuario.getPassword_hash());
+        this.statement.setString(7, this.usuario.getSuperusuario() ? "S" : "N");
     }
 
     @Override
@@ -284,17 +283,32 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
         this.extraerResultSetParaObtenerPorId();
 //          usuario = null;
 //          usuario = new UsuariosDTO();
-//          if(this.resultSet.next()){
-//              
-//          
-//            usuario.setUsuario_id(this.resultSet.getInt("USUARIO_ID"));
-//            usuario.setCorreo_electronico(this.resultSet.getString("CORREO_ELECTRONICO"));
-//            usuario.setNombre_de_usuario(this.resultSet.getString("NOMBRE_DE_USUARIO"));
-//            usuario.setNombre(this.resultSet.getString("NOMBRE"));
-//            usuario.setApellidos(this.resultSet.getString("APELLIDOS"));
-//            usuario.setActivo(this.resultSet.getString("ACTIVO").equals("S"));
-//            usuario.setPassword_hash(this.resultSet.getString("PASSWORD_HASH"));
-//            usuario.setSuperusuario(this.resultSet.getString("SUPERUSUARIO").equals("S"));
+//          Boolean datosusuario = false;
+//          while(this.resultSet.next()){
+//            if(!datosusuario){
+//                usuario.setUsuario_id(this.resultSet.getInt("USUARIO_ID"));
+//                usuario.setCorreo_electronico(this.resultSet.getString("CORREO_ELECTRONICO"));
+//                usuario.setNombre_de_usuario(this.resultSet.getString("NOMBRE_DE_USUARIO"));
+//                usuario.setNombre(this.resultSet.getString("NOMBRE"));
+//                usuario.setApellidos(this.resultSet.getString("APELLIDOS"));
+//                usuario.setActivo(this.resultSet.getString("ACTIVO").equals("S"));
+//                usuario.setPassword_hash(this.resultSet.getString("PASSWORD_HASH"));
+//                usuario.setSuperusuario(this.resultSet.getString("SUPERUSUARIO").equals("S"));
+//                usuario.setFecha_eliminacion(this.resultSet.getTimestamp("FECHA_ELIMINACION"));
+//                UsuariosDTO usuarioEliminacion = new UsuariosDTO();
+//                usuarioEliminacion.setUsuario_id(this.resultSet.getInt("USUARIO_ELIMINACION"));
+//                usuario.setUsuario_eliminacion(usuarioEliminacion);
+//                datosusuario = true;
+//            }
+//            PaisesDTO pais = new PaisesDTO();
+//            pais.setPais_id(this.resultSet.getInt("PAIS_ID"));
+//            pais.setNombre(this.resultSet.getString("NOMBRE"));
+//            pais.setCodigo_iso(this.resultSet.getString("CODIGO_ISO"));
+//            pais.setCodigo_telefonico(this.resultSet.getString("CODIGO_TELEFONICO"));
+//            UsuarioPaisAccesoDTO acceso = new UsuarioPaisAccesoDTO();
+//            acceso.setAcceso(this.resultSet.getString("ACCESO").equals("S"));
+//            acceso.setPais(pais);
+//            usuario.addUsuario_pais(acceso);
 //          }
     }
     
