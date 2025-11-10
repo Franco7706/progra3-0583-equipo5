@@ -134,7 +134,9 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
                 " CP9_ENTIDAD_BANCARIA_NOMBRE, " +
                 " CP10_ENTIDAD_BANCARIA_SWIFT, " +
                 " CP11_ENTIDAD_BANCARIA_PAIS_ID, " +
-                " CP12_ENTIDAD_BANCARIA_PAIS_NOMBRE " +
+                " CP12_ENTIDAD_BANCARIA_PAIS_NOMBRE," +
+                " AC2_RAZON_SOCIAL_ACREEDOR, " +
+                " MO1_MONEDA_CODIGO_ISO " +
                 " FROM VW_PROPUESTA_COMPLETA WHERE P1_PROPUESTA_DE_PAGO_ID = ? ";
     }
 
@@ -292,7 +294,7 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         detallePropuesta.setFactura(insertarFactura());
         detallePropuesta.setCuenta_acreedor(insertarCuentaAcreedor());
         detallePropuesta.setCuenta_propia(insertarCuentaPropia());
-
+        
         return detallePropuesta;
     }
 
@@ -346,7 +348,7 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
             propuestaPago.addDetalle_Propuesta(detallePropuesta);
         }
     }
-    
+
     @Override
     protected String generarSQLParaListarTodos(){
         return """
@@ -396,7 +398,6 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
                    p.PROPUESTA_DE_PAGO_ID DESC;
                """;
     }
-    
     @Override
     protected void extraerResultSetParaListarTodos() throws SQLException{
         propuestasPago=new ArrayList<>();
@@ -438,10 +439,6 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
             propuestasPago.add(p);
         }
     }
-    
-//    
-    
-   
     
 //    @Override
 //    protected String generarSQLCustom1() {
@@ -532,6 +529,7 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         try{
             DetallesPropuestaDAO daoDetalle =  new DetallesPropuestaDAOImpl(this.getConexion());
             for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
+                detalle.setPropuesta_pago(this.propuestaPago);
                 daoDetalle.insertar(detalle);
             }
         }
