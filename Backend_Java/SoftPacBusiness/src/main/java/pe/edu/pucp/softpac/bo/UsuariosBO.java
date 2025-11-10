@@ -15,86 +15,83 @@ import pe.edu.pucp.softpac.model.UsuarioPaisAccesoDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 public class UsuariosBO {
-    
+
     private UsuariosDAO usuariosDAO;
     private UsuarioPaisAccesoDAO usuariosPaisAccesoDAO;
-    
-    public UsuariosBO(){
+
+    public UsuariosBO() {
         this.usuariosDAO = new UsuariosDAOImpl();
         this.usuariosPaisAccesoDAO = new UsuarioPaisAccesoDAOImpl();
     }
-    
-    
-    public UsuariosDTO autenticarUsuarioPorNombreUsuario(String nombreUsuario, String password){
+
+    public UsuariosDTO autenticarUsuarioPorNombreUsuario(String nombreUsuario, String password) {
         UsuariosDTO usuario = this.usuariosDAO.obtenerPorNombreDeUsuario(nombreUsuario.trim());
-        
-        if(usuario == null){
+
+        if (usuario == null) {
             return new UsuariosDTO(); //Usuario no encontrado
         }
-        
-        
+
         Boolean esValido = PasswordUtil.checkPassword(password.trim(), usuario.getPassword_hash());
-        
-        if(esValido && usuario.getFecha_eliminacion()==null){
+
+        if (esValido && usuario.getFecha_eliminacion() == null) {
             //PARA SERIALIZACIÓN:
-            for(UsuarioPaisAccesoDTO upa : usuario.getUsuario_pais()){
+            for (UsuarioPaisAccesoDTO upa : usuario.getUsuario_pais()) {
                 upa.setUsuario(null);
             }
             return usuario; //Autenticación exitosa
         }
-        
+
         return new UsuariosDTO(); //Contraseña incorrecta
     }
-    
+
     //VIEJO:
-    public UsuariosDTO autenticarUsuarioPorCorreo(String correo_usuario, String password){
+    public UsuariosDTO autenticarUsuarioPorCorreo(String correo_usuario, String password) {
         UsuariosDTO usuario = this.usuariosDAO.obtenerPorCorreo(correo_usuario);
-        
-        if(usuario == null){
+
+        if (usuario == null) {
             return null; //Usuario no encontrado
         }
-       
-        
+
         Boolean esValido = PasswordUtil.checkPassword(password.trim(), usuario.getPassword_hash());
-        
-        if(esValido){
+
+        if (esValido) {
             //PARA SERIALIZACIÓN:
-            for(UsuarioPaisAccesoDTO upa : usuario.getUsuario_pais()){
+            for (UsuarioPaisAccesoDTO upa : usuario.getUsuario_pais()) {
                 upa.setUsuario(null);
             }
             return usuario; //Autenticación exitosa
         }
-        
+
         return null; //Contraseña incorrecta
-        
+
     }
-    
-    public ArrayList<UsuariosDTO> listarTodos(){
+
+    public ArrayList<UsuariosDTO> listarTodos() {
         return (ArrayList<UsuariosDTO>) usuariosDAO.listarTodos();
     }
-    
+
 //    public UsuariosDTO obtenerPorId(Integer usuario_id){
 //        UsuariosDTO usuario = new UsuariosDTO();
 //        usuario.setUsuario_id(usuario_id);
 //        
 //        return usuariosDAO.obtenerPorId(usuario_id);
 //    }
-    public UsuariosDTO obtenerPorId(Integer usuario_id){
+    public UsuariosDTO obtenerPorId(Integer usuario_id) {
         UsuariosDTO usuario = new UsuariosDTO();
         usuario.setUsuario_id(usuario_id);
-        
+
         usuario = usuariosDAO.obtenerPorId(usuario_id);
-        
+
         //PARA SERIALIZACIÓN:
-        for(UsuarioPaisAccesoDTO upa : usuario.getUsuario_pais()){
+        for (UsuarioPaisAccesoDTO upa : usuario.getUsuario_pais()) {
             upa.setUsuario(null);
         }
-        
+
         return usuario;
     }
-    
-    public Integer insertarUsuario(UsuariosDTO nuevoUsuario){
-        if(nuevoUsuario.getPassword_hash() == null){
+
+    public Integer insertarUsuario(UsuariosDTO nuevoUsuario) {
+        if (nuevoUsuario.getPassword_hash() == null) {
             try {
                 throw new Exception("La contraseña es obligatoria para nuevos usuarios.");
             } catch (Exception ex) {
@@ -103,59 +100,69 @@ public class UsuariosBO {
         }
         String hashedPassword = PasswordUtil.hashPassword(nuevoUsuario.getPassword_hash());
         nuevoUsuario.setPassword_hash(hashedPassword);
-        for(UsuarioPaisAccesoDTO acceso : nuevoUsuario.getUsuario_pais()){
+        for (UsuarioPaisAccesoDTO acceso : nuevoUsuario.getUsuario_pais()) {
             acceso.setUsuario(nuevoUsuario);
         }
         return usuariosDAO.insertar(nuevoUsuario);
-        
+
     }
-    
-    
+
     public Integer modificarAccesoUsuario(int usuarioId, String nuevoNombreUsuario,
-                    Boolean activo, List<Integer> paisesIds){
+            Boolean activo, List<Integer> paisesIds) {
         UsuariosDTO usuario = usuariosDAO.obtenerPorId(usuarioId);
-        if(usuario == null) return 0;
-        
+        if (usuario == null) {
+            return 0;
+        }
         usuario.setNombre_de_usuario(nuevoNombreUsuario);
         usuario.setActivo(activo);
-        
+
         //Actualizamos la lista de países
         usuario.getUsuario_pais().clear();
-        
-        for(Integer paisId : paisesIds){
+        for (Integer paisId : paisesIds) {
             UsuarioPaisAccesoDTO user = new UsuarioPaisAccesoDTO();
             PaisesDTO pais = new PaisesDTO();
             pais.setPais_id(paisId);
             user.setUsuario(usuario);
             user.setPais(pais);
             user.setAcceso(activo);
-            
+
             usuario.getUsuario_pais().add(user);
             usuario.getUsuario_pais().add(user);
-        
         }
-        
         return usuariosDAO.modificar(usuario);
-        
     }
-    
-    
-    public Integer eliminarUsuario(UsuariosDTO usuario, UsuariosDTO usuarioActual){
-        
+
+
+    public Integer modificarUsuario(UsuariosDTO usuario) {
+        UsuariosDTO usuarioExistente = usuariosDAO.obtenerPorId(usuario.getUsuario_id());
+        if (usuarioExistente == null) {
+            return 0;
+        }
+
+        // Actualizar campos básicos
+        usuarioExistente.setNombre_de_usuario(usuario.getNombre_de_usuario());
+        usuarioExistente.setActivo(usuario.getActivo());
+
+        // Actualizar accesos a países
+        usuarioExistente.getUsuario_pais().clear();
+
+        for (UsuarioPaisAccesoDTO acceso : usuario.getUsuario_pais()) {
+            acceso.setUsuario(usuarioExistente);
+            usuarioExistente.getUsuario_pais().add(acceso);
+        }
+
+        return usuariosDAO.modificar(usuarioExistente);
+    }
+
+    public Integer eliminarUsuario(UsuariosDTO usuario, UsuariosDTO usuarioActual) {
+
         usuario.setFecha_eliminacion(new Date());
         usuario.setUsuario_eliminacion(usuarioActual);
-        for(UsuarioPaisAccesoDTO acceso : usuario.getUsuario_pais()){
+        for (UsuarioPaisAccesoDTO acceso : usuario.getUsuario_pais()) {
             acceso.setUsuario(usuario);
         }
         return usuariosDAO.eliminarLogico(usuario);
-        
+
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
 }

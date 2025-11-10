@@ -3,6 +3,7 @@ package pe.edu.pucp.softpac.bo;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,6 +30,9 @@ public class PropuestaPagoBO {
     }
     
     public Integer modificar (PropuestasPagoDTO propuestaPago){
+        for(DetallesPropuestaDTO detalle : propuestaPago.getDetalles_propuesta()){
+            detalle.setPropuesta_pago(propuestaPago);
+        }
         return propuestasDAO.modificar(propuestaPago);
     }
     
@@ -78,7 +82,11 @@ public class PropuestaPagoBO {
     }
     
     public PropuestasPagoDTO obtenerPorId(Integer propuesta_id){
-        return this.propuestasDAO.obtenerPorId(propuesta_id);
+        PropuestasPagoDTO propuesta = this.propuestasDAO.obtenerPorId(propuesta_id);
+        for(DetallesPropuestaDTO detalle : propuesta.getDetalles_propuesta()){
+            detalle.setPropuesta_pago(null);
+        }
+        return propuesta;
     }
     
     public ArrayList<PropuestasPagoDTO> listarActividadPorUsuario(Integer usuarioId){
@@ -115,12 +123,14 @@ public class PropuestaPagoBO {
         return propuestasActividad;
     }
     
-    public ArrayList<PropuestasPagoDTO> ListarConFiltros(Integer bancoId, String estado) {
+    public ArrayList<PropuestasPagoDTO> ListarConFiltros(Integer pais_id, Integer bancoId, String estado) {
         ArrayList<PropuestasPagoDTO> propuestas = (ArrayList<PropuestasPagoDTO>) propuestasDAO.listarTodos();
         ArrayList<PropuestasPagoDTO> propuestasFiltros = new ArrayList<>();
         
         for(PropuestasPagoDTO propuesta: propuestas){
-            if((bancoId == null || (propuesta.getEntidad_bancaria() != null &&
+            if((pais_id == 0 || (propuesta.getEntidad_bancaria()!= null 
+                    && propuesta.getEntidad_bancaria().getPais().getPais_id().equals(pais_id))) &&
+                    (bancoId == 0 || (propuesta.getEntidad_bancaria() != null &&
                     propuesta.getEntidad_bancaria().getEntidad_bancaria_id().equals(bancoId))) &&
                     (estado.isEmpty() || propuesta.getEstado().equals(estado))){
                 propuestasFiltros.add(propuesta);
@@ -171,7 +181,7 @@ public class PropuestaPagoBO {
             for (Integer id : cuentasSeleccionadas)
             {
                 var cuenta = cuentasPropiasDAO.obtenerPorId(id);
-                if (cuenta.getActiva()) cuentas.add(new CuentasPropiasDTO(cuenta));
+                if (cuenta.getActiva()) cuentas.add(cuenta);
             }
 
             // 2️ Limpiar cualquier asignación previa

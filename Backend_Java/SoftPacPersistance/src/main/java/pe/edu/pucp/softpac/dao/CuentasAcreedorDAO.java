@@ -18,4 +18,6 @@ public interface CuentasAcreedorDAO {
     public Integer eliminar(CuentasAcreedorDTO cuentaAcreedor);
 
     public Integer eliminarLogico(CuentasAcreedorDTO cuentaAcreedor);
+
+    public ArrayList<CuentasAcreedorDTO> obtenerPorAcreedor(Integer acreedor_id);
 }

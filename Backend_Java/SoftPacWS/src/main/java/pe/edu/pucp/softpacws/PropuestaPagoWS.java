@@ -64,8 +64,9 @@ public class PropuestaPagoWS {
     }
     
     @WebMethod(operationName = "listarConFiltros")
-    public ArrayList<PropuestasPagoDTO> listarConFiltros(@WebParam(name = "bancoId") Integer bancoId,@WebParam(name = "estado") String estado){
-        return propuestaPagoBO.ListarConFiltros(bancoId, estado);
+    public ArrayList<PropuestasPagoDTO> listarConFiltros(@WebParam(name = "paisId") Integer pais_id, 
+            @WebParam(name = "bancoId") Integer bancoId,@WebParam(name = "estado") String estado){
+        return propuestaPagoBO.ListarConFiltros(pais_id, bancoId, estado);
     }    
 
     @WebMethod(operationName = "generarDetallesParciales")

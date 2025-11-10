@@ -23,12 +23,6 @@ public class CuentasAcreedorWS {
         return cuentasAcreedorBO.obtenerPorAcreedor(acreedor_id);
     }
     
-    @WebMethod(operationName = "obtenerCuentasPorAcreedor_v2")
-    public ArrayList<CuentasAcreedorDTO> obtenerCuentasPorAcreedor_v2(
-            @WebParam(name = "acreedor_id") Integer acreedor_id) {
-        return cuentasAcreedorBO.ObtenerPorAcreedor(acreedor_id);
-    }
-    
     @WebMethod(operationName = "listarCuentasAcreedor")
     public ArrayList<CuentasAcreedorDTO> listarCuentasAcreedor() {
         return cuentasAcreedorBO.listarTodos();

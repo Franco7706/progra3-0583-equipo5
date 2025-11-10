@@ -11,6 +11,7 @@ import pe.edu.pucp.softpac.model.AcreedoresDTO;
 import pe.edu.pucp.softpac.model.CuentasAcreedorDTO;
 import pe.edu.pucp.softpac.model.EntidadesBancariasDTO;
 import pe.edu.pucp.softpac.model.MonedasDTO;
+import pe.edu.pucp.softpac.model.PaisesDTO;
 
 public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreedorDAO {
 
@@ -197,4 +198,79 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
         this.cuentaAcreedor = cuentaAcreedor;
         return super.eliminarLogico();
     }
+    
+    @Override
+    public ArrayList<CuentasAcreedorDTO> obtenerPorAcreedor(Integer acreedor_id){
+        this.cuentaAcreedor = new CuentasAcreedorDTO();
+        this.cuentaAcreedor.setCuenta_bancaria_id(acreedor_id);
+        super.queryCustom1();
+        return (ArrayList<CuentasAcreedorDTO>) this.cuentasAcreedores;
+    }
+    
+    @Override
+    public String generarSQLCustom1(){
+        return "SELECT c.CUENTA_ACREEDOR_ID, c.TIPO_CUENTA, c.NUMERO_CUENTA," +
+                " c.CCI, c.ACTIVO, c.ACREEDOR_ID, a.RAZON_SOCIAL, a.RUC, " +
+                "a.DIRECCION_FISCAL, a.CONDICION, a.PLAZO_DE_PAGO, a.ACTIVO, a.PAIS_ID, " +
+                "c.ENTIDAD_BANCARIA_ID, e.NOMBRE, e.FORMATO_ACEPTADO, e.CODIGO_SWIFT, e.PAIS_ID, " +
+                "c.MONEDA_ID, m.NOMBRE, m.CODIGO_ISO, m.SIMBOLO " +
+                "FROM PA_CUENTAS_ACREEDOR c JOIN PA_ACREEDORES a ON c.ACREEDOR_ID=a.ACREEDOR_ID" +
+                " JOIN PA_ENTIDADES_BANCARIAS e ON c.ENTIDAD_BANCARIA_ID=e.ENTIDAD_BANCARIA_ID" +
+                " JOIN PA_MONEDAS m ON c.MONEDA_ID=m.MONEDA_ID WHERE a.ACREEDOR_ID = ?";
+    }
+    
+    @Override
+    protected void incluirValorDeParametrosCustom1() throws SQLException{
+        this.statement.setInt(1,this.cuentaAcreedor.getCuenta_bancaria_id());
+    }
+    
+    @Override
+    protected void extraerResultSetCustom1() throws SQLException{
+        this.cuentasAcreedores = new ArrayList<>();
+        MonedasDTO moneda;
+        EntidadesBancariasDTO entidadBancaria;
+        AcreedoresDTO acreedor;
+        PaisesDTO pais;
+        while(this.resultSet.next()){
+            this.cuentaAcreedor = new CuentasAcreedorDTO();
+            this.cuentaAcreedor.setCuenta_bancaria_id(this.resultSet.getInt(1));
+            this.cuentaAcreedor.setTipo_cuenta(this.resultSet.getString(2));
+            this.cuentaAcreedor.setNumero_cuenta(this.resultSet.getString(3));
+            this.cuentaAcreedor.setCci(this.resultSet.getString(4));
+            this.cuentaAcreedor.setActiva(this.resultSet.getString(5).equals("S"));
+            acreedor = new AcreedoresDTO();
+            acreedor.setAcreedor_id(this.resultSet.getInt(6));
+            acreedor.setRazon_social(this.resultSet.getString(7));
+            acreedor.setRuc(this.resultSet.getString(8));
+            acreedor.setDireccion_fiscal(this.resultSet.getString(9));
+            acreedor.setCondicion(this.resultSet.getString(10));
+            acreedor.setPlazo_de_pago(this.resultSet.getInt(11));
+            acreedor.setActivo(this.resultSet.getString(12).equals("S"));
+            pais = new PaisesDTO();
+            pais.setPais_id(this.resultSet.getInt(13));
+            acreedor.setPais(pais);
+            
+            entidadBancaria = new EntidadesBancariasDTO();
+            entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(14));
+            entidadBancaria.setNombre(this.resultSet.getString(15));
+            entidadBancaria.setFormato_aceptado(this.resultSet.getString(16));
+            entidadBancaria.setCodigo_swift(this.resultSet.getString(17));
+            pais = new PaisesDTO();
+            pais.setPais_id(this.resultSet.getInt(18));
+            entidadBancaria.setPais(pais);
+            
+            moneda = new MonedasDTO();
+            moneda.setMoneda_id(this.resultSet.getInt(19));
+            moneda.setNombre(this.resultSet.getString(20));
+            moneda.setCodigo_iso(this.resultSet.getString(21));
+            moneda.setSimbolo(this.resultSet.getString(22));
+            
+            this.cuentaAcreedor.setAcreedor(acreedor);
+            this.cuentaAcreedor.setEntidad_bancaria(entidadBancaria);
+            this.cuentaAcreedor.setMoneda(moneda);
+        
+            this.cuentasAcreedores.add(this.cuentaAcreedor);
+        }
+    }
+    
 }
