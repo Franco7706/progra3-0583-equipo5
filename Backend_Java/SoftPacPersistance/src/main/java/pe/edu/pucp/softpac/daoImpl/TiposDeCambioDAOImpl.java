@@ -65,7 +65,7 @@ public class TiposDeCambioDAOImpl extends DAOImplBase implements TiposDeCambioDA
         if(resultSet.next()){
             this.tipoDeCambio = new TiposDeCambioDTO();
             this.tipoDeCambio.setTipo_cambio_id(resultSet.getInt(1));
-            this.tipoDeCambio.setFecha(resultSet.getTime(2));
+            this.tipoDeCambio.setFecha(resultSet.getTimestamp(2));
             this.tipoDeCambio.setTasa_de_cambio(resultSet.getBigDecimal(3));
             moneda = new MonedasDTO();
             moneda.setMoneda_id(resultSet.getInt(4));
@@ -89,7 +89,7 @@ public class TiposDeCambioDAOImpl extends DAOImplBase implements TiposDeCambioDA
         while(resultSet.next()){
             tipoDeCambio = new TiposDeCambioDTO();
             tipoDeCambio.setTipo_cambio_id(resultSet.getInt(1));
-            tipoDeCambio.setFecha(resultSet.getTime(2));
+            tipoDeCambio.setFecha(resultSet.getTimestamp(2));
             tipoDeCambio.setTasa_de_cambio(resultSet.getBigDecimal(3));
             moneda = new MonedasDTO();
             moneda.setMoneda_id(resultSet.getInt(4));

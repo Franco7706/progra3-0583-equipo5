@@ -263,6 +263,7 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
         try{
             DetallesFacturaDAO daoDetalle = new DetallesFacturaDAOImpl(this.getConexion());
             for(DetallesFacturaDTO detalle : this.factura.getDetalles_Factura()){
+                detalle.setFactura(factura);
                 daoDetalle.insertar(detalle);
             }
         }

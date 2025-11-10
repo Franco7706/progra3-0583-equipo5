@@ -165,15 +165,7 @@ public class CuentasPropiasBO {
     }
     
     public ArrayList<CuentasPropiasDTO> listarPorEntidadBancaria(Integer entidad_bancaria_id){
-        ArrayList<CuentasPropiasDTO> todas = listarTodos();
-        ArrayList<CuentasPropiasDTO> cuentasEntidad = new ArrayList<>();
-        
-        for (CuentasPropiasDTO cuenta : todas) {
-            if (cuenta.getEntidad_bancaria() != null && cuenta.getEntidad_bancaria().getEntidad_bancaria_id().equals(entidad_bancaria_id)) {
-                cuentasEntidad.add(cuenta);
-            }
-        }
-        return cuentasEntidad;
+        return cuentasPropiasDAO.listarPorEntidadBancaria(entidad_bancaria_id);
     }
     
 }

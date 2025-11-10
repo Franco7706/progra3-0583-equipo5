@@ -18,4 +18,6 @@ public interface CuentasPropiasDAO {
     public Integer eliminar(CuentasPropiasDTO cuentaPropia);
 
     public Integer eliminarLogico(CuentasPropiasDTO cuentaPropia);
+    
+    public ArrayList<CuentasPropiasDTO> listarPorEntidadBancaria(Integer entidad_bancaria_id);
 }

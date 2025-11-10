@@ -146,7 +146,7 @@ public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPro
 
         propuesta.addDetalle_Propuesta(this.detallePropuesta);
         propuesta.setPropuesta_id(this.resultSet.getInt(1));
-        propuesta.setFecha_hora_creacion(this.resultSet.getTime(2));
+        propuesta.setFecha_hora_creacion(this.resultSet.getTimestamp(2));
         propuesta.setEstado(this.resultSet.getString(3));
 
         propuesta.setEntidad_bancaria(entidadBancaria);
@@ -169,9 +169,9 @@ public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPro
 
         factura.setFactura_id(this.resultSet.getInt(14));
         factura.setNumero_factura(resultSet.getString(15));
-        factura.setFecha_emision(resultSet.getTime(16));
-        factura.setFecha_recepcion(resultSet.getTime(17));
-        factura.setFecha_limite_pago(resultSet.getTime(18));
+        factura.setFecha_emision(resultSet.getTimestamp(16));
+        factura.setFecha_recepcion(resultSet.getTimestamp(17));
+        factura.setFecha_limite_pago(resultSet.getTimestamp(18));
         factura.setEstado(this.resultSet.getString(19));
         factura.setMonto_total(this.resultSet.getBigDecimal(20));
         factura.setMonto_igv(this.resultSet.getBigDecimal(21));

@@ -3,6 +3,7 @@ package pe.edu.pucp.softpac.bo;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,6 +30,9 @@ public class PropuestaPagoBO {
     }
     
     public Integer modificar (PropuestasPagoDTO propuestaPago){
+        for(DetallesPropuestaDTO detalle : propuestaPago.getDetalles_propuesta()){
+            detalle.setPropuesta_pago(propuestaPago);
+        }
         return propuestasDAO.modificar(propuestaPago);
     }
     
@@ -78,7 +82,11 @@ public class PropuestaPagoBO {
     }
     
     public PropuestasPagoDTO obtenerPorId(Integer propuesta_id){
-        return this.propuestasDAO.obtenerPorId(propuesta_id);
+        PropuestasPagoDTO propuesta = this.propuestasDAO.obtenerPorId(propuesta_id);
+        for(DetallesPropuestaDTO detalle : propuesta.getDetalles_propuesta()){
+            detalle.setPropuesta_pago(null);
+        }
+        return propuesta;
     }
     
     public ArrayList<PropuestasPagoDTO> listarActividadPorUsuario(Integer usuarioId){
@@ -171,7 +179,7 @@ public class PropuestaPagoBO {
             for (Integer id : cuentasSeleccionadas)
             {
                 var cuenta = cuentasPropiasDAO.obtenerPorId(id);
-                if (cuenta.getActiva()) cuentas.add(new CuentasPropiasDTO(cuenta));
+                if (cuenta.getActiva()) cuentas.add(cuenta);
             }
 
             // 2️ Limpiar cualquier asignación previa

@@ -94,7 +94,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
                 usuario.setSuperusuario(this.resultSet.getString(8).equals("S"));
                 this.resultSet.getTimestamp(9);
                 if(!this.resultSet.wasNull()){
-                    usuario.setFecha_eliminacion(this.resultSet.getTime(9));
+                    usuario.setFecha_eliminacion(this.resultSet.getTimestamp(9));
                     usuarioEliminacion=new UsuariosDTO();
                     usuario.setUsuario_eliminacion(usuarioEliminacion);
                     usuarioEliminacion.setUsuario_id(this.resultSet.getInt(10));

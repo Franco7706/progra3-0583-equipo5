@@ -1,5 +1,6 @@
 package pe.edu.pucp.softpac.daoImpl;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -133,7 +134,9 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
                 " CP9_ENTIDAD_BANCARIA_NOMBRE, " +
                 " CP10_ENTIDAD_BANCARIA_SWIFT, " +
                 " CP11_ENTIDAD_BANCARIA_PAIS_ID, " +
-                " CP12_ENTIDAD_BANCARIA_PAIS_NOMBRE " +
+                " CP12_ENTIDAD_BANCARIA_PAIS_NOMBRE," +
+                " AC2_RAZON_SOCIAL_ACREEDOR, " +
+                " MO1_MONEDA_CODIGO_ISO " +
                 " FROM VW_PROPUESTA_COMPLETA WHERE P1_PROPUESTA_DE_PAGO_ID = ? ";
     }
 
@@ -162,9 +165,11 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         factura.setOtros_tributos(this.resultSet.getBigDecimal("F12_OTROS_TRIBUTOS"));
 
         moneda.setMoneda_id(this.resultSet.getInt("F13_MONEDA_ID"));
+        moneda.setCodigo_iso(this.resultSet.getString("MO1_MONEDA_CODIGO_ISO"));
         factura.setMoneda(moneda);
 
         acreedor.setAcreedor_id(this.resultSet.getInt("F14_ACREEDOR_ID"));
+        acreedor.setRazon_social(this.resultSet.getString("AC2_RAZON_SOCIAL_ACREEDOR"));
         factura.setAcreedor(acreedor);
 
         return factura;
@@ -289,7 +294,7 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         detallePropuesta.setFactura(insertarFactura());
         detallePropuesta.setCuenta_acreedor(insertarCuentaAcreedor());
         detallePropuesta.setCuenta_propia(insertarCuentaPropia());
-
+        
         return detallePropuesta;
     }
 
@@ -308,8 +313,8 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
                 // Crear propuesta de pago
                 this.propuestaPago = new PropuestasPagoDTO();
                 this.propuestaPago.setPropuesta_id(this.resultSet.getInt("P1_PROPUESTA_DE_PAGO_ID"));
-                this.propuestaPago.setFecha_hora_creacion(this.resultSet.getTime("P2_FECHA_HORA_CREACION"));
-                this.propuestaPago.setFecha_hora_modificacion(this.resultSet.getTime("P3_FECHA_HORA_MODIFICACION"));
+                this.propuestaPago.setFecha_hora_creacion(this.resultSet.getTimestamp("P2_FECHA_HORA_CREACION"));
+                this.propuestaPago.setFecha_hora_modificacion(this.resultSet.getTimestamp("P3_FECHA_HORA_MODIFICACION"));
 
 
                 // Insertar usuarios
@@ -345,24 +350,92 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
     }
 
     @Override
+    protected String generarSQLParaListarTodos(){
+        return """
+               SELECT 
+                   p.PROPUESTA_DE_PAGO_ID,
+                   p.FECHA_HORA_CREACION,
+                   p.FECHA_HORA_MODIFICACION,
+                   p.ESTADO,
+                   p.ENTIDAD_BANCARIA_ID,
+                   p.USUARIO_CREACION,
+                   p.USUARIO_MODIFICACION,
+                   -- Usuario de creación (columnas separadas)
+                   uc.NOMBRE AS USUARIO_CREACION_NOMBRE,
+                   uc.APELLIDOS AS USUARIO_CREACION_APELLIDOS,
+                   uc.NOMBRE_DE_USUARIO AS USUARIO_CREACION,
+                   -- Banco de la propuesta
+                   eb.NOMBRE AS BANCO_NOMBRE,
+                   -- País del banco de la propuesta
+                   pa.PAIS_ID,
+                   pa.NOMBRE AS PAIS_NOMBRE,
+                   -- Cantidad de detalles
+                   COUNT(dp.DETALLE_PROPUESTA_ID) AS CANTIDAD_DETALLES
+               FROM 
+                   softpacbd.PA_PROPUESTAS_DE_PAGO p
+                   INNER JOIN softpacbd.PA_USUARIOS uc 
+                       ON p.USUARIO_CREACION = uc.USUARIO_ID
+                   INNER JOIN softpacbd.PA_ENTIDADES_BANCARIAS eb 
+                       ON p.ENTIDAD_BANCARIA_ID = eb.ENTIDAD_BANCARIA_ID
+                   INNER JOIN softpacbd.PA_PAISES pa 
+                       ON eb.PAIS_ID = pa.PAIS_ID
+                   LEFT JOIN softpacbd.PA_DETALLES_PROPUESTA dp 
+                       ON p.PROPUESTA_DE_PAGO_ID = dp.PROPUESTA_DE_PAGO_ID
+                       AND dp.FECHA_ELIMINACION IS NULL
+               WHERE 
+                   p.FECHA_ELIMINACION IS NULL
+               GROUP BY 
+                   p.PROPUESTA_DE_PAGO_ID,
+                   p.FECHA_HORA_CREACION,
+                   p.ESTADO,
+                   p.FECHA_HORA_MODIFICACION,
+                   uc.NOMBRE,
+                   uc.APELLIDOS,
+                   uc.NOMBRE_DE_USUARIO,
+                   eb.NOMBRE,
+                   pa.NOMBRE
+               ORDER BY 
+                   p.PROPUESTA_DE_PAGO_ID DESC;
+               """;
+    }
+    @Override
     protected void extraerResultSetParaListarTodos() throws SQLException{
         propuestasPago=new ArrayList<>();
-        EntidadesBancariasDTO entidadBancaria=null;
+        EntidadesBancariasDTO entidadBancaria;
+        PaisesDTO pais;
         while(this.resultSet.next()){
             PropuestasPagoDTO p=new PropuestasPagoDTO();
             p.setPropuesta_id(this.resultSet.getInt(1));
             p.setFecha_hora_creacion(this.resultSet.getTimestamp(2));
-            p.setEstado(this.resultSet.getString(3));
+            p.setFecha_hora_modificacion(this.resultSet.getTimestamp(3));
+            p.setEstado(this.resultSet.getString(4));
             entidadBancaria=new EntidadesBancariasDTO();
-            entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(4));
-            p.setEntidad_bancaria(entidadBancaria);
+            entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt(5));
             /*Añadido*/
             UsuariosDTO userCreacion = new UsuariosDTO();
             userCreacion.setUsuario_id(this.resultSet.getInt(6));
             UsuariosDTO userModificacion = new UsuariosDTO();
             userModificacion.setUsuario_id(this.resultSet.getInt(7));
+            
+            userCreacion.setNombre(this.resultSet.getString(8));
+            userCreacion.setApellidos(this.resultSet.getString(9));
+            userCreacion.setNombre_de_usuario(this.resultSet.getString(10));
+            
+            entidadBancaria.setNombre(this.resultSet.getString(11));
+            pais = new PaisesDTO();
+            pais.setPais_id(this.resultSet.getInt(12));
+            pais.setNombre(this.resultSet.getString(13));
+            entidadBancaria.setPais(pais);
+            p.setEntidad_bancaria(entidadBancaria);
             p.setUsuario_creacion(userCreacion);
             p.setUsuario_modificacion(userModificacion);
+            int cantDetalles = this.resultSet.getInt(14);
+            for(int i=0;i<cantDetalles; i++){
+                DetallesPropuestaDTO detalle = new DetallesPropuestaDTO();
+                detalle.setForma_pago('-');
+                detalle.setMonto_pago(BigDecimal.ONE);
+                p.addDetalle_Propuesta(detalle);
+            }
             propuestasPago.add(p);
         }
     }
@@ -456,6 +529,7 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         try{
             DetallesPropuestaDAO daoDetalle =  new DetallesPropuestaDAOImpl(this.getConexion());
             for(DetallesPropuestaDTO detalle : this.propuestaPago.getDetalles_propuesta()){
+                detalle.setPropuesta_pago(this.propuestaPago);
                 daoDetalle.insertar(detalle);
             }
         }
