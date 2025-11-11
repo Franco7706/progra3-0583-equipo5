@@ -87,11 +87,11 @@ public class ReporteFactPendDAOImpl extends DAOImplBase implements ReporteFactPe
         sql = sql.concat("r.RANGO_VENCIMIENTO, ");
         sql = sql.concat("r.RAZON_SOCIAL ");
 
-        sql = sql.concat("FROM PA_REPORTES_FACTURAS r ");
+        sql = sql.concat("FROM PA_REPORTES_FACTURAS_PENDIENTES r ");
 
-        sql = sql.concat("WHERE r.ACREEDOR_ID = ? ");
-        sql = sql.concat("AND r.PAIS_ID = ? ");
-        sql = sql.concat("AND r.MONEDA_ID = ? ");
+        sql = sql.concat("WHERE (? = 0 OR r.ACREEDOR_ID = ?) ");
+        sql = sql.concat("AND (? = 0 OR r.PAIS_ID = ?) ");
+        sql = sql.concat("AND (? = 0 OR r.MONEDA_ID = ?) ");
 
         sql = sql.concat("ORDER BY r.RANGO_VENCIMIENTO");
         
@@ -103,9 +103,12 @@ public class ReporteFactPendDAOImpl extends DAOImplBase implements ReporteFactPe
         ReporteFacturasPendientesParametros parametros = (ReporteFacturasPendientesParametros) objetoParametros;
         try {            
             //TODO
-            this.statement.setInt(1, parametros.getIdAcreedor());                  
-            this.statement.setInt(2, parametros.getIdPais());                  
-            this.statement.setInt(3, parametros.getIdMoneda());                  
+            this.statement.setInt(1, parametros.getIdAcreedor());
+            this.statement.setInt(2, parametros.getIdAcreedor());
+            this.statement.setInt(3, parametros.getIdPais());
+            this.statement.setInt(4, parametros.getIdPais());
+            this.statement.setInt(5, parametros.getIdMoneda());
+            this.statement.setInt(6, parametros.getIdMoneda());
         } catch (SQLException ex) {
             System.getLogger(ReporteFactPendDAOImpl.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -142,6 +145,7 @@ public class ReporteFactPendDAOImpl extends DAOImplBase implements ReporteFactPe
       factura.setFactura_id(this.resultSet.getInt("FACTURA_ID"));
       factura.setNumero_factura(this.resultSet.getString("NUMERO_FACTURA"));
       factura.setFecha_limite_pago(this.resultSet.getTimestamp("FECHA_LIMITE_PAGO"));
+      factura.setMonto_restante(this.resultSet.getBigDecimal("MONTO_RESTANTE"));
       this.reporte.setFactura(factura);
 
     }
