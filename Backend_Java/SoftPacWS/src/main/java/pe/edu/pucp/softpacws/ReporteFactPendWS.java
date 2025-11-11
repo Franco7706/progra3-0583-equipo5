@@ -17,11 +17,12 @@ public class ReporteFactPendWS {
     }
     
     @WebMethod(operationName = "generarReporteFacturasPendientes")
-    public void generarReporteFacturasPendientes(
+    public int generarReporteFacturasPendientes(
             @WebParam(name = "acreedor_id") Integer acreedor_id,
             @WebParam(name = "pais_id") Integer pais_id,
             @WebParam(name = "moneda_id") Integer moneda_id) {
         reporteFactPendBO.generarReporteFacturasPendientes(acreedor_id, pais_id, moneda_id);
+        return 1;
     }
     
     @WebMethod(operationName = "listarPorFiltros")
