@@ -81,13 +81,6 @@ public class EntidadesBancariasDAOImpl extends DAOImplBase implements EntidadesB
             pais.setCodigo_telefonico(this.resultSet.getString(8));
         }
     }
-    
-    @Override
-    protected String generarSQLParaListarTodos(){
-        return "SELECT e.ENTIDAD_BANCARIA_ID, e.NOMBRE, e.FORMATO_ACEPTADO, e.CODIGO_SWIFT, e.PAIS_ID, p.NOMBRE\n" +
-            "FROM PA_ENTIDADES_BANCARIAS e join PA_PAISES p on e.PAIS_ID = p.PAIS_ID";
-    }
-            
 
     @Override
     protected void extraerResultSetParaListarTodos() throws SQLException {
@@ -101,7 +94,6 @@ public class EntidadesBancariasDAOImpl extends DAOImplBase implements EntidadesB
             e.setCodigo_swift(this.resultSet.getString(4));
             pais=new PaisesDTO();
             pais.setPais_id(this.resultSet.getInt(5));
-            pais.setNombre(this.resultSet.getString(6));
             e.setPais(pais);
             entidadesBancarias.add(e);
         }
@@ -138,4 +130,41 @@ public class EntidadesBancariasDAOImpl extends DAOImplBase implements EntidadesB
         this.entidadBancaria=entidadBancaria;
         return super.eliminar();
     }
+    
+    @Override
+    public EntidadesBancariasDTO obtenerPorNombre(String nombre){
+        this.entidadBancaria = new EntidadesBancariasDTO();
+        this.entidadBancaria.setNombre(nombre);
+        super.queryCustom1();
+        return this.entidadBancaria;
+    }
+    
+    @Override
+    protected String generarSQLCustom1() {
+        return "SELECT ENTIDAD_BANCARIA_ID, NOMBRE, FORMATO_ACEPTADO, CODIGO_SWIFT, PAIS_ID " +
+               "FROM PA_ENTIDADES_BANCARIAS " +
+               "WHERE NOMBRE = ?";
+    }
+
+    @Override
+    protected void incluirValorDeParametrosCustom1() throws SQLException {
+        this.statement.setString(1, this.entidadBancaria.getNombre());
+    }
+
+    @Override
+    protected void extraerResultSetCustom1() throws SQLException {
+        this.entidadBancaria = null;
+        if (this.resultSet.next()) {
+            this.entidadBancaria = new EntidadesBancariasDTO();
+            this.entidadBancaria.setEntidad_bancaria_id(this.resultSet.getInt("ENTIDAD_BANCARIA_ID"));
+            this.entidadBancaria.setNombre(this.resultSet.getString("NOMBRE"));
+            this.entidadBancaria.setFormato_aceptado(this.resultSet.getString("FORMATO_ACEPTADO"));
+            this.entidadBancaria.setCodigo_swift(this.resultSet.getString("CODIGO_SWIFT"));
+
+            PaisesDTO pais = new PaisesDTO();
+            pais.setPais_id(this.resultSet.getInt("PAIS_ID"));
+            this.entidadBancaria.setPais(pais);
+        }
+    }
+
 }

@@ -209,12 +209,12 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
 //        }
 //    }
 
-    @Override
-    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
-        this.statement.setTimestamp(1,new Timestamp(this.factura.getFecha_eliminacion().getTime()));
-        this.statement.setInt(2,this.factura.getUsuario_eliminacion().getUsuario_id());
-        this.statement.setInt(3,this.factura.getFactura_id());
-    }
+//    @Override
+//    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
+//        this.statement.setTimestamp(1,new Timestamp(this.factura.getFecha_eliminacion().getTime()));
+//        this.statement.setInt(2,this.factura.getUsuario_eliminacion().getUsuario_id());
+//        this.statement.setInt(3,this.factura.getFactura_id());
+//    }
 
     @Override
     public Integer insertar(FacturasDTO factura) {
@@ -269,6 +269,20 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
         catch(DAODetalleException e){
             throw e;
         }
+    }
+    
+    @Override
+    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
+        this.statement.setTimestamp(1,new Timestamp(this.factura.getFecha_eliminacion().getTime()));
+        this.statement.setInt(2,this.factura.getUsuario_eliminacion().getUsuario_id());
+        this.statement.setString(3, "Eliminado");
+        this.statement.setInt(4,this.factura.getFactura_id());
+    }
+
+    @Override
+    protected String generarSQLParaEliminacionLogica() {
+        return "UPDATE PA_FACTURAS SET FECHA_ELIMINACION=?, USUARIO_ELIMINACION=?,\n"
+                + "ESTADO=? WHERE FACTURA_ID=?";
     }
 
     @Override

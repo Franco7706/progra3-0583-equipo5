@@ -21,5 +21,9 @@ public class EntidadesBancariasBO {
         entidadesBancariasDTO.setEntidad_bancaria_id(entidades_bancarias_id);
         return this.entidadesBancariasDAO.obtenerPorId(entidades_bancarias_id);
     }
+ 
+    public EntidadesBancariasDTO obtenerPorNombre(String nombre){
+        return this.entidadesBancariasDAO.obtenerPorNombre(nombre);
+    }
     
 }

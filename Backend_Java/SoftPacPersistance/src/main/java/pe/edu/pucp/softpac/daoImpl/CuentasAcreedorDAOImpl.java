@@ -199,7 +199,6 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
         return super.eliminarLogico();
     }
     
-    @Override
     public ArrayList<CuentasAcreedorDTO> obtenerPorAcreedor(Integer acreedor_id){
         this.cuentaAcreedor = new CuentasAcreedorDTO();
         this.cuentaAcreedor.setCuenta_bancaria_id(acreedor_id);
@@ -209,14 +208,18 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
     
     @Override
     public String generarSQLCustom1(){
-        return "SELECT c.CUENTA_ACREEDOR_ID, c.TIPO_CUENTA, c.NUMERO_CUENTA," +
-                " c.CCI, c.ACTIVO, c.ACREEDOR_ID, a.RAZON_SOCIAL, a.RUC, " +
-                "a.DIRECCION_FISCAL, a.CONDICION, a.PLAZO_DE_PAGO, a.ACTIVO, a.PAIS_ID, " +
-                "c.ENTIDAD_BANCARIA_ID, e.NOMBRE, e.FORMATO_ACEPTADO, e.CODIGO_SWIFT, e.PAIS_ID, " +
-                "c.MONEDA_ID, m.NOMBRE, m.CODIGO_ISO, m.SIMBOLO " +
-                "FROM PA_CUENTAS_ACREEDOR c JOIN PA_ACREEDORES a ON c.ACREEDOR_ID=a.ACREEDOR_ID" +
-                " JOIN PA_ENTIDADES_BANCARIAS e ON c.ENTIDAD_BANCARIA_ID=e.ENTIDAD_BANCARIA_ID" +
-                " JOIN PA_MONEDAS m ON c.MONEDA_ID=m.MONEDA_ID WHERE a.ACREEDOR_ID = ?";
+        return "SELECT c.CUENTA_ACREEDOR_ID, c.TIPO_CUENTA, c.NUMERO_CUENTA, " +
+           "c.CCI, c.ACTIVO, c.ACREEDOR_ID, a.RAZON_SOCIAL, a.RUC, " +
+           "a.DIRECCION_FISCAL, a.CONDICION, a.PLAZO_DE_PAGO, a.ACTIVO, a.PAIS_ID, " +
+           "c.ENTIDAD_BANCARIA_ID, e.NOMBRE, e.FORMATO_ACEPTADO, e.CODIGO_SWIFT, e.PAIS_ID, " +
+           "c.MONEDA_ID, m.NOMBRE, m.CODIGO_ISO, m.SIMBOLO " +
+           "FROM PA_CUENTAS_ACREEDOR c " +
+           "JOIN PA_ACREEDORES a ON c.ACREEDOR_ID = a.ACREEDOR_ID " +
+           "JOIN PA_ENTIDADES_BANCARIAS e ON c.ENTIDAD_BANCARIA_ID = e.ENTIDAD_BANCARIA_ID " +
+           "JOIN PA_MONEDAS m ON c.MONEDA_ID = m.MONEDA_ID " +
+           "WHERE a.ACREEDOR_ID = ? " +
+           "AND c.FECHA_ELIMINACION IS NULL AND c.USUARIO_ELIMINACION IS NULL " +
+           "AND c.ACTIVO = 'S'";
     }
     
     @Override
@@ -272,5 +275,4 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
             this.cuentasAcreedores.add(this.cuentaAcreedor);
         }
     }
-    
 }

@@ -2,6 +2,7 @@
 package pe.edu.pucp.softpac.bo;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import pe.edu.pucp.softpac.dao.AcreedoresDAO;
 import pe.edu.pucp.softpac.daoImpl.AcreedoresDAOImpl;
@@ -81,5 +82,19 @@ public class AcreedoresBO {
         return (ArrayList<AcreedoresDTO>) acreedorDAO.listarTodos();
     }
     
+    public ArrayList<AcreedoresDTO> listarPorPaises(ArrayList<Integer> paisesIds) {
+        ArrayList<AcreedoresDTO> todos = (ArrayList<AcreedoresDTO>) acreedorDAO.listarTodos();
+        ArrayList<AcreedoresDTO> filtrados = new ArrayList<>();
+
+        for (AcreedoresDTO a : todos) {
+            if (a.getPais() != null && paisesIds.contains(a.getPais().getPais_id())) {
+                filtrados.add(a);
+            }
+        }
+
+        // opcional: ordenar por nombre o fecha de creación
+        filtrados.sort(Comparator.comparing(AcreedoresDTO::getRazon_social, String.CASE_INSENSITIVE_ORDER));
+        return filtrados;
+    }
     
 }

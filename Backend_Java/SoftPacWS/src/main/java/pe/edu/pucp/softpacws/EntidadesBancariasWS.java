@@ -26,4 +26,9 @@ public class EntidadesBancariasWS {
             @WebParam(name = "entidades_bancarias_id") Integer entidades_bancarias_id) {
         return entidadesBancariasBO.obtenerPorId(entidades_bancarias_id);
     }
+    
+    @WebMethod(operationName = "obtenerEntidadBancariaPorNombre")
+    public EntidadesBancariasDTO obtenerPorNombre(@WebParam(name = "nombre_entidad")String nombre){
+        return this.entidadesBancariasBO.obtenerPorNombre(nombre);
+    }
 }

@@ -33,17 +33,20 @@ public class FacturasBO {
     }
     
     public Integer insertarDetalle(DetallesFacturaDTO detalle){
-        return this.facturasDAO.insertar(detalle.getFactura());
+        detalle.getFactura().addDetalle_Factura(detalle);
+        return this.facturasDAO.modificar(detalle.getFactura());
     }
     
     public Integer modificarDetalle(DetallesFacturaDTO detalle){
+        detalle.getFactura().addDetalle_Factura(detalle);
         return this.facturasDAO.modificar(detalle.getFactura());
     }
     
     public Integer eliminarDetalle(DetallesFacturaDTO detalle, UsuariosDTO usuarioActual){
-        detalle.getFactura().setFecha_eliminacion(new Date());
-        detalle.getFactura().setUsuario_eliminacion(usuarioActual);
-        return this.facturasDAO.eliminarLogico(detalle.getFactura());
+        detalle.setFecha_eliminacion(new Date());
+        detalle.setUsuario_eliminacion(usuarioActual);
+        detalle.getFactura().addDetalle_Factura(detalle);
+        return this.facturasDAO.modificar(detalle.getFactura());
     }   
     
     public Integer insertar(FacturasDTO factura){
@@ -62,7 +65,7 @@ public class FacturasBO {
         ArrayList<FacturasDTO> facturasPendientes = new ArrayList<>();
         ArrayList<FacturasDTO> facturasGenerales = (ArrayList<FacturasDTO>) facturasDAO.listarTodos();
         for(FacturasDTO factura : facturasGenerales){
-            if(factura.getEstado().equals("PENDIENTE")){
+            if(factura.getEstado().equals("Pendiente")){
                 facturasPendientes.add(factura);
             }
         }
@@ -89,7 +92,7 @@ public class FacturasBO {
         for (FacturasDTO factura : facturasGenerales) {
             if (
                 factura != null
-                && "PENDIENTE".equals(factura.getEstado())
+                && "Pendiente".equals(factura.getEstado())
                 && factura.getAcreedor() != null
                 && factura.getAcreedor().getPais() != null
                 && factura.getAcreedor().getPais().getPais_id().equals(paisId)
