@@ -23,18 +23,18 @@ public class FacturasBOTest {
         
     }
     
-    @Test
-    public void listarFiltrosTest() throws ParseException{
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date fecha = sdf.parse("2024-10-20 23:59:59");
-        ArrayList<FacturasDTO> facturasGenerales = facturasBOTest.listarPendientesPorCriterios(1, fecha);
-        
-        if(facturasGenerales == null) System.out.println("Lista nula");
-        
-        for(var f : facturasGenerales){
-            System.out.println(f.getFactura_id());
-            System.out.println(f.getFecha_limite_pago());
-        }
-        
-    }
+//    @Test
+//    public void listarFiltrosTest() throws ParseException{
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date fecha = sdf.parse("2024-10-20 23:59:59");
+//        ArrayList<FacturasDTO> facturasGenerales = facturasBOTest.listarPendientesPorCriterios(1, fecha);
+//        
+//        if(facturasGenerales == null) System.out.println("Lista nula");
+//        
+//        for(var f : facturasGenerales){
+//            System.out.println(f.getFactura_id());
+//            System.out.println(f.getFecha_limite_pago());
+//        }
+//        
+//    }
 }

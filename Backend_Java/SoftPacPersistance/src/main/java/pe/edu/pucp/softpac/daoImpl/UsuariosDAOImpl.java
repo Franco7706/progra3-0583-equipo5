@@ -25,7 +25,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
         this.retornarLlavePrimaria = true;
         this.ejecutaOperacionesEnCascada = true;
         this.seEliminaLogicamente = true;
-        this.listarEliminados = false;
+        this.listarEliminados = true;
         super.incluirColumnasDeEliminacionLogica();
     }
 
@@ -76,13 +76,13 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
     @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException {
-        usuario=null;
-        PaisesDTO pais=null;
-        UsuarioPaisAccesoDTO usuarioPaisAcceso=null;
-        UsuariosDTO usuarioEliminacion=null;
-        int i=0;
+        usuario = null;
+        PaisesDTO pais = null;
+        UsuarioPaisAccesoDTO usuarioPaisAcceso = null;
+        UsuariosDTO usuarioEliminacion = null;
+        int i = 0;
         while (this.resultSet.next()) {
-            if (i==0){
+            if (i == 0) {
                 usuario = new UsuariosDTO();
                 usuario.setUsuario_id(this.resultSet.getInt(1));
                 usuario.setCorreo_electronico(this.resultSet.getString(2));
@@ -93,17 +93,19 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
                 usuario.setPassword_hash(this.resultSet.getString(7));
                 usuario.setSuperusuario(this.resultSet.getString(8).equals("S"));
                 this.resultSet.getTimestamp(9);
-                if(!this.resultSet.wasNull()){
+                if (!this.resultSet.wasNull()) {
                     usuario.setFecha_eliminacion(this.resultSet.getTime(9));
-                    usuarioEliminacion=new UsuariosDTO();
+                    usuarioEliminacion = new UsuariosDTO();
                     usuario.setUsuario_eliminacion(usuarioEliminacion);
                     usuarioEliminacion.setUsuario_id(this.resultSet.getInt(10));
                 }
-                i=1;
+                i = 1;
             }
-            pais=new PaisesDTO();
+            pais = new PaisesDTO();
             pais.setPais_id(this.resultSet.getInt(11));
-            if(this.resultSet.wasNull()) break;
+            if (this.resultSet.wasNull()) {
+                break;
+            }
             pais.setNombre(this.resultSet.getString(12));
             pais.setCodigo_iso(this.resultSet.getString(13));
             pais.setCodigo_telefonico(this.resultSet.getString(14));
@@ -117,15 +119,15 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
     @Override
     protected String generarSQLParaObtenerPorId() {
-        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION," +
-                " p.PAIS_ID, p.NOMBRE, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO" +
-                " FROM PA_USUARIOS u LEFT JOIN PA_USUARIO_PAIS_ACCESO upa ON u.USUARIO_ID = upa.USUARIO_ID" +
-                " LEFT JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID WHERE u.USUARIO_ID = ?";
+        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION,"
+                + " p.PAIS_ID, p.NOMBRE, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO"
+                + " FROM PA_USUARIOS u LEFT JOIN PA_USUARIO_PAIS_ACCESO upa ON u.USUARIO_ID = upa.USUARIO_ID"
+                + " LEFT JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID WHERE u.USUARIO_ID = ?";
     }
 
     @Override
     protected void extraerResultSetParaListarTodos() throws SQLException {
-        usuarios=new ArrayList<>();
+        usuarios = new ArrayList<>();
         while (this.resultSet.next()) {
             UsuariosDTO u = new UsuariosDTO();
             u.setUsuario_id(this.resultSet.getInt("USUARIO_ID"));
@@ -142,16 +144,17 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
     @Override
     protected String generarSQLCustom1() {
-        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION," +
-                " p.PAIS_ID, p.NOMBRE, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO" +
-                " FROM PA_USUARIOS u LEFT JOIN PA_USUARIO_PAIS_ACCESO upa ON u.USUARIO_ID = upa.USUARIO_ID" +
-                " LEFT JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID  WHERE u.CORREO_ELECTRONICO = ?";
+        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION,"
+                + " p.PAIS_ID, p.NOMBRE, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO"
+                + " FROM PA_USUARIOS u LEFT JOIN PA_USUARIO_PAIS_ACCESO upa ON u.USUARIO_ID = upa.USUARIO_ID"
+                + " LEFT JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID  WHERE u.CORREO_ELECTRONICO = ?";
     }
 
     @Override
     protected void incluirValorDeParametrosCustom1() throws SQLException {
-        this.statement.setString(1,this.usuario.getCorreo_electronico());
+        this.statement.setString(1, this.usuario.getCorreo_electronico());
     }
+
     @Override
     protected void extraerResultSetCustom1() throws SQLException {
         this.extraerResultSetParaObtenerPorId();
@@ -161,7 +164,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
         this.statement.setTimestamp(1, new Timestamp(this.usuario.getFecha_eliminacion().getTime()));
         this.statement.setInt(2, this.usuario.getUsuario_eliminacion().getUsuario_id());
-        this.statement.setInt(3,this.usuario.getUsuario_id());
+        this.statement.setInt(3, this.usuario.getUsuario_id());
     }
 
     @Override
@@ -197,7 +200,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     }
 
     @Override
-    public UsuariosDTO obtenerPorCorreo(String correo){
+    public UsuariosDTO obtenerPorCorreo(String correo) {
         this.usuario = new UsuariosDTO();
         this.usuario.setCorreo_electronico(correo);
         super.queryCustom1();
@@ -205,8 +208,8 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     }
 
     @Override
-    public Integer eliminarLogico(UsuariosDTO usuario){
-        this.usuario=usuario;
+    public Integer eliminarLogico(UsuariosDTO usuario) {
+        this.usuario = usuario;
         return super.eliminarLogico();
     }
 
@@ -214,54 +217,53 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     protected void ejecutarCascadaParaEliminacion() {
         try {
             UsuarioPaisAccesoDAO usuarioPaisAccesoDAO = new UsuarioPaisAccesoDAOImpl(this.getConexion());
-            for(UsuarioPaisAccesoDTO usu_pais_acceso : this.usuario.getUsuario_pais()){
+            for (UsuarioPaisAccesoDTO usu_pais_acceso : this.usuario.getUsuario_pais()) {
                 usuarioPaisAccesoDAO.eliminar(usu_pais_acceso);
             }
-        }
-        catch (DAODetalleException e) {
+        } catch (DAODetalleException e) {
             throw e;
         }
     }
+
     @Override
     protected void recuperarAutoGeneradoParaInsercionDeDetalle(Integer resultado) {
         this.usuario.setUsuario_id(resultado);
     }
+
     @Override
     protected void ejecutarCascadaParaInsercion() {
         try {
             UsuarioPaisAccesoDAO usuarioPaisAccesoDAO = new UsuarioPaisAccesoDAOImpl(this.getConexion());
-            for(UsuarioPaisAccesoDTO usu_pais_acceso : this.usuario.getUsuario_pais()){
+            for (UsuarioPaisAccesoDTO usu_pais_acceso : this.usuario.getUsuario_pais()) {
                 usu_pais_acceso.setUsuario(this.usuario);
                 usuarioPaisAccesoDAO.insertar(usu_pais_acceso);
             }
-        }
-        catch (DAODetalleException e) {
+        } catch (DAODetalleException e) {
             throw e;
         }
     }
+
     @Override
     protected void ejecutarCascadaParaModificacion() {
         try {
             UsuarioPaisAccesoDAO usuarioPaisAccesoDAO = new UsuarioPaisAccesoDAOImpl(this.getConexion());
-            for(UsuarioPaisAccesoDTO usu_pais_acceso : this.usuario.getUsuario_pais()){
+            for (UsuarioPaisAccesoDTO usu_pais_acceso : this.usuario.getUsuario_pais()) {
                 usuarioPaisAccesoDAO.modificar(usu_pais_acceso);
             }
-        }
-        catch (DAODetalleException e) {
+        } catch (DAODetalleException e) {
             throw e;
         }
     }
-    
+
     //NUEVO: Implementacion para obtener por nombre.
-    
     @Override
-    public UsuariosDTO obtenerPorNombreDeUsuario(String nombreDeUsuario){
+    public UsuariosDTO obtenerPorNombreDeUsuario(String nombreDeUsuario) {
         this.usuario = new UsuariosDTO();
         this.usuario.setNombre_de_usuario(nombreDeUsuario);
         super.queryCustom2();
         return this.usuario;
     }
-    
+
     //SQL:
     @Override
     protected String generarSQLCustom2() {
@@ -269,18 +271,18 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 //        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION" +
 //                " FROM PA_USUARIOS u " +
 //                "  WHERE u.NOMBRE_DE_USUARIO = ?";
-        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION," +
-                " p.PAIS_ID, p.NOMBRE, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO" +
-                " FROM PA_USUARIOS u LEFT JOIN PA_USUARIO_PAIS_ACCESO upa ON u.USUARIO_ID = upa.USUARIO_ID" +
-                " LEFT JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID  WHERE u.NOMBRE_DE_USUARIO = ?";
+        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION,"
+                + " p.PAIS_ID, p.NOMBRE, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO"
+                + " FROM PA_USUARIOS u LEFT JOIN PA_USUARIO_PAIS_ACCESO upa ON u.USUARIO_ID = upa.USUARIO_ID"
+                + " LEFT JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID  WHERE u.NOMBRE_DE_USUARIO = ?";
     }
-    
+
     //Valores en el statement.
     @Override
     protected void incluirValorDeParametrosCustom2() throws SQLException {
-        this.statement.setString(1,this.usuario.getNombre_de_usuario());
+        this.statement.setString(1, this.usuario.getNombre_de_usuario());
     }
-    
+
     //Para recuperar el SELECT:
     @Override
     protected void extraerResultSetCustom2() throws SQLException {
@@ -315,8 +317,12 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 //            usuario.addUsuario_pais(acceso);
 //          }
     }
-    
+
     //////////////////////////////////////////////////////////////////////////
     
-
+    @Override
+    protected String generarSQLParaEliminacionLogica() {
+        // UPDATE PA_USUARIOS SET ACTIVO=?, FECHA_ELIMINACION=?, USUARIO_ELIMINACION=? WHERE USUARIO_ID=?
+        return "UPDATE PA_USUARIOS SET ACTIVO='N', FECHA_ELIMINACION=?, USUARIO_ELIMINACION=? WHERE USUARIO_ID=?";
+    }
 }

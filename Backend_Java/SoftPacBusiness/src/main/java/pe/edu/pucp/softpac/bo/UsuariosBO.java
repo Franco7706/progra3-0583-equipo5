@@ -33,7 +33,7 @@ public class UsuariosBO {
 
         Boolean esValido = PasswordUtil.checkPassword(password.trim(), usuario.getPassword_hash());
 
-        if (esValido && usuario.getFecha_eliminacion() == null) {
+        if (esValido && usuario.getActivo() == true) {
             //PARA SERIALIZACIÓN:
             for (UsuarioPaisAccesoDTO upa : usuario.getUsuario_pais()) {
                 upa.setUsuario(null);
