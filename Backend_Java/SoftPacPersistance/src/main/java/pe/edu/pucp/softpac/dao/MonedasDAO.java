@@ -15,4 +15,6 @@ public interface MonedasDAO {
     public Integer modificar(MonedasDTO moneda);
     
     public Integer eliminar(MonedasDTO moneda);
+    
+    public MonedasDTO obtenerPorDivisa(String divisaMoneda);
 }

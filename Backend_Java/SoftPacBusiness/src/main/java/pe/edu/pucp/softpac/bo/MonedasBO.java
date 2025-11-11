@@ -24,5 +24,8 @@ public class MonedasBO {
         return this.monedasDAO.obtenerPorId(moneda_id);
     }
     
+    public MonedasDTO obtenerPorDivisa(String divisaMoneda){
+        return this.monedasDAO.obtenerPorDivisa(divisaMoneda);
+    }
     
 }

@@ -25,4 +25,9 @@ public class MonedasWS {
     public MonedasDTO obtenerMonedaPorID(@WebParam(name = "moneda_id") Integer moneda_id) {
         return monedasBO.obtenerPorID(moneda_id);
     }
+    
+    @WebMethod(operationName = "obtenerMonedaPorDivisa")
+    public MonedasDTO obtenerPorDivisa(@WebParam(name = "moneda_divisa")String divisaMoneda){
+        return monedasBO.obtenerPorDivisa(divisaMoneda);
+    }
 }

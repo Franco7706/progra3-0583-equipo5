@@ -6,6 +6,7 @@ import java.util.List;
 
 import pe.edu.pucp.softpac.dao.MonedasDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
+import pe.edu.pucp.softpac.model.CuentasAcreedorDTO;
 import pe.edu.pucp.softpac.model.MonedasDTO;
 
 public class MonedasDAOImpl extends DAOImplBase implements MonedasDAO {
@@ -73,6 +74,38 @@ public class MonedasDAOImpl extends DAOImplBase implements MonedasDAO {
             m.setCodigo_iso(this.resultSet.getString("CODIGO_ISO"));
             m.setSimbolo(this.resultSet.getString("SIMBOLO"));
             monedas.add(m);
+        }
+    }
+    
+    @Override
+    public MonedasDTO obtenerPorDivisa(String divisaMoneda){
+        this.moneda = new MonedasDTO();
+        this.moneda.setCodigo_iso(divisaMoneda);
+        super.queryCustom1();
+        return this.moneda;
+    }
+    
+    @Override
+    protected String generarSQLCustom1() {
+        return "SELECT MONEDA_ID, NOMBRE, CODIGO_ISO, SIMBOLO " +
+               "FROM PA_MONEDAS " +
+               "WHERE CODIGO_ISO = ?";
+    }
+    
+    @Override
+    protected void incluirValorDeParametrosCustom1() throws SQLException {
+        this.statement.setString(1, this.moneda.getCodigo_iso());
+    }
+    
+    @Override
+    protected void extraerResultSetCustom1() throws SQLException {
+        this.moneda = null;
+        if (this.resultSet.next()) {
+            this.moneda = new MonedasDTO();
+            this.moneda.setMoneda_id(this.resultSet.getInt("MONEDA_ID"));
+            this.moneda.setNombre(this.resultSet.getString("NOMBRE"));
+            this.moneda.setCodigo_iso(this.resultSet.getString("CODIGO_ISO"));
+            this.moneda.setSimbolo(this.resultSet.getString("SIMBOLO"));
         }
     }
 

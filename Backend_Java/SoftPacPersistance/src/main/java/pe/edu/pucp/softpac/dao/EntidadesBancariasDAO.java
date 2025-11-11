@@ -15,4 +15,6 @@ public interface EntidadesBancariasDAO {
     public Integer modificar(EntidadesBancariasDTO entidadBancaria);
     
     public Integer eliminar(EntidadesBancariasDTO entidadBancaria);
+    
+    public EntidadesBancariasDTO obtenerPorNombre(String nombre);
 }

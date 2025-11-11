@@ -22,4 +22,7 @@ public class EntidadesBancariasBO {
         return this.entidadesBancariasDAO.obtenerPorId(entidades_bancarias_id);
     }
     
+    public EntidadesBancariasDTO obtenerPorNombre(String nombre){
+        return this.entidadesBancariasDAO.obtenerPorNombre(nombre);
+    }
 }
