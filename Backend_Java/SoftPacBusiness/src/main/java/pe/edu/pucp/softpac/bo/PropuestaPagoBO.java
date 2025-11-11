@@ -8,14 +8,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import pe.edu.pucp.softpac.dao.CuentasPropiasDAO;
+import pe.edu.pucp.softpac.dao.FacturasDAO;
 import pe.edu.pucp.softpac.dao.PropuestasPagoDAO;
 import pe.edu.pucp.softpac.daoImpl.CuentasPropiasDAOImpl;
+import pe.edu.pucp.softpac.daoImpl.FacturasDAOImpl;
 import pe.edu.pucp.softpac.daoImpl.PropuestasPagoDAOImpl;
 import pe.edu.pucp.softpac.model.CuentasAcreedorDTO;
 import pe.edu.pucp.softpac.model.CuentasPropiasDTO;
 import pe.edu.pucp.softpac.model.DetallesPropuestaDTO;
 import pe.edu.pucp.softpac.model.FacturasDTO;
 import pe.edu.pucp.softpac.model.PropuestasPagoDTO;
+import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 public class PropuestaPagoBO {
     
@@ -245,6 +248,83 @@ public class PropuestaPagoBO {
     }
     
     
-    
+    public Integer confirmarEnvioPropuesta(int propuestaId, UsuariosDTO usuario){
+        FacturasDAO facturasDAO = new FacturasDAOImpl();
+        CuentasPropiasDAO cuentasPropiasDAO = new CuentasPropiasDAOImpl();
+        
+        class AgrupadoCuenta {
+            CuentasPropiasDTO cuenta;
+            List<DetallesPropuestaDTO> detalles;
+            BigDecimal total;
+        }
+        PropuestasPagoDTO propuesta = propuestasDAO.obtenerPorId(propuestaId);
+        if(!"pendiente".equals(propuesta.getEstado().toLowerCase())){
+            return 0;
+        }
+        propuesta.setUsuario_modificacion(usuario);
+        propuesta.setFecha_hora_modificacion(new Date());
+        Boolean pagosActualizados = false;
+        for(DetallesPropuestaDTO detalle : propuesta.getDetalles_propuesta()){
+            if(detalle.getFactura().getMonto_restante().compareTo(BigDecimal.ZERO)<=0 || !"pendiente".equals(detalle.getFactura().getEstado().toLowerCase())){
+                pagosActualizados = true;
+                detalle.setFecha_eliminacion(new Date());
+                detalle.setUsuario_eliminacion(usuario);
+            }
+            else if (detalle.getFactura().getMonto_restante().compareTo(detalle.getMonto_pago())!=0){
+                pagosActualizados = true;
+                detalle.setMonto_pago(detalle.getFactura().getMonto_restante());
+            }
+        }
+        Map<Integer, AgrupadoCuenta> resultado =
+        propuesta.getDetalles_propuesta()
+                 .stream()
+                 .collect(Collectors.groupingBy(
+                     d -> d.getCuenta_propia().getCuenta_bancaria_id(),
+                     Collectors.collectingAndThen(
+                         Collectors.toList(),
+                         lista -> {
+                             AgrupadoCuenta a = new AgrupadoCuenta();
+                             a.detalles = lista;
+                             a.cuenta = lista.get(0).getCuenta_propia();
+                             a.total = lista.stream()
+                                            .map(DetallesPropuestaDTO::getMonto_pago)
+                                            .reduce(BigDecimal.ZERO, BigDecimal::add);
+                             return a;
+                         }
+                     )
+                 ));
+        
+        for (Map.Entry<Integer, AgrupadoCuenta> entry : resultado.entrySet()) {
+            AgrupadoCuenta agrupado = entry.getValue();
+
+            CuentasPropiasDTO cuenta = agrupado.cuenta;
+
+            BigDecimal total = agrupado.total;
+            
+            if(cuenta.getSaldo_disponible().compareTo(total)<0){
+                if(pagosActualizados)
+                    propuestasDAO.modificar(propuesta);
+                return 0;
+            }
+        }
+        for (Map.Entry<Integer, AgrupadoCuenta> entry : resultado.entrySet()) {
+            AgrupadoCuenta agrupado = entry.getValue();
+
+            CuentasPropiasDTO cuenta = agrupado.cuenta;
+            List<DetallesPropuestaDTO> detalles = agrupado.detalles;
+            BigDecimal total = agrupado.total;
+            
+            for(DetallesPropuestaDTO detalle : detalles){
+                detalle.getFactura().setMonto_restante(BigDecimal.ZERO);
+                detalle.getFactura().setEstado("Pagada");
+                facturasDAO.modificar(detalle.getFactura());
+            }
+            cuenta.setSaldo_disponible(cuenta.getSaldo_disponible().subtract(total));
+            cuentasPropiasDAO.modificar(cuenta);
+        }
+        propuesta.setEstado("Enviada");
+        propuestasDAO.modificar(propuesta);
+        return 1;
+    }
     
 }

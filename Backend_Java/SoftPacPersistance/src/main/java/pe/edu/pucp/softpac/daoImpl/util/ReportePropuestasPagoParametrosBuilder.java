@@ -1,12 +1,12 @@
 package pe.edu.pucp.softpac.daoImpl.util;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class ReportePropuestasPagoParametrosBuilder {
     private Integer idPais;
     private Integer idBanco;
-    private LocalDateTime fechaInicio;
-    private LocalDateTime fechaFin;
+    private Date fechaInicio;
+    private Date fechaFin;
 
     public ReportePropuestasPagoParametrosBuilder conIdPais(Integer idPais) {
         this.idPais = idPais;
@@ -18,12 +18,12 @@ public class ReportePropuestasPagoParametrosBuilder {
         return this;
     }
     
-    public ReportePropuestasPagoParametrosBuilder conFechaInicio(LocalDateTime fechaInicio) {
+    public ReportePropuestasPagoParametrosBuilder conFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
         return this;
     }
     
-    public ReportePropuestasPagoParametrosBuilder conFechaFin(LocalDateTime fechaFin) {
+    public ReportePropuestasPagoParametrosBuilder conFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
         return this;
     }
