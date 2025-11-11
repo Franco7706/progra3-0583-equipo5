@@ -61,4 +61,8 @@ public class AcreedoresWS {
        return this.acreedoresBO.listarTodos();
     }
     
+    @WebMethod(operationName = "listarAcreedoresPorPaises")
+    public ArrayList<AcreedoresDTO> listarPorPaises(@WebParam(name = "paises_ids")ArrayList<Integer> paisesIds){
+        return this.acreedoresBO.listarPorPaises(paisesIds);
+    }
 }

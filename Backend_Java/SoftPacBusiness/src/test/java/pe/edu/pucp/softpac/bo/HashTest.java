@@ -15,7 +15,7 @@ public class HashTest {
     
     @Test
     public void HashContraseña(){
-        String c = PasswordUtil.hashPassword("12345");
+        String c = PasswordUtil.hashPassword("contrasenha");
         System.out.println(c);
     }
 }
