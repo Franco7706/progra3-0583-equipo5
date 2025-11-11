@@ -7,6 +7,7 @@ import pe.edu.pucp.softpac.daoImpl.UsuariosDAOImpl;
 import pe.edu.pucp.softpac.model.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -184,7 +185,7 @@ public class CuentasAcreedorDAOTest {
     void testEliminarLogico() {
         generatedId = dao.insertar(testCuenta);
         testCuenta.setCuenta_bancaria_id(generatedId);
-        testCuenta.setFecha_eliminacion(java.time.LocalDateTime.now());
+        testCuenta.setFecha_eliminacion(new Date());
         testCuenta.setUsuario_eliminacion(testUsuarioEliminacion);
 
         Integer res = dao.eliminarLogico(testCuenta);

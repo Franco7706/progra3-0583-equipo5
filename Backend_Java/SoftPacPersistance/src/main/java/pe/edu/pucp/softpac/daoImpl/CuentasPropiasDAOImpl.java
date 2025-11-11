@@ -145,7 +145,7 @@ public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropias
 
     @Override
     protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
-        this.statement.setTimestamp(1, Timestamp.valueOf(this.cuentaPropia.getFecha_eliminacion()));
+        this.statement.setTimestamp(1, new Timestamp(this.cuentaPropia.getFecha_eliminacion().getTime()));
         this.statement.setInt(2,this.cuentaPropia.getUsuario_eliminacion().getUsuario_id());
         this.statement.setInt(3,this.cuentaPropia.getCuenta_bancaria_id());
     }

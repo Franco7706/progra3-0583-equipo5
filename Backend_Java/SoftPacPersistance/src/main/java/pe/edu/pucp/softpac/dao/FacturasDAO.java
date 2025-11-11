@@ -18,4 +18,7 @@ public interface FacturasDAO {
     public Integer eliminar(FacturasDTO factura);
 
     public Integer eliminarLogico(FacturasDTO factura);
+    
+    public List<FacturasDTO>listarFiltros();
+    
 }

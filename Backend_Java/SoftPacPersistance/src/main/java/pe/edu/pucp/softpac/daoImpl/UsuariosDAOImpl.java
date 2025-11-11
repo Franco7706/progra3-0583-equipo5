@@ -2,7 +2,6 @@ package pe.edu.pucp.softpac.daoImpl;
 
 import pe.edu.pucp.softpac.dao.UsuariosDAO;
 import pe.edu.pucp.softpac.dao.UsuarioPaisAccesoDAO;
-import pe.edu.pucp.softpac.daoImpl.util.Tipo_Operacion;
 import pe.edu.pucp.softpac.model.PaisesDTO;
 import pe.edu.pucp.softpac.model.UsuarioPaisAccesoDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
@@ -13,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
@@ -22,16 +22,16 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
     public UsuariosDAOImpl() {
         super("PA_USUARIOS");
         this.usuario = null;
-        this.retornarLlavePrimaria = false; // USUARIO_ID no es auto_increment
+        this.retornarLlavePrimaria = true;
         this.ejecutaOperacionesEnCascada = true;
         this.seEliminaLogicamente = true;
-        this.listarEliminados = true;
+        this.listarEliminados = false;
         super.incluirColumnasDeEliminacionLogica();
     }
 
     @Override
     protected void configurarListaDeColumnas() {
-        this.listaColumnas.add(new Columna("USUARIO_ID", true, false)); // PK, no auto_increment
+        this.listaColumnas.add(new Columna("USUARIO_ID", true, true));
         this.listaColumnas.add(new Columna("CORREO_ELECTRONICO", false, false));
         this.listaColumnas.add(new Columna("NOMBRE_DE_USUARIO", false, false));
         this.listaColumnas.add(new Columna("NOMBRE", false, false));
@@ -43,14 +43,13 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
     @Override
     protected void incluirValorDeParametrosParaInsercion() throws SQLException {
-        this.statement.setInt(1, this.usuario.getUsuario_id());
-        this.statement.setString(2, this.usuario.getCorreo_electronico());
-        this.statement.setString(3, this.usuario.getNombre_de_usuario());
-        this.statement.setString(4, this.usuario.getNombre());
-        this.statement.setString(5, this.usuario.getApellidos());
-        this.statement.setString(6, this.usuario.getActivo() ? "S" : "N");
-        this.statement.setString(7, this.usuario.getPassword_hash());
-        this.statement.setString(8, this.usuario.getSuperusuario() ? "S" : "N");
+        this.statement.setString(1, this.usuario.getCorreo_electronico());
+        this.statement.setString(2, this.usuario.getNombre_de_usuario());
+        this.statement.setString(3, this.usuario.getNombre());
+        this.statement.setString(4, this.usuario.getApellidos());
+        this.statement.setString(5, this.usuario.getActivo() ? "S" : "N");
+        this.statement.setString(6, this.usuario.getPassword_hash());
+        this.statement.setString(7, this.usuario.getSuperusuario() ? "S" : "N");
     }
 
     @Override
@@ -95,7 +94,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
                 usuario.setSuperusuario(this.resultSet.getString(8).equals("S"));
                 this.resultSet.getTimestamp(9);
                 if(!this.resultSet.wasNull()){
-                    usuario.setFecha_eliminacion(this.resultSet.getTimestamp(9).toLocalDateTime());
+                    usuario.setFecha_eliminacion(this.resultSet.getTime(9));
                     usuarioEliminacion=new UsuariosDTO();
                     usuario.setUsuario_eliminacion(usuarioEliminacion);
                     usuarioEliminacion.setUsuario_id(this.resultSet.getInt(10));
@@ -160,7 +159,7 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
 
     @Override
     protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
-        this.statement.setTimestamp(1, Timestamp.valueOf(this.usuario.getFecha_eliminacion()));
+        this.statement.setTimestamp(1, new Timestamp(this.usuario.getFecha_eliminacion().getTime()));
         this.statement.setInt(2, this.usuario.getUsuario_eliminacion().getUsuario_id());
         this.statement.setInt(3,this.usuario.getUsuario_id());
     }
@@ -223,12 +222,16 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
             throw e;
         }
     }
-
+    @Override
+    protected void recuperarAutoGeneradoParaInsercionDeDetalle(Integer resultado) {
+        this.usuario.setUsuario_id(resultado);
+    }
     @Override
     protected void ejecutarCascadaParaInsercion() {
         try {
             UsuarioPaisAccesoDAO usuarioPaisAccesoDAO = new UsuarioPaisAccesoDAOImpl(this.getConexion());
             for(UsuarioPaisAccesoDTO usu_pais_acceso : this.usuario.getUsuario_pais()){
+                usu_pais_acceso.setUsuario(this.usuario);
                 usuarioPaisAccesoDAO.insertar(usu_pais_acceso);
             }
         }
@@ -248,5 +251,72 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
             throw e;
         }
     }
+    
+    //NUEVO: Implementacion para obtener por nombre.
+    
+    @Override
+    public UsuariosDTO obtenerPorNombreDeUsuario(String nombreDeUsuario){
+        this.usuario = new UsuariosDTO();
+        this.usuario.setNombre_de_usuario(nombreDeUsuario);
+        super.queryCustom2();
+        return this.usuario;
+    }
+    
+    //SQL:
+    @Override
+    protected String generarSQLCustom2() {
+        //SQL PARA SOLO OBTENER POR EL NOMBRE.
+//        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION" +
+//                " FROM PA_USUARIOS u " +
+//                "  WHERE u.NOMBRE_DE_USUARIO = ?";
+        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION," +
+                " p.PAIS_ID, p.NOMBRE, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO" +
+                " FROM PA_USUARIOS u LEFT JOIN PA_USUARIO_PAIS_ACCESO upa ON u.USUARIO_ID = upa.USUARIO_ID" +
+                " LEFT JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID  WHERE u.NOMBRE_DE_USUARIO = ?";
+    }
+    
+    //Valores en el statement.
+    @Override
+    protected void incluirValorDeParametrosCustom2() throws SQLException {
+        this.statement.setString(1,this.usuario.getNombre_de_usuario());
+    }
+    
+    //Para recuperar el SELECT:
+    @Override
+    protected void extraerResultSetCustom2() throws SQLException {
+        this.extraerResultSetParaObtenerPorId();
+//          usuario = null;
+//          usuario = new UsuariosDTO();
+//          Boolean datosusuario = false;
+//          while(this.resultSet.next()){
+//            if(!datosusuario){
+//                usuario.setUsuario_id(this.resultSet.getInt("USUARIO_ID"));
+//                usuario.setCorreo_electronico(this.resultSet.getString("CORREO_ELECTRONICO"));
+//                usuario.setNombre_de_usuario(this.resultSet.getString("NOMBRE_DE_USUARIO"));
+//                usuario.setNombre(this.resultSet.getString("NOMBRE"));
+//                usuario.setApellidos(this.resultSet.getString("APELLIDOS"));
+//                usuario.setActivo(this.resultSet.getString("ACTIVO").equals("S"));
+//                usuario.setPassword_hash(this.resultSet.getString("PASSWORD_HASH"));
+//                usuario.setSuperusuario(this.resultSet.getString("SUPERUSUARIO").equals("S"));
+//                usuario.setFecha_eliminacion(this.resultSet.getTimestamp("FECHA_ELIMINACION"));
+//                UsuariosDTO usuarioEliminacion = new UsuariosDTO();
+//                usuarioEliminacion.setUsuario_id(this.resultSet.getInt("USUARIO_ELIMINACION"));
+//                usuario.setUsuario_eliminacion(usuarioEliminacion);
+//                datosusuario = true;
+//            }
+//            PaisesDTO pais = new PaisesDTO();
+//            pais.setPais_id(this.resultSet.getInt("PAIS_ID"));
+//            pais.setNombre(this.resultSet.getString("NOMBRE"));
+//            pais.setCodigo_iso(this.resultSet.getString("CODIGO_ISO"));
+//            pais.setCodigo_telefonico(this.resultSet.getString("CODIGO_TELEFONICO"));
+//            UsuarioPaisAccesoDTO acceso = new UsuarioPaisAccesoDTO();
+//            acceso.setAcceso(this.resultSet.getString("ACCESO").equals("S"));
+//            acceso.setPais(pais);
+//            usuario.addUsuario_pais(acceso);
+//          }
+    }
+    
+    //////////////////////////////////////////////////////////////////////////
+    
 
 }

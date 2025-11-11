@@ -3,7 +3,6 @@ package pe.edu.pucp.softpac.daoImpl;
 import java.util.ArrayList;
 
 import pe.edu.pucp.softpac.dao.DetallesFacturaDAO;
-import pe.edu.pucp.softpac.dao.DetallesPropuestaDAO;
 import pe.edu.pucp.softpac.dao.FacturasDAO;
 import pe.edu.pucp.softpac.daoImpl.exception.DAODetalleException;
 import pe.edu.pucp.softpac.model.FacturasDTO;
@@ -48,9 +47,9 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     @Override
     protected void incluirValorDeParametrosParaInsercion() throws SQLException {
         this.statement.setString(1, this.factura.getNumero_factura());
-        this.statement.setTimestamp(2,Timestamp.valueOf(this.factura.getFecha_emision()));
-        this.statement.setTimestamp(3,Timestamp.valueOf(this.factura.getFecha_recepcion()));
-        this.statement.setTimestamp(4,Timestamp.valueOf(this.factura.getFecha_limite_pago()));
+        this.statement.setTimestamp(2,new Timestamp(this.factura.getFecha_emision().getTime()));
+        this.statement.setTimestamp(3,new Timestamp(this.factura.getFecha_recepcion().getTime()));
+        this.statement.setTimestamp(4,new Timestamp(this.factura.getFecha_limite_pago().getTime()));
         this.statement.setString(5, this.factura.getEstado());
         this.statement.setBigDecimal(6, this.factura.getMonto_total());
         this.statement.setBigDecimal(7, this.factura.getMonto_igv());
@@ -65,9 +64,9 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     @Override
     protected void incluirValorDeParametrosParaModificacion() throws SQLException {
         this.statement.setString(1, this.factura.getNumero_factura());
-        this.statement.setTimestamp(2,Timestamp.valueOf(this.factura.getFecha_emision()));
-        this.statement.setTimestamp(3,Timestamp.valueOf(this.factura.getFecha_recepcion()));
-        this.statement.setTimestamp(4,Timestamp.valueOf(this.factura.getFecha_limite_pago()));
+        this.statement.setTimestamp(2,new Timestamp(this.factura.getFecha_emision().getTime()));
+        this.statement.setTimestamp(3,new Timestamp(this.factura.getFecha_recepcion().getTime()));
+        this.statement.setTimestamp(4,new Timestamp(this.factura.getFecha_limite_pago().getTime()));
         this.statement.setString(5, this.factura.getEstado());
         this.statement.setBigDecimal(6, this.factura.getMonto_total());
         this.statement.setBigDecimal(7, this.factura.getMonto_igv());
@@ -141,9 +140,9 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
                 this.factura = new FacturasDTO();
                 this.factura.setFactura_id(this.resultSet.getInt(1));
                 this.factura.setNumero_factura(this.resultSet.getString(2));
-                this.factura.setFecha_emision(this.resultSet.getTimestamp(3).toLocalDateTime());
-                this.factura.setFecha_recepcion(this.resultSet.getTimestamp(4).toLocalDateTime());
-                this.factura.setFecha_limite_pago(this.resultSet.getTimestamp(5).toLocalDateTime());
+                this.factura.setFecha_emision(this.resultSet.getTimestamp(3));
+                this.factura.setFecha_recepcion(this.resultSet.getTimestamp(4));
+                this.factura.setFecha_limite_pago(this.resultSet.getTimestamp(5));
                 this.factura.setEstado(this.resultSet.getString(6));
                 this.factura.setMonto_total(this.resultSet.getBigDecimal(7));
                 this.factura.setMonto_igv(this.resultSet.getBigDecimal(8));
@@ -175,9 +174,11 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
             }
             detalleFactura = new DetallesFacturaDTO();
             detalleFactura.setDetalle_factura_id(this.resultSet.getInt(26));
-            detalleFactura.setSubtotal(this.resultSet.getBigDecimal(27));
-            detalleFactura.setDescripcion(this.resultSet.getString(28));
-            factura.addDetalle_Factura(detalleFactura);
+            if(detalleFactura.getDetalle_factura_id()!=0){
+                detalleFactura.setSubtotal(this.resultSet.getBigDecimal(27));
+                detalleFactura.setDescripcion(this.resultSet.getString(28));
+                factura.addDetalle_Factura(detalleFactura);
+            }
         }
     }        
 
@@ -190,9 +191,9 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
             FacturasDTO f = new FacturasDTO();
             f.setFactura_id(this.resultSet.getInt(1));
             f.setNumero_factura(this.resultSet.getString(2));
-            f.setFecha_emision(this.resultSet.getTimestamp(3).toLocalDateTime());
-            f.setFecha_recepcion(this.resultSet.getTimestamp(4).toLocalDateTime());
-            f.setFecha_limite_pago(this.resultSet.getTimestamp(5).toLocalDateTime());
+            f.setFecha_emision(this.resultSet.getTimestamp(3));
+            f.setFecha_recepcion(this.resultSet.getTimestamp(4));
+            f.setFecha_limite_pago(this.resultSet.getTimestamp(5));
             f.setEstado(this.resultSet.getString(6));
             f.setMonto_total(this.resultSet.getBigDecimal(7));
             f.setMonto_igv(this.resultSet.getBigDecimal(8));
@@ -212,11 +213,18 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
 
     @Override
     protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
-        this.statement.setTimestamp(1,Timestamp.valueOf(this.factura.getFecha_eliminacion()));
+        this.statement.setTimestamp(1,new Timestamp(this.factura.getFecha_eliminacion().getTime()));
         this.statement.setInt(2,this.factura.getUsuario_eliminacion().getUsuario_id());
-        this.statement.setInt(3,this.factura.getFactura_id());
+        this.statement.setString(3, "Eliminado");
+        this.statement.setInt(4,this.factura.getFactura_id());
     }
 
+    @Override
+    protected String generarSQLParaEliminacionLogica() {
+        return "UPDATE PA_FACTURAS SET FECHA_ELIMINACION=?, USUARIO_ELIMINACION=?,\n"
+                + "ESTADO=? WHERE FACTURA_ID=?";
+    }
+    
     @Override
     public Integer insertar(FacturasDTO factura) {
         this.factura = factura;
@@ -233,7 +241,7 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
 
     @Override
     public List<FacturasDTO> listarTodos() {
-        super.listarTodosQuery();
+        super.queryCustom1();
         return facturas;
     }
 
@@ -304,4 +312,59 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
             throw e;
         }
     }
+    
+    @Override
+    protected String generarSQLCustom1(){
+        return "SELECT f.FACTURA_ID, f.NUMERO_FACTURA, f.FECHA_EMISION, f.FECHA_RECEPCION, f.FECHA_LIMITE_PAGO,\n" +
+            "f.ESTADO, f.MONTO_TOTAL, f.MONTO_IGV, f.MONTO_RESTANTE, f.REGIMEN_FISCAL, f.TASA_IVA, f.OTROS_TRIBUTOS, f.MONEDA_ID,\n" +
+            "f.ACREEDOR_ID, p.PAIS_ID as PAIS_ID, a.RAZON_SOCIAL, p.NOMBRE\n" +
+            "FROM PA_FACTURAS f JOIN PA_ACREEDORES a on f.ACREEDOR_ID = a.ACREEDOR_ID JOIN PA_PAISES p on p.PAIS_ID = a.PAIS_ID";
+    }
+    
+    @Override
+    public List<FacturasDTO> listarFiltros(){
+        super.queryCustom1();
+        return facturas;
+    } 
+    
+    @Override
+    protected void extraerResultSetCustom1() throws SQLException {
+        facturas = new ArrayList<>();
+        MonedasDTO moneda = null;
+        AcreedoresDTO acreedor = null;
+        PaisesDTO pais = null;
+        while (this.resultSet.next()) {
+            FacturasDTO f = new FacturasDTO();
+            f.setFactura_id(this.resultSet.getInt(1));
+            f.setNumero_factura(this.resultSet.getString(2));
+            f.setFecha_emision(this.resultSet.getTimestamp(3));
+            f.setFecha_recepcion(this.resultSet.getTimestamp(4));
+            f.setFecha_limite_pago(this.resultSet.getTimestamp(5));
+            f.setEstado(this.resultSet.getString(6));
+            f.setMonto_total(this.resultSet.getBigDecimal(7));
+            f.setMonto_igv(this.resultSet.getBigDecimal(8));
+            f.setMonto_restante(this.resultSet.getBigDecimal(9));
+            f.setRegimen_fiscal(this.resultSet.getString(10));
+            f.setTasa_iva(this.resultSet.getBigDecimal(11));
+            f.setOtros_tributos(this.resultSet.getBigDecimal(12));
+            moneda = new MonedasDTO();
+            moneda.setMoneda_id(this.resultSet.getInt(13));
+            acreedor = new AcreedoresDTO();
+            acreedor.setAcreedor_id(this.resultSet.getInt(14));
+            acreedor.setRazon_social(this.resultSet.getString(16));
+            pais = new PaisesDTO();
+            pais.setPais_id(this.resultSet.getInt(15));
+            pais.setNombre(this.resultSet.getString(17));
+            acreedor.setPais(pais);
+            f.setMoneda(moneda);
+            f.setAcreedor(acreedor);
+            facturas.add(f);
+        }
+    }
+    
+    @Override
+    protected void incluirValorDeParametrosCustom1() throws SQLException {
+        
+    }
+    
 }

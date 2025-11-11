@@ -31,14 +31,14 @@ public class TiposDeCambioDAOImpl extends DAOImplBase implements TiposDeCambioDA
 
     @Override
     protected void incluirValorDeParametrosParaInsercion() throws SQLException {
-        this.statement.setTimestamp(1, Timestamp.valueOf(this.tipoDeCambio.getFecha()));
+        this.statement.setTimestamp(1, new Timestamp(this.tipoDeCambio.getFecha().getTime()));
         this.statement.setBigDecimal(2,this.tipoDeCambio.getTasa_de_cambio());
         this.statement.setInt(3,this.tipoDeCambio.getMoneda_origen().getMoneda_id());
         this.statement.setInt(4,this.tipoDeCambio.getMoneda_destino().getMoneda_id());
     }
     @Override
     protected void incluirValorDeParametrosParaModificacion() throws SQLException {
-        this.statement.setTimestamp(1, Timestamp.valueOf(this.tipoDeCambio.getFecha()));
+        this.statement.setTimestamp(1, new Timestamp(this.tipoDeCambio.getFecha().getTime()));
         this.statement.setBigDecimal(2,this.tipoDeCambio.getTasa_de_cambio());
         this.statement.setInt(3,this.tipoDeCambio.getMoneda_origen().getMoneda_id());
         this.statement.setInt(4,this.tipoDeCambio.getMoneda_destino().getMoneda_id());
@@ -65,7 +65,7 @@ public class TiposDeCambioDAOImpl extends DAOImplBase implements TiposDeCambioDA
         if(resultSet.next()){
             this.tipoDeCambio = new TiposDeCambioDTO();
             this.tipoDeCambio.setTipo_cambio_id(resultSet.getInt(1));
-            this.tipoDeCambio.setFecha(resultSet.getTimestamp(2).toLocalDateTime());
+            this.tipoDeCambio.setFecha(resultSet.getTime(2));
             this.tipoDeCambio.setTasa_de_cambio(resultSet.getBigDecimal(3));
             moneda = new MonedasDTO();
             moneda.setMoneda_id(resultSet.getInt(4));
@@ -89,7 +89,7 @@ public class TiposDeCambioDAOImpl extends DAOImplBase implements TiposDeCambioDA
         while(resultSet.next()){
             tipoDeCambio = new TiposDeCambioDTO();
             tipoDeCambio.setTipo_cambio_id(resultSet.getInt(1));
-            tipoDeCambio.setFecha(resultSet.getTimestamp(2).toLocalDateTime());
+            tipoDeCambio.setFecha(resultSet.getTime(2));
             tipoDeCambio.setTasa_de_cambio(resultSet.getBigDecimal(3));
             moneda = new MonedasDTO();
             moneda.setMoneda_id(resultSet.getInt(4));

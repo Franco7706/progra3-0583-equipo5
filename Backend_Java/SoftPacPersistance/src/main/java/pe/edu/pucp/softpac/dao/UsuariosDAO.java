@@ -19,4 +19,8 @@ public interface UsuariosDAO {
     public UsuariosDTO obtenerPorCorreo(String correo);
 
     public Integer eliminarLogico(UsuariosDTO usuario);
+    
+    //Nuevo: Para UsuariosDTO ObtenerPorNombreUsuario(string nombreUsuario);
+    public UsuariosDTO obtenerPorNombreDeUsuario(String nombreDeUsuario);
+    
 }

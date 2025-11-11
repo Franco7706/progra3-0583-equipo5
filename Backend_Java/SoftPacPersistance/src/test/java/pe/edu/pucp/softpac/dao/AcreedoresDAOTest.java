@@ -10,6 +10,7 @@ import pe.edu.pucp.softpac.model.UsuariosDTO;
 import pe.edu.pucp.softpac.dao.UsuariosDAO;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,7 +56,7 @@ public class AcreedoresDAOTest {
         testAcreedor = new AcreedoresDTO();
         testAcreedor.setAcreedor_id(0);
         testAcreedor.setRazon_social("Proveedor de Prueba S.A.");
-        testAcreedor.setRuc("12345678901");
+        testAcreedor.setRuc("12345678910");
         testAcreedor.setDireccion_fiscal("Av. Siempre Viva 742");
         testAcreedor.setCondicion("ACTIVO");
         testAcreedor.setPlazo_de_pago(30);
@@ -152,7 +153,7 @@ public class AcreedoresDAOTest {
     void testEliminarLogico() {
         generatedId = dao.insertar(testAcreedor);
         testAcreedor.setAcreedor_id(generatedId);
-        testAcreedor.setFecha_eliminacion(java.time.LocalDateTime.now());
+        testAcreedor.setFecha_eliminacion(new Date());
         testAcreedor.setUsuario_eliminacion(testUsuarioEliminacion);
 
         Integer res = dao.eliminarLogico(testAcreedor);

@@ -14,6 +14,7 @@ import pe.edu.pucp.softpac.model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -142,9 +143,9 @@ public class PropuestasPagoDAOTest {
         testFacturaRef = new FacturasDTO();
         testFacturaRef.setFactura_id(0);
         testFacturaRef.setNumero_factura("PF-" + System.nanoTime());
-        testFacturaRef.setFecha_emision(LocalDateTime.of(2025,1,1,10,0));
-        testFacturaRef.setFecha_recepcion(LocalDateTime.of(2025,1,2,10,0));
-        testFacturaRef.setFecha_limite_pago(LocalDateTime.of(2025,2,1,23,59));
+        testFacturaRef.setFecha_emision(new Date(2025,1,1,10,0));
+        testFacturaRef.setFecha_recepcion(new Date(2025,1,2,10,0));
+        testFacturaRef.setFecha_limite_pago(new Date(2025,2,1,23,59));
         testFacturaRef.setEstado("PENDIENTE");
         testFacturaRef.setMonto_total(total);
         testFacturaRef.setMonto_igv(montoIgv);
@@ -159,9 +160,9 @@ public class PropuestasPagoDAOTest {
         testFacturaRef2 = new FacturasDTO();
         testFacturaRef2.setFactura_id(0);
         testFacturaRef2.setNumero_factura("PF2-" + System.nanoTime());
-        testFacturaRef2.setFecha_emision(LocalDateTime.of(2025,1,1,10,0));
-        testFacturaRef2.setFecha_recepcion(LocalDateTime.of(2025,1,2,10,0));
-        testFacturaRef2.setFecha_limite_pago(LocalDateTime.of(2025,2,1,23,59));
+        testFacturaRef2.setFecha_emision(new Date(2025,1,1,10,0));
+        testFacturaRef2.setFecha_recepcion(new Date(2025,1,2,10,0));
+        testFacturaRef2.setFecha_limite_pago(new Date(2025,2,1,23,59));
         testFacturaRef2.setEstado("PENDIENTE");
         testFacturaRef2.setMonto_total(total);
         testFacturaRef2.setMonto_igv(montoIgv);
@@ -176,9 +177,9 @@ public class PropuestasPagoDAOTest {
         testFacturaRef3 = new FacturasDTO();
         testFacturaRef3.setFactura_id(0);
         testFacturaRef3.setNumero_factura("PF3-" + System.nanoTime());
-        testFacturaRef3.setFecha_emision(LocalDateTime.of(2025,1,1,10,0));
-        testFacturaRef3.setFecha_recepcion(LocalDateTime.of(2025,1,2,10,0));
-        testFacturaRef3.setFecha_limite_pago(LocalDateTime.of(2025,2,1,23,59));
+        testFacturaRef3.setFecha_emision(new Date(2025,1,1,10,0));
+        testFacturaRef3.setFecha_recepcion(new Date(2025,1,2,10,0));
+        testFacturaRef3.setFecha_limite_pago(new Date(2025,2,1,23,59));
         testFacturaRef3.setEstado("PENDIENTE");
         testFacturaRef3.setMonto_total(total);
         testFacturaRef3.setMonto_igv(montoIgv);
@@ -218,11 +219,11 @@ public class PropuestasPagoDAOTest {
 
         testPropuesta = new PropuestasPagoDTO();
         testPropuesta.setPropuesta_id(0);
-        testPropuesta.setFecha_hora_creacion(LocalDateTime.now());
+        testPropuesta.setFecha_hora_creacion(new Date());
         testPropuesta.setEstado("PENDIENTE");
         testPropuesta.setEntidad_bancaria(testEntidad);
-        testPropuesta.setFecha_hora_creacion(LocalDateTime.now());
-        testPropuesta.setFecha_hora_modificacion(LocalDateTime.now());
+        testPropuesta.setFecha_hora_creacion(new Date());
+        testPropuesta.setFecha_hora_modificacion(new Date());
         testPropuesta.setUsuario_creacion(testUsuario);
         testPropuesta.setUsuario_modificacion(testUsuario);
     }
@@ -317,7 +318,7 @@ public class PropuestasPagoDAOTest {
     void testEliminarLogico() {
         generatedId = dao.insertar(testPropuesta);
         testPropuesta.setPropuesta_id(generatedId);
-        testPropuesta.setFecha_eliminacion(LocalDateTime.now());
+        testPropuesta.setFecha_eliminacion(new Date());
         testPropuesta.setUsuario_eliminacion(testUsuarioEliminacion);
 
         int result = dao.eliminarLogico(testPropuesta);
@@ -455,7 +456,7 @@ public class PropuestasPagoDAOTest {
         // Preparar cambios
         ed1.setMonto_pago(new java.math.BigDecimal("25.00"));
 
-        ed2.setFecha_eliminacion(LocalDateTime.now());
+        ed2.setFecha_eliminacion(new Date());
         ed2.setUsuario_eliminacion(testUsuarioEliminacion);
 
         DetallesPropuestaDTO dp3 = new DetallesPropuestaDTO();

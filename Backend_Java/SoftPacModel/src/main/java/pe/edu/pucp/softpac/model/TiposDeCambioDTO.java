@@ -1,11 +1,11 @@
 package pe.edu.pucp.softpac.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class TiposDeCambioDTO {
     private Integer tipo_cambio_id;
-    private LocalDateTime fecha;
+    private Date fecha;
     private BigDecimal tasa_de_cambio;
     private MonedasDTO moneda_origen;
     private MonedasDTO moneda_destino;
@@ -18,14 +18,14 @@ public class TiposDeCambioDTO {
         moneda_destino=null;
     }
 
-    public TiposDeCambioDTO(Integer tipo_cambio_id, LocalDateTime fecha, BigDecimal tasa_de_cambio){
+    public TiposDeCambioDTO(Integer tipo_cambio_id, Date fecha, BigDecimal tasa_de_cambio){
         this.tipo_cambio_id=tipo_cambio_id;
         this.fecha=fecha;
         this.tasa_de_cambio=tasa_de_cambio;
         moneda_origen=null;
         moneda_destino=null;
     }
-    public TiposDeCambioDTO(Integer tipo_cambio_id, LocalDateTime fecha, BigDecimal tasa_de_cambio, MonedasDTO moneda_origen, MonedasDTO moneda_destino){
+    public TiposDeCambioDTO(Integer tipo_cambio_id, Date fecha, BigDecimal tasa_de_cambio, MonedasDTO moneda_origen, MonedasDTO moneda_destino){
         this.tipo_cambio_id=tipo_cambio_id;
         this.fecha=fecha;
         this.tasa_de_cambio=tasa_de_cambio;
@@ -48,11 +48,11 @@ public class TiposDeCambioDTO {
         this.tipo_cambio_id = tipo_cambio_id;
     }
 
-    public LocalDateTime getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

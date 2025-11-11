@@ -1,4 +1,5 @@
 pe\edu\pucp\softpac\model\CuentasPropiasDTO.class
+pe\edu\pucp\softpac\model\ReportePagoDTO.class
 pe\edu\pucp\softpac\model\UsuariosDTO.class
 pe\edu\pucp\softpac\model\AcreedoresDTO.class
 pe\edu\pucp\softpac\model\PaisesDTO.class
@@ -9,6 +10,8 @@ pe\edu\pucp\softpac\model\EntidadesBancariasDTO.class
 pe\edu\pucp\softpac\model\UsuarioPaisAccesoDTO.class
 pe\edu\pucp\softpac\model\CuentasBancariasDTO.class
 pe\edu\pucp\softpac\model\PropuestasPagoDTO.class
+pe\edu\pucp\softpac\model\ReporteFactPendDTO.class
+pe\edu\pucp\softpac\model\ReportePropPagoDTO.class
 pe\edu\pucp\softpac\model\FacturasDTO.class
 pe\edu\pucp\softpac\model\TiposDeCambioDTO.class
 pe\edu\pucp\softpac\model\CuentasAcreedorDTO.class
