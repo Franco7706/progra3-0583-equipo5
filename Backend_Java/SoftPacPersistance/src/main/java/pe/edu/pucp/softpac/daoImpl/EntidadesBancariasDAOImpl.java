@@ -84,8 +84,8 @@ public class EntidadesBancariasDAOImpl extends DAOImplBase implements EntidadesB
 
     @Override
     protected void extraerResultSetParaListarTodos() throws SQLException {
-        entidadesBancarias=new ArrayList<>();
-        PaisesDTO pais=null;
+        entidadesBancarias = new ArrayList<>();
+        PaisesDTO pais = null;
         while(this.resultSet.next()){
             EntidadesBancariasDTO e=new EntidadesBancariasDTO();
             e.setEntidad_bancaria_id(this.resultSet.getInt(1));
@@ -94,6 +94,7 @@ public class EntidadesBancariasDAOImpl extends DAOImplBase implements EntidadesB
             e.setCodigo_swift(this.resultSet.getString(4));
             pais=new PaisesDTO();
             pais.setPais_id(this.resultSet.getInt(5));
+            pais.setNombre(this.resultSet.getString(6));
             e.setPais(pais);
             entidadesBancarias.add(e);
         }
@@ -137,6 +138,13 @@ public class EntidadesBancariasDAOImpl extends DAOImplBase implements EntidadesB
         this.entidadBancaria.setNombre(nombre);
         super.queryCustom1();
         return this.entidadBancaria;
+    }
+    
+    @Override
+    protected String generarSQLParaListarTodos(){
+        return "SELECT e.ENTIDAD_BANCARIA_ID, e.NOMBRE, e.FORMATO_ACEPTADO, e.CODIGO_SWIFT, e.PAIS_ID,\n" +
+            "p.NOMBRE\n" +
+            "FROM PA_ENTIDADES_BANCARIAS e join PA_PAISES p on e.PAIS_ID = p.PAIS_ID";
     }
     
     @Override
