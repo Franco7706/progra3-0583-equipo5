@@ -94,6 +94,7 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
                 " D1_DETALLE_PROPUESTA_ID, " +
                 " D2_MONTO_PAGO, " +
                 " D3_FORMA_PAGO, " +
+                " D4_ESTADO, " +
                 "    -- Factura \n" +
                 " F1_FACTURA_ID, " +
                 " F2_NUMERO_FACTURA, " +
@@ -290,6 +291,7 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         if(formaPago != null && formaPago.length() > 0) {
             detallePropuesta.setForma_pago(formaPago.charAt(0));
         }
+        detallePropuesta.setEstado(this.resultSet.getString("D4_ESTADO"));
 
         detallePropuesta.setFactura(insertarFactura());
         detallePropuesta.setCuenta_acreedor(insertarCuentaAcreedor());
@@ -460,12 +462,19 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
         this.propuestaPago=new PropuestasPagoDTO();
         this.propuestaPago.setPropuesta_id(propuestaPagoId);
         super.obtenerPorId();
+        if(this.propuestaPago == null){
+            this.propuestaPago = new PropuestasPagoDTO();
+            this.propuestaPago.setDetalles_propuesta(new ArrayList<>());
+        }
         return this.propuestaPago;
     }
 
     @Override
     public List<PropuestasPagoDTO> listarTodos() {
         super.listarTodosQuery();
+        if(this.propuestasPago == null){
+            this.propuestasPago = new ArrayList<>();
+        }
         return propuestasPago;
     }
 

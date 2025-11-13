@@ -10,6 +10,7 @@ public class DetallesPropuestaDTO extends EliminableDTOBase{
     private FacturasDTO factura;
     private CuentasAcreedorDTO cuenta_acreedor;
     private CuentasPropiasDTO cuenta_propia;
+    private String estado;
 
     public DetallesPropuestaDTO() {
         super();
@@ -20,9 +21,10 @@ public class DetallesPropuestaDTO extends EliminableDTOBase{
         factura=null;
         cuenta_acreedor=null;
         cuenta_propia=null;
+        estado=null;
     }
 
-    public DetallesPropuestaDTO(Integer detalle_propuesta_id, BigDecimal monto_pago, char forma_pago, CuentasAcreedorDTO cuenta_acreedor, PropuestasPagoDTO propuesta_pago, CuentasPropiasDTO cuenta_propia, FacturasDTO factura) {
+    public DetallesPropuestaDTO(Integer detalle_propuesta_id, BigDecimal monto_pago, char forma_pago, CuentasAcreedorDTO cuenta_acreedor, PropuestasPagoDTO propuesta_pago, CuentasPropiasDTO cuenta_propia, FacturasDTO factura, String estado) {
         this.detalle_propuesta_id = detalle_propuesta_id;
         this.monto_pago = monto_pago;
         this.forma_pago = forma_pago;
@@ -30,6 +32,7 @@ public class DetallesPropuestaDTO extends EliminableDTOBase{
         this.factura = factura;
         this.cuenta_acreedor = cuenta_acreedor;
         this.cuenta_propia = cuenta_propia;
+        this.estado = estado;
     }
 
     public DetallesPropuestaDTO(DetallesPropuestaDTO detalle_propuesta_pago){
@@ -41,6 +44,7 @@ public class DetallesPropuestaDTO extends EliminableDTOBase{
         this.cuenta_acreedor = detalle_propuesta_pago.getCuenta_acreedor();
         this.cuenta_propia = detalle_propuesta_pago.getCuenta_propia();
         this.factura = detalle_propuesta_pago.getFactura();
+        this.estado = detalle_propuesta_pago.getEstado();
     }
 
     public Integer getDetalle_propuesta_id() {
@@ -97,5 +101,19 @@ public class DetallesPropuestaDTO extends EliminableDTOBase{
 
     public void setCuenta_propia(CuentasPropiasDTO cuenta_propia) {
         this.cuenta_propia = cuenta_propia;
+    }
+
+    /**
+     * @return the estado
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

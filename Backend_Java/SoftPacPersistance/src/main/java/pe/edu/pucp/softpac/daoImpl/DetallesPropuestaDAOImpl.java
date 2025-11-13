@@ -38,6 +38,7 @@ public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPro
         this.listaColumnas.add(new Columna("FACTURA_ID",false,false));
         this.listaColumnas.add(new Columna("CUENTA_ACREEDOR_ID",false,false));
         this.listaColumnas.add(new Columna("CUENTA_PROPIA_ID",false,false));
+        this.listaColumnas.add(new Columna("ESTADO",false,true));
     }
     @Override
     protected void incluirValorDeParametrosParaInsercion() throws SQLException{
@@ -57,7 +58,8 @@ public class DetallesPropuestaDAOImpl extends DAOImplBase implements DetallesPro
         this.statement.setInt(4,this.detallePropuesta.getFactura().getFactura_id());
         this.statement.setInt(5,this.detallePropuesta.getCuenta_acreedor().getCuenta_bancaria_id());
         this.statement.setInt(6,this.detallePropuesta.getCuenta_propia().getCuenta_bancaria_id());
-        this.statement.setInt(7,this.detallePropuesta.getDetalle_propuesta_id());
+        this.statement.setString(7,String.valueOf(this.detallePropuesta.getEstado()));
+        this.statement.setInt(8,this.detallePropuesta.getDetalle_propuesta_id());
     }
     @Override
     protected String generarSQLParaEliminacion(){

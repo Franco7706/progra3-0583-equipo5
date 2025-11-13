@@ -56,7 +56,11 @@ public class FacturasBO {
     }
     
     public Integer modificar(FacturasDTO factura){
-        
+        if(factura.getDetalles_Factura()!=null){
+            for(DetallesFacturaDTO detalle : factura.getDetalles_Factura()){
+                detalle.setFactura(factura);
+            }
+        }
         return this.facturasDAO.modificar(factura);
                 
     }

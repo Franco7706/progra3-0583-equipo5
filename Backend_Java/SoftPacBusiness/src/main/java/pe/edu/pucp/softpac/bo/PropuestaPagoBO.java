@@ -270,7 +270,7 @@ public class PropuestaPagoBO {
                 detalle.setFecha_eliminacion(new Date());
                 detalle.setUsuario_eliminacion(usuario);
             }
-            else if (detalle.getFactura().getMonto_restante().compareTo(detalle.getMonto_pago())!=0){
+            else if (detalle.getFactura().getMonto_restante().compareTo(detalle.getMonto_pago())<0){
                 pagosActualizados = true;
                 detalle.setMonto_pago(detalle.getFactura().getMonto_restante());
             }
@@ -315,8 +315,12 @@ public class PropuestaPagoBO {
             BigDecimal total = agrupado.total;
             
             for(DetallesPropuestaDTO detalle : detalles){
-                detalle.getFactura().setMonto_restante(BigDecimal.ZERO);
-                detalle.getFactura().setEstado("Pagada");
+                detalle.getFactura().setMonto_restante(detalle.getFactura().getMonto_restante().subtract(detalle.getMonto_pago()));
+                if(detalle.getFactura().getMonto_restante().compareTo(new BigDecimal("0.01"))<0){
+                    detalle.getFactura().setEstado("Pagada");
+                    detalle.getFactura().setMonto_restante(BigDecimal.ZERO);
+                }
+                detalle.setEstado("Pagado");
                 facturasDAO.modificar(detalle.getFactura());
             }
             cuenta.setSaldo_disponible(cuenta.getSaldo_disponible().subtract(total));
