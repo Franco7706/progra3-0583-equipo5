@@ -60,13 +60,15 @@ public abstract class DBManager {
                 config.setDriverClassName(this.driver);
                 
                 // Configuración del pool
-                config.setMaximumPoolSize(8); // Máximo 20 conexiones
-                config.setMinimumIdle(3);      // Mínimo 5 conexiones inactivas
-                config.setConnectionTimeout(30000); // 30 segundos timeout
-                config.setIdleTimeout(60000);      // 1 minuto idle
-                config.setMaxLifetime(1800000);     // 30 minutos max lifetime
-                config.setLeakDetectionThreshold(20000); // 20s: detectar conexiones no cerradas
-                config.setValidationTimeout(5000);       // tiempo máximo para validar conexión
+                config.setMaximumPoolSize(8); 
+                config.setMinimumIdle(3);      
+                config.setConnectionTimeout(30000); 
+                config.setIdleTimeout(60000);      
+                config.setMaxLifetime(1800000);    
+                config.setLeakDetectionThreshold(20000); 
+                config.setValidationTimeout(5000);      
+                config.setLeakDetectionThreshold(5000); 
+
 
                 // Optimizaciones
                 config.setAutoCommit(true);
