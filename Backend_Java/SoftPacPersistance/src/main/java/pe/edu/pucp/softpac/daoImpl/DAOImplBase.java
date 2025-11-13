@@ -28,7 +28,6 @@ public abstract class DAOImplBase {
     protected ArrayList<Columna> columnasEliminacion;
     protected Boolean seEliminaLogicamente;
 
-
     public DAOImplBase(String nombre_tabla) {
         this.nombre_tabla = nombre_tabla;
         this.retornarLlavePrimaria = false;
@@ -61,7 +60,7 @@ public abstract class DAOImplBase {
     protected abstract void configurarListaDeColumnas();
 
     protected Integer insertar() {
-        if (this.esDetalle==true) {
+        if (this.esDetalle == true) {
             try {
                 return this.ejecutaDetalle_DML(Tipo_Operacion.INSERTAR);
             } catch (DAODetalleException e) {
@@ -72,7 +71,7 @@ public abstract class DAOImplBase {
     }
 
     protected Integer modificar() {
-        if (this.esDetalle==true) {
+        if (this.esDetalle == true) {
             try {
                 return this.ejecutaDetalle_DML(Tipo_Operacion.MODIFICAR);
             } catch (DAODetalleException e) {
@@ -83,7 +82,7 @@ public abstract class DAOImplBase {
     }
 
     protected Integer eliminar() {
-        if (this.esDetalle==true) {
+        if (this.esDetalle == true) {
             try {
                 return this.ejecutaDetalle_DML(Tipo_Operacion.ELIMINAR);
             } catch (DAODetalleException e) {
@@ -94,10 +93,10 @@ public abstract class DAOImplBase {
     }
 
     protected Integer eliminarLogico() {
-        if (this.esDetalle==true){
-            try{
+        if (this.esDetalle == true) {
+            try {
                 return this.ejecutaDetalle_DML(Tipo_Operacion.ELIMINAR_LOGICO);
-            } catch (DAODetalleException e){
+            } catch (DAODetalleException e) {
                 throw e;
             }
         }
@@ -124,7 +123,6 @@ public abstract class DAOImplBase {
         this.ejecuta_Query(Tipo_Query.CUSTOM3);
     }
 
-
     private Integer ejecutarDMLenBD() throws SQLException {
         return this.statement.executeUpdate();
     }
@@ -150,8 +148,28 @@ public abstract class DAOImplBase {
     }
 
     protected void cerrarConexion() throws SQLException {
-        if (this.conexion != null) {
-            this.conexion.close();
+        try {
+            if (this.resultSet != null && !this.resultSet.isClosed()) {
+                this.resultSet.close();
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error al cerrar ResultSet - " + ex);
+        }
+
+        try {
+            if (this.statement != null && !this.statement.isClosed()) {
+                this.statement.close();
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error al cerrar Statement - " + ex);
+        }
+
+        try {
+            if (this.conexion != null && !this.conexion.isClosed()) {
+                this.conexion.close();
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error al cerrar Conexión - " + ex);
         }
     }
 
@@ -190,16 +208,19 @@ public abstract class DAOImplBase {
         }
     }
 
-
     protected void ejecutarEliminacionEnCascada(Tipo_Operacion tipo_operacion) throws SQLException {
-        if (this.ejecutaOperacionesEnCascada == false) return;
+        if (this.ejecutaOperacionesEnCascada == false) {
+            return;
+        }
         if (tipo_operacion == Tipo_Operacion.ELIMINAR) {
             this.ejecutarCascadaParaEliminacion();
         }
     }
 
-    private void ejecutarOperacionesEnCascada(Tipo_Operacion tipo_operacion,Integer resultado) throws SQLException {
-        if (this.ejecutaOperacionesEnCascada == false) return;
+    private void ejecutarOperacionesEnCascada(Tipo_Operacion tipo_operacion, Integer resultado) throws SQLException {
+        if (this.ejecutaOperacionesEnCascada == false) {
+            return;
+        }
         try {
             switch (tipo_operacion) {
                 case Tipo_Operacion.INSERTAR:
@@ -222,7 +243,6 @@ public abstract class DAOImplBase {
 
     protected void recuperarAutoGeneradoParaInsercionDeDetalle(Integer resultado) {
     }
-
 
     protected void ejecutarCascadaParaModificacion() {
     }
@@ -247,6 +267,21 @@ public abstract class DAOImplBase {
         } catch (SQLException ex) {
             System.err.println("Error al intentar ejecutar DML en Detalle - " + ex);
             throw new DAODetalleException(" Error al ejecutar operación de detalle: " + tipo_operacion, ex);
+        } finally {
+            try {
+                if (this.resultSet != null) {
+                    this.resultSet.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar ResultSet en detalle - " + ex);
+            }
+            try {
+                if (this.statement != null) {
+                    this.statement.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar Statement en detalle - " + ex);
+            }
         }
     }
 
@@ -262,7 +297,7 @@ public abstract class DAOImplBase {
             if (this.retornarLlavePrimaria && tipo_operacion == Tipo_Operacion.INSERTAR) {
                 resultado = this.retornarUltimoAutoGenerado();
             }
-            this.ejecutarOperacionesEnCascada(tipo_operacion,resultado);
+            this.ejecutarOperacionesEnCascada(tipo_operacion, resultado);
             this.commitTransaccion();
         } catch (SQLException ex) {
             System.err.println("Error al intentar ejecutar DML - " + ex);
@@ -365,17 +400,18 @@ public abstract class DAOImplBase {
             }
         }
     }
+
     public void ejecutarProcedimientoAlmacenado(String sql,
-                                                Boolean conTransaccion) {
+            Boolean conTransaccion) {
         Consumer incluirValorDeParametros = null;
         Object parametros = null;
         this.ejecutarProcedimientoAlmacenado(sql, incluirValorDeParametros, parametros, conTransaccion);
     }
 
     public void ejecutarProcedimientoAlmacenado(String sql,
-                                                Consumer incluirValorDeParametros,
-                                                Object parametros,
-                                                Boolean conTransaccion) {
+            Consumer incluirValorDeParametros,
+            Object parametros,
+            Boolean conTransaccion) {
         try {
             if (conTransaccion) {
                 this.iniciarTransaccion();
@@ -554,9 +590,9 @@ public abstract class DAOImplBase {
         sql = sql.concat(" FROM ");
         sql = sql.concat(this.nombre_tabla);
         String sql_predicado = "";
-        if(this.seEliminaLogicamente && !this.listarEliminados) {
-            for(Columna columna : this.columnasEliminacion) {
-                if(!sql_predicado.isBlank()) {
+        if (this.seEliminaLogicamente && !this.listarEliminados) {
+            for (Columna columna : this.columnasEliminacion) {
+                if (!sql_predicado.isBlank()) {
                     sql_predicado = sql_predicado.concat(" AND ");
                 }
                 sql_predicado = sql_predicado.concat(columna.getNombre());
@@ -612,7 +648,6 @@ public abstract class DAOImplBase {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-
     protected void extraerResultSetCustom3() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -635,15 +670,32 @@ public abstract class DAOImplBase {
 
     public Integer retornarUltimoAutoGenerado() {
         Integer resultado = null;
+        CallableStatement stmtTemp = null;
+        ResultSet rsTemp = null;
         try {
             String sql = DBManager.retornarSQLParaUltimoAutoGenerado();
-            this.statement = this.conexion.prepareCall(sql);
-            this.resultSet = this.statement.executeQuery();
-            if (this.resultSet.next()) {
-                resultado = this.resultSet.getInt("id");
+            stmtTemp = this.conexion.prepareCall(sql);
+            rsTemp = stmtTemp.executeQuery();
+            if (rsTemp.next()) {
+                resultado = rsTemp.getInt("id");
             }
         } catch (SQLException ex) {
             System.err.println("Error al intentar retornarUltimoAutoGenerado - " + ex);
+        } finally {
+            try {
+                if (rsTemp != null) {
+                    rsTemp.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar ResultSet temp - " + ex);
+            }
+            try {
+                if (stmtTemp != null) {
+                    stmtTemp.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar Statement temp - " + ex);
+            }
         }
         return resultado;
     }
@@ -651,9 +703,8 @@ public abstract class DAOImplBase {
     protected void abrirConexion() {
         this.conexion = DBManager.getInstance().getConnection();
     }
-    
+
     //NUEVO/////////////////////////////////////////////////////////////////////
-    
     public List listarTodos() {
         String sql = null;
         Consumer incluirValorDeParametros = null;
@@ -689,18 +740,17 @@ public abstract class DAOImplBase {
         }
         return lista;
     }
-    
+
     protected void ejecutarSelectEnDB() throws SQLException {
         this.resultSet = this.statement.executeQuery();
     }
-    
+
     protected void agregarObjetoALaLista(List lista) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     protected void instanciarObjetoDelResultSet() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    
+
 }

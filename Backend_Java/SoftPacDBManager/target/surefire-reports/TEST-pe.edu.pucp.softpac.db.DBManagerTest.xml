@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="pe.edu.pucp.softpac.db.DBManagerTest" time="4.533" tests="3" errors="1" skipped="0" failures="1">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="pe.edu.pucp.softpac.db.DBManagerTest" time="4.767" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="24"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="user.country" value="ES"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Apache NetBeans\jdk\bin"/>
-    <property name="sun.java.command" value="C:\Users\USUARIO\AppData\Local\Temp\surefire6806655570119517567\surefirebooter-20251113180746215_3.jar C:\Users\USUARIO\AppData\Local\Temp\surefire6806655570119517567 2025-11-13T18-07-46_117-jvmRun1 surefire-20251113180746215_1tmp surefire_0-20251113180746215_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\USUARIO\AppData\Local\Temp\surefire12183367150201378288\surefirebooter-20251113183743523_3.jar C:\Users\USUARIO\AppData\Local\Temp\surefire12183367150201378288 2025-11-13T18-37-43_423-jvmRun1 surefire-20251113183743523_1tmp surefire_0-20251113183743523_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\USUARIO\Desktop\progra3-0583-equipo5\Backend_Java\SoftPacDBManager\target\test-classes;C:\Users\USUARIO\Desktop\progra3-0583-equipo5\Backend_Java\SoftPacDBManager\target\classes;C:\Users\USUARIO\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.3\junit-jupiter-api-5.10.3.jar;C:\Users\USUARIO\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\USUARIO\.m2\repository\org\junit\platform\junit-platform-commons\1.10.3\junit-platform-commons-1.10.3.jar;C:\Users\USUARIO\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\USUARIO\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.3\junit-jupiter-params-5.10.3.jar;C:\Users\USUARIO\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.3\junit-jupiter-engine-5.10.3.jar;C:\Users\USUARIO\.m2\repository\org\junit\platform\junit-platform-engine\1.10.3\junit-platform-engine-1.10.3.jar;C:\Users\USUARIO\.m2\repository\com\mysql\mysql-connector-j\9.2.0\mysql-connector-j-9.2.0.jar;C:\Users\USUARIO\.m2\repository\com\google\protobuf\protobuf-java\4.29.0\protobuf-java-4.29.0.jar;C:\Users\USUARIO\.m2\repository\commons-codec\commons-codec\1.18.0\commons-codec-1.18.0.jar;C:\Users\USUARIO\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\USUARIO\.m2\repository\org\slf4j\slf4j-api\2.0.0-alpha1\slf4j-api-2.0.0-alpha1.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\USUARIO\AppData\Local\Temp\surefire6806655570119517567\surefirebooter-20251113180746215_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\USUARIO\AppData\Local\Temp\surefire12183367150201378288\surefirebooter-20251113183743523_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="24.0.2+12"/>
@@ -60,36 +60,19 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="68.0"/>
   </properties>
-  <testcase name="testMultiplesConexiones" classname="pe.edu.pucp.softpac.db.DBManagerTest" time="3.057">
-    <failure message="Error: Cannot invoke &quot;com.zaxxer.hikari.HikariDataSource.getConnection()&quot; because &quot;pe.edu.pucp.softpac.db.DBManager.dataSource&quot; is null" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Error: Cannot invoke "com.zaxxer.hikari.HikariDataSource.getConnection()" because "pe.edu.pucp.softpac.db.DBManager.dataSource" is null
-	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
-	at org.junit.jupiter.api.Assertions.fail(Assertions.java:138)
-	at pe.edu.pucp.softpac.db.DBManagerTest.testMultiplesConexiones(DBManagerTest.java:47)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></failure>
+  <testcase name="testMultiplesConexiones" classname="pe.edu.pucp.softpac.db.DBManagerTest" time="4.748">
     <system-out><![CDATA[testMultiplesConexiones
+Pool de conexiones HikariCP inicializado correctamente
+Pool funcionando: 5 conexiones activas
 ]]></system-out>
     <system-err><![CDATA[SLF4J: No SLF4J providers were found.
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#noProviders for further details.
-Error al inicializar el pool de conexiones - com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Too many connections
-Error al inicializar el pool de conexiones - com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Too many connections
 ]]></system-err>
   </testcase>
-  <testcase name="testGetConnection" classname="pe.edu.pucp.softpac.db.DBManagerTest" time="1.455">
-    <error message="Cannot invoke &quot;com.zaxxer.hikari.HikariDataSource.getConnection()&quot; because &quot;pe.edu.pucp.softpac.db.DBManager.dataSource&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot invoke "com.zaxxer.hikari.HikariDataSource.getConnection()" because "pe.edu.pucp.softpac.db.DBManager.dataSource" is null
-	at pe.edu.pucp.softpac.db.DBManager.getConnection(DBManager.java:96)
-	at pe.edu.pucp.softpac.db.DBManagerTest.testGetConnection(DBManagerTest.java:26)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></error>
+  <testcase name="testGetConnection" classname="pe.edu.pucp.softpac.db.DBManagerTest" time="0.001">
     <system-out><![CDATA[getConnection
 ]]></system-out>
-    <system-err><![CDATA[Error al inicializar el pool de conexiones - com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Too many connections
-]]></system-err>
   </testcase>
   <testcase name="testGetInstance" classname="pe.edu.pucp.softpac.db.DBManagerTest" time="0.001">
     <system-out><![CDATA[getInstance

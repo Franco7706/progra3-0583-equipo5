@@ -52,23 +52,20 @@ public abstract class DBManager {
         if (dataSource == null) {
             try {
                 HikariConfig config = new HikariConfig();
-                
-                // Configuración de la conexión
+
                 config.setJdbcUrl(getURL());
                 config.setUsername(this.usuario);
                 config.setPassword(this.contraseña);
                 config.setDriverClassName(this.driver);
-                
-                // Configuración del pool
-                config.setMaximumPoolSize(8); 
-                config.setMinimumIdle(3);      
-                config.setConnectionTimeout(30000); 
-                config.setIdleTimeout(60000);      
-                config.setMaxLifetime(1800000);    
-                config.setLeakDetectionThreshold(20000); 
-                config.setValidationTimeout(5000);      
-                config.setLeakDetectionThreshold(5000); 
 
+                // Configuración optimizada
+                config.setMaximumPoolSize(10);              
+                config.setMinimumIdle(3);
+                config.setConnectionTimeout(30000);
+                config.setIdleTimeout(300000);              // 5 minutos
+                config.setMaxLifetime(1800000);             // 30 minutos
+                config.setLeakDetectionThreshold(30000);    
+                config.setValidationTimeout(5000);
 
                 // Optimizaciones
                 config.setAutoCommit(true);
@@ -76,10 +73,9 @@ public abstract class DBManager {
                 config.addDataSourceProperty("prepStmtCacheSize", "250");
                 config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
                 config.addDataSourceProperty("useServerPrepStmts", "true");
-                
-                // Pool name para debugging
+
                 config.setPoolName("SoftPacHikariPool");
-                
+
                 dataSource = new HikariDataSource(config);
                 System.out.println("Pool de conexiones HikariCP inicializado correctamente");
             } catch (Exception ex) {
@@ -118,12 +114,12 @@ public abstract class DBManager {
 
     private static MotorDeBaseDeDatos obtenerMotorDeBaseDeDatos() {
         Properties properties = new Properties();
-        
+
         try {
             String nmArchivoConf = "/" + ARCHIVO_CONFIGURACION;
             properties.load(DBManager.class.getResourceAsStream(nmArchivoConf));
-            String seleccion = properties.getProperty("db.seleccion"); 
-            
+            String seleccion = properties.getProperty("db.seleccion");
+
             if (seleccion.equals("MySQL")) {
                 return MotorDeBaseDeDatos.MYSQL;
             } else {
@@ -136,7 +132,7 @@ public abstract class DBManager {
         }
         return null;
     }
-    
+
     public static String retornarSQLParaUltimoAutoGenerado() {
         if (dbManager instanceof DBManagerMySQL) {
             return "select @@last_insert_id as id";
@@ -146,7 +142,7 @@ public abstract class DBManager {
             throw new UnsupportedOperationException("Motor de base de datos no soportado");
         }
     }
-    
+
     // Método para cerrar el pool al finalizar la aplicación
     public static void cerrarPool() {
         if (dataSource != null && !dataSource.isClosed()) {
