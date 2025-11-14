@@ -13,7 +13,7 @@ public class EmailClienteUtil {
 
     // URL base del servicio REST (ajustar según tu configuración)
     //private static final String BASE_URL = "http://localhost:8080/SoftPacEmailWS/resources/Email";
-    private static final String BASE_URL = "http://localhost:9626/SoftPacEmailWS/resources/Email";
+    private static final String BASE_URL = "http://localhost:8080/SoftPacEmailWS/resources/Email";
     private Client client;
     private WebTarget webTarget;
     
