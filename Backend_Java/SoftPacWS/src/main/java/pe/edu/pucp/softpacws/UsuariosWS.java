@@ -42,20 +42,27 @@ public class UsuariosWS {
         return usuariosBO.obtenerPorId(usuario_id);
     }
 
+    //                     CAMBIOS
     @WebMethod(operationName = "insertarUsuario")
-    public Integer insertarUsuario(@WebParam(name = "nuevoUsuario") UsuariosDTO nuevoUsuario) {
-        return usuariosBO.insertarUsuario(nuevoUsuario);
+    public Integer insertarUsuario(@WebParam(name = "nuevoUsuario") UsuariosDTO nuevoUsuario,
+            @WebParam(name = "usuarioActual") UsuariosDTO usuarioActual) {
+        return usuariosBO.insertarUsuario(nuevoUsuario, usuarioActual);
     }
 
+    //                     CAMBIOS
     @WebMethod(operationName = "modificarAccesoUsuario")
     public Integer modificarAccesoUsuario(
             @WebParam(name = "usuarioId") int usuarioId,
             @WebParam(name = "nuevoNombreUsuario") String nuevoNombreUsuario,
             @WebParam(name = "activo") Boolean activo,
-            @WebParam(name = "paisesIds") List<Integer> paisesIds) {
-        return usuariosBO.modificarAccesoUsuario(usuarioId, nuevoNombreUsuario, activo, paisesIds);
+            @WebParam(name = "paisesIds") List<Integer> paisesIds,
+            @WebParam(name = "usuarioActual") UsuariosDTO usuarioActual,
+            @WebParam(name = "nuevaContrasenha") String nuevaContrasenha) {
+        return usuariosBO.modificarAccesoUsuario(usuarioId, nuevoNombreUsuario, activo, paisesIds,
+                usuarioActual, nuevaContrasenha);
     }
 
+    //                     CAMBIOS
     @WebMethod(operationName = "eliminarUsuario")
     public Integer eliminarUsuario(
             @WebParam(name = "usuario") UsuariosDTO usuario,

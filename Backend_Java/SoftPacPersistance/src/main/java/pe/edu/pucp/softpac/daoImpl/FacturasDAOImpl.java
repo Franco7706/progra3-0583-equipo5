@@ -176,7 +176,8 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
             detalleFactura.setDetalle_factura_id(this.resultSet.getInt(26));
             detalleFactura.setSubtotal(this.resultSet.getBigDecimal(27));
             detalleFactura.setDescripcion(this.resultSet.getString(28));
-            factura.addDetalle_Factura(detalleFactura);
+            if(detalleFactura.getDetalle_factura_id()!=0)
+                factura.addDetalle_Factura(detalleFactura);
         }
     }        
 

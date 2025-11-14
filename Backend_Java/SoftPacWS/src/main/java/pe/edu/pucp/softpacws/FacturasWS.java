@@ -1,10 +1,14 @@
 package pe.edu.pucp.softpacws;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import jakarta.jws.WebService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import pe.edu.pucp.softpac.bo.FacturasBO;
 import pe.edu.pucp.softpac.model.DetallesFacturaDTO;
 import pe.edu.pucp.softpac.model.FacturasDTO;
@@ -14,9 +18,53 @@ import pe.edu.pucp.softpac.model.UsuariosDTO;
 public class FacturasWS {
     
     private FacturasBO facturasBO;
+    private Timer timer;
     
     public FacturasWS(){
         this.facturasBO = new FacturasBO();
+    }
+    
+    @PostConstruct
+    public void inicializar() {        
+        timer = new Timer(true); // true = daemon thread
+        
+        // Ejecutar cada 12 horas (en milisegundos)
+        long seisHoras = 12 * 60 * 60 * 1000;
+        
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                vencerFacturas();
+            }
+        }, 0, seisHoras); // 0 = empezar inmediatamente
+        
+    }
+    
+    @PreDestroy
+    public void detener() {
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
+    
+    private void vencerFacturas() {
+        
+        try {
+            ArrayList<FacturasDTO> facturas = facturasBO.listarTodos();
+        
+            for (FacturasDTO factura : facturas)
+            {
+                if (factura.getFecha_limite_pago().before(new Date()) && "Pendiente".equals(factura.getEstado()))
+                {
+                    factura.setEstado("Vencida");
+                    facturasBO.modificar(factura);
+                }
+            }
+            
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     @WebMethod(operationName = "listarFacturas")
