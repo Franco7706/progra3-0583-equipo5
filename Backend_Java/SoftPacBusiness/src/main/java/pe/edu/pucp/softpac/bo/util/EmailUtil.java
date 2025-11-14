@@ -161,7 +161,9 @@ private String armarCorreoModificar(UsuariosDTO usuario) {
     }
     
     //Contraseña
-    String passwordOriginal = (usuario.getPassword_hash() != null) ? usuario.getPassword_hash() : "ERROR"; 
+    String passwordOriginal = (usuario.getPassword_hash() != null && !usuario.getPassword_hash().trim().isEmpty()) 
+    ? usuario.getPassword_hash() 
+    : "NO MODIFICADA";
     // Estado activo
     String estadoActivo = (usuario.getActivo() != null && usuario.getActivo()) ? "ACTIVO" : "INACTIVO";
     String estadoMensaje = (usuario.getActivo() != null && usuario.getActivo()) 
