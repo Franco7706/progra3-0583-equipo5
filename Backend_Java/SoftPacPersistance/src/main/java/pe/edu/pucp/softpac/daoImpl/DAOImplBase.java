@@ -269,13 +269,6 @@ public abstract class DAOImplBase {
             throw new DAODetalleException(" Error al ejecutar operación de detalle: " + tipo_operacion, ex);
         } finally {
             try {
-                if (this.resultSet != null) {
-                    this.resultSet.close();
-                }
-            } catch (SQLException ex) {
-                System.err.println("Error al cerrar ResultSet en detalle - " + ex);
-            }
-            try {
                 if (this.statement != null) {
                     this.statement.close();
                 }
