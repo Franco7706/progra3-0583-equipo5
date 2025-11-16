@@ -27,7 +27,7 @@ public class KardexCuentasPropiasDAOImpl extends DAOImplBase implements KardexCu
     private int cuentaPropiaId;
     
     public KardexCuentasPropiasDAOImpl() {
-        super("PA_KARDEX_CUENTAS_PROPIAS");
+        super("PA_ESTADO_CUENTAS_PROPIAS");
         this.retornarLlavePrimaria = false;
     }
 
@@ -52,7 +52,7 @@ public class KardexCuentasPropiasDAOImpl extends DAOImplBase implements KardexCu
     private String generarSQLSinWhere(){
         return """
                SELECT
-                  -- PA_KARDEX_CUENTAS_PROPIAS (k)
+                  -- PA_ESTADO_CUENTAS_PROPIAS (k)
                   k.CUENTA_PROPIA_ID,
                   k.FECHA_MODIFICACION,
                   k.SALDO_MODIFICACION,
@@ -84,7 +84,7 @@ public class KardexCuentasPropiasDAOImpl extends DAOImplBase implements KardexCu
                   -- PA_ENTIDADES_BANCARIAS (eb)
                   eb.NOMBRE AS EB_NOMBRE
 
-               FROM PA_KARDEX_CUENTAS_PROPIAS k
+               FROM PA_ESTADO_CUENTAS_PROPIAS k
                INNER JOIN PA_USUARIOS u
                   ON u.USUARIO_ID = k.USUARIO_MODIFICACION
                INNER JOIN PA_CUENTAS_PROPIAS c

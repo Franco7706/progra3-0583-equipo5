@@ -448,9 +448,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `softpacbd`.`PA_KARDEX_CUENTAS_PROPIAS`
+-- Table `softpacbd`.`PA_ESTADO_CUENTAS_PROPIAS`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `softpacbd`.`PA_KARDEX_CUENTAS_PROPIAS` (
+CREATE TABLE IF NOT EXISTS `softpacbd`.`PA_ESTADO_CUENTAS_PROPIAS` (
   `CUENTA_PROPIA_ID` INT UNSIGNED NOT NULL,
   `FECHA_MODIFICACION` DATETIME NOT NULL,
   `SALDO_MODIFICACION` DECIMAL(15,2) NOT NULL,
