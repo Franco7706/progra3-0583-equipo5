@@ -9,6 +9,7 @@ pe\edu\pucp\softpac\model\MonedasDTO.class
 pe\edu\pucp\softpac\model\EntidadesBancariasDTO.class
 pe\edu\pucp\softpac\model\UsuarioPaisAccesoDTO.class
 pe\edu\pucp\softpac\model\CuentasBancariasDTO.class
+pe\edu\pucp\softpac\model\KardexCuentasPropiasDTO.class
 pe\edu\pucp\softpac\model\PropuestasPagoDTO.class
 pe\edu\pucp\softpac\model\ReporteFactPendDTO.class
 pe\edu\pucp\softpac\model\ReportePropPagoDTO.class

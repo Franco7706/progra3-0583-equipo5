@@ -31,9 +31,11 @@ pe\edu\pucp\softpac\daoImpl\util\Tipo_Operacion.class
 pe\edu\pucp\softpac\dao\CuentasAcreedorDAO.class
 pe\edu\pucp\softpac\dao\TiposDeCambioDAO.class
 pe\edu\pucp\softpac\daoImpl\AcreedoresDAOImpl.class
+pe\edu\pucp\softpac\dao\KardexCuentasPropiasDAO.class
 pe\edu\pucp\softpac\daoImpl\DAOImplBase.class
 pe\edu\pucp\softpac\daoImpl\MonedasDAOImpl.class
 pe\edu\pucp\softpac\daoImpl\UsuariosDAOImpl.class
+pe\edu\pucp\softpac\daoImpl\KardexCuentasPropiasDAOImpl.class
 pe\edu\pucp\softpac\dao\UsuariosDAO.class
 pe\edu\pucp\softpac\dao\ReportePropPagoDAO.class
 pe\edu\pucp\softpac\daoImpl\EntidadesBancariasDAOImpl.class

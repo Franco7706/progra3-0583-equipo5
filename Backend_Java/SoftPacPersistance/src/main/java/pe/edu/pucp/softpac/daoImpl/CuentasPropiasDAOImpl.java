@@ -128,7 +128,7 @@ public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropias
     protected String generarSQLParaListarTodos(){
         return "SELECT c.CUENTA_PROPIA_ID, c.SALDO_DISPONIBLE, c.TIPO_CUENTA, c.NUMERO_CUENTA, c.CCI, c.ACTIVO, c.ENTIDAD_BANCARIA_ID, c.MONEDA_ID, e.NOMBRE, m.CODIGO_ISO\n" +
                 "FROM PA_CUENTAS_PROPIAS c LEFT JOIN PA_ENTIDADES_BANCARIAS e on e.ENTIDAD_BANCARIA_ID = c.ENTIDAD_BANCARIA_ID \n" +
-                "LEFT JOIN PA_MONEDAS m on m.MONEDA_ID = c.MONEDA_ID";
+                "LEFT JOIN PA_MONEDAS m on m.MONEDA_ID = c.MONEDA_ID WHERE FECHA_ELIMINACION IS NULL";
     }
     
     @Override

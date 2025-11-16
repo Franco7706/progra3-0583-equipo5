@@ -107,6 +107,13 @@ public class CuentasPropiasBO {
         return this.cuentasPropiasDAO.modificar(cuentasPropias);
     }
     
+    public Integer modificar(CuentasPropiasDTO cuentasPropias,int usuarioId){
+        if(cuentasPropias == null) return 0;
+        KardexCuentasPropiasBO kardexCuentasPropiasBO = new KardexCuentasPropiasBO();
+        kardexCuentasPropiasBO.RegistrarModificacion(cuentasPropias, usuarioId);
+        return this.cuentasPropiasDAO.modificar(cuentasPropias);
+    }
+    
     
     public Integer eliminarLogico(CuentasPropiasDTO cuenta, UsuariosDTO usuarioActual){
         if (cuenta == null || cuenta.getCuenta_bancaria_id()== null) {

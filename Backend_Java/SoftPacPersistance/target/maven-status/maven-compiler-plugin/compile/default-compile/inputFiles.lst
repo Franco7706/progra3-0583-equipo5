@@ -5,6 +5,7 @@ C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend
 C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\DetallesPropuestaDAO.java
 C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\EntidadesBancariasDAO.java
 C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\FacturasDAO.java
+C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\KardexCuentasPropiasDAO.java
 C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\MonedasDAO.java
 C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\PaisesDAO.java
 C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\dao\PropuestasPagoDAO.java
@@ -22,6 +23,7 @@ C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend
 C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\EntidadesBancariasDAOImpl.java
 C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\exception\DAODetalleException.java
 C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\FacturasDAOImpl.java
+C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\KardexCuentasPropiasDAOImpl.java
 C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\MonedasDAOImpl.java
 C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\PaisesDAOImpl.java
 C:\Users\Usuario\Documents\2025-2\TrabajoPrograBack\progra3-0583-equipo5\Backend_Java\SoftPacPersistance\src\main\java\pe\edu\pucp\softpac\daoImpl\PropuestasPagoDAOImpl.java

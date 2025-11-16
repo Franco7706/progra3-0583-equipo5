@@ -109,6 +109,25 @@ public class FacturasBO {
         return resultado;
     }
     
+    public void vencerFacturas() {
+        
+        try {
+            ArrayList<FacturasDTO> facturas = listarTodos();
+        
+            for (FacturasDTO factura : facturas)
+            {
+                if (factura.getFecha_limite_pago().before(new Date()) && "Pendiente".equals(factura.getEstado()))
+                {
+                    factura.setEstado("Vencida");
+                    modificar(factura);
+                }
+            }
+            
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
     
     
 }

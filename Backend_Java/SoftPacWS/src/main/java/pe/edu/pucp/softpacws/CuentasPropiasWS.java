@@ -6,16 +6,20 @@ import jakarta.jws.WebParam;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import pe.edu.pucp.softpac.bo.CuentasPropiasBO;
+import pe.edu.pucp.softpac.bo.KardexCuentasPropiasBO;
 import pe.edu.pucp.softpac.model.CuentasPropiasDTO;
+import pe.edu.pucp.softpac.model.KardexCuentasPropiasDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 @WebService(serviceName = "CuentasPropiasWS")
 public class CuentasPropiasWS {
     
     private CuentasPropiasBO cuentasPropiasBO;
+    private KardexCuentasPropiasBO kardexCuentasPropiasBO;
     
     public CuentasPropiasWS(){
         this.cuentasPropiasBO = new CuentasPropiasBO();
+        this.kardexCuentasPropiasBO = new KardexCuentasPropiasBO();
     }
     
     @WebMethod(operationName = "insertarCuentaPropiaParametros")
@@ -54,8 +58,9 @@ public class CuentasPropiasWS {
     
     @WebMethod(operationName = "modificarCuentaPropia")
     public Integer modificarCuentaPropia(
-            @WebParam(name = "cuenta_propia") CuentasPropiasDTO cuenta_propia) {
-        return cuentasPropiasBO.modificar(cuenta_propia);
+            @WebParam(name = "cuenta_propia") CuentasPropiasDTO cuenta_propia,
+            @WebParam(name = "usuario_id") Integer usuario_id) {
+        return cuentasPropiasBO.modificar(cuenta_propia,usuario_id);
     }
     
     @WebMethod(operationName = "eliminarCuentaPropia")
@@ -98,5 +103,15 @@ public class CuentasPropiasWS {
     @WebMethod(operationName = "listarPorEntidadBancaria")
     public ArrayList<CuentasPropiasDTO> listarPorEntidadBancaria(Integer entidad_bancaria_id) {
         return cuentasPropiasBO.listarPorEntidadBancaria(entidad_bancaria_id);
+    }
+    
+    @WebMethod(operationName = "obtenerKardexCuentaPropiaPorUsuario")
+    public ArrayList<KardexCuentasPropiasDTO>obtenerKardexCuentaPropiaPorUsuario(int usuarioId){
+        return kardexCuentasPropiasBO.obtenerPorUsuario(usuarioId);
+    }
+    
+    @WebMethod(operationName = "obtenerKardexCuentaPropiaPorCuenta")
+    public ArrayList<KardexCuentasPropiasDTO>obtenerKardexCuentaPropiaPorCuenta(int cuentaPropiaId){
+        return kardexCuentasPropiasBO.obtenerPorCuentaPropia(cuentaPropiaId);
     }
 }

@@ -324,7 +324,8 @@ public class PropuestaPagoBO {
                 facturasDAO.modificar(detalle.getFactura());
             }
             cuenta.setSaldo_disponible(cuenta.getSaldo_disponible().subtract(total));
-            cuentasPropiasDAO.modificar(cuenta);
+            CuentasPropiasBO cuentasPropiasBO = new CuentasPropiasBO();
+            cuentasPropiasBO.modificar(cuenta,usuario.getUsuario_id());
         }
         propuesta.setEstado("Enviada");
         propuestasDAO.modificar(propuesta);

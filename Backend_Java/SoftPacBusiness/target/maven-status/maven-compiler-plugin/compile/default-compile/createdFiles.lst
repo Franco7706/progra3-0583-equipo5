@@ -1,6 +1,7 @@
 pe\edu\pucp\softpac\bo\PropuestaPagoBO$1AgrupadoCuenta.class
 pe\edu\pucp\softpac\bo\ReportePropPagoBO.class
 pe\edu\pucp\softpac\bo\util\EmailUtil$1.class
+pe\edu\pucp\softpac\bo\KardexCuentasPropiasBO.class
 pe\edu\pucp\softpac\bo\TiposDeCambioBO.class
 pe\edu\pucp\softpac\bo\CuentasAcreedorBO.class
 pe\edu\pucp\softpac\bo\CuentasPropiasBO.class

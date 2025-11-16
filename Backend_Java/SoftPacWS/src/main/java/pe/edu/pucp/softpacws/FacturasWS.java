@@ -34,7 +34,7 @@ public class FacturasWS {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                vencerFacturas();
+                facturasBO.vencerFacturas();
             }
         }, 0, seisHoras); // 0 = empezar inmediatamente
         
@@ -44,26 +44,6 @@ public class FacturasWS {
     public void detener() {
         if (timer != null) {
             timer.cancel();
-        }
-    }
-    
-    private void vencerFacturas() {
-        
-        try {
-            ArrayList<FacturasDTO> facturas = facturasBO.listarTodos();
-        
-            for (FacturasDTO factura : facturas)
-            {
-                if (factura.getFecha_limite_pago().before(new Date()) && "Pendiente".equals(factura.getEstado()))
-                {
-                    factura.setEstado("Vencida");
-                    facturasBO.modificar(factura);
-                }
-            }
-            
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
         }
     }
     
