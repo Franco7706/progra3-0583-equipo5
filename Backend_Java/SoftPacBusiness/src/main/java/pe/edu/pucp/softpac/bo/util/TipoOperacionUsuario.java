@@ -15,5 +15,10 @@ public enum TipoOperacionUsuario {
     /**
      * Indica la eliminación lógica de un usuario.
      */
-    ELIMINAR
+    ELIMINAR,
+    
+    /**
+     * Indica el rechazo de una propuesta de pago.
+     */
+    RECHAZAR_PROPUESTA
 }
