@@ -37,10 +37,10 @@ public class UsuariosBO {
         if (usuario == null) {
             return new UsuariosDTO(); //Usuario no encontrado
         }
-
+        
         Boolean esValido = PasswordUtil.checkPassword(password.trim(), usuario.getPassword_hash());
 
-        if (esValido && usuario.getActivo() == true) {
+        if (esValido) {
             //PARA SERIALIZACIÓN:
             for (UsuarioPaisAccesoDTO upa : usuario.getUsuario_pais()) {
                 upa.setUsuario(null);

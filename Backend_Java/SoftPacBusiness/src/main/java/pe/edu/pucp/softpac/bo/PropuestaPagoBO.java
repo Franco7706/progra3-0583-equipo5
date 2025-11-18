@@ -195,22 +195,22 @@ public class PropuestaPagoBO {
 
             // 3️ Agrupar los pagos por moneda
             //var pagosPorMoneda = propuestaPagoParcial.getDetalles_propuesta().stream().collect(Collectors.groupingBy(d -> d.getFactura().getMoneda().getCodigo_iso()));
-              Map<String, List<DetallesPropuestaDTO>> pagosPorMoneda = propuestaPagoParcial.getDetalles_propuesta().stream()
+              Map<Integer, List<DetallesPropuestaDTO>> pagosPorMoneda = propuestaPagoParcial.getDetalles_propuesta().stream()
                 .collect(Collectors.groupingBy(
                     // d => d.Factura.Moneda.CodigoIso
-                    d -> d.getFactura().getMoneda().getCodigo_iso()
+                    d -> d.getFactura().getMoneda().getMoneda_id()
                 ));  
 
             // 4️ Aplicar algoritmo greedy por moneda
 
-            for (Map.Entry<String, List<DetallesPropuestaDTO>> grupoEntry : pagosPorMoneda.entrySet()) {
+            for (Map.Entry<Integer, List<DetallesPropuestaDTO>> grupoEntry : pagosPorMoneda.entrySet()) {
 
-                String codigoIsoMoneda = grupoEntry.getKey();
+                Integer moneda_id = grupoEntry.getKey();
                 List<DetallesPropuestaDTO> pagosDelGrupo = grupoEntry.getValue();
 
                 // Filtra las cuentas por la Moneda y las ordena por SaldoDisponible (descendente)
                 List<CuentasPropiasDTO> cuentasMoneda = cuentas.stream()
-                    .filter(c -> c.getMoneda().getCodigo_iso().equals(codigoIsoMoneda))
+                    .filter(c -> c.getMoneda().getMoneda_id().equals(moneda_id))
                     // Ordena descendente por SaldoDisponible: Comparator.reverseOrder()
                     .sorted(Comparator.comparing(CuentasPropiasDTO::getSaldo_disponible).reversed())
                     .collect(Collectors.toList());
@@ -226,7 +226,7 @@ public class PropuestaPagoBO {
                     // 4. Equivalente a: var cuenta = cuentasMoneda.FirstOrDefault(c => c.SaldoDisponible >= pago.MontoPago);
 
                     // Busca la primera cuenta que pueda cubrir el monto del pago
-                    CuentasPropiasDTO cuentaAsignada = cuentas.stream().filter(c -> c.getSaldo_disponible().compareTo(pago.getMonto_pago()) >= 0).findFirst().orElse(null);      
+                    CuentasPropiasDTO cuentaAsignada = cuentasMoneda.stream().filter(c -> c.getSaldo_disponible().compareTo(pago.getMonto_pago()) >= 0).findFirst().orElse(null);      
 
                     // 5. Asignación y actualización del saldo
                     if (cuentaAsignada != null) {
@@ -258,7 +258,7 @@ public class PropuestaPagoBO {
             BigDecimal total;
         }
         PropuestasPagoDTO propuesta = propuestasDAO.obtenerPorId(propuestaId);
-        if(!"pendiente".equals(propuesta.getEstado().toLowerCase())){
+        if(!"en revisión".equals(propuesta.getEstado().toLowerCase())){
             return 0;
         }
         propuesta.setUsuario_modificacion(usuario);
