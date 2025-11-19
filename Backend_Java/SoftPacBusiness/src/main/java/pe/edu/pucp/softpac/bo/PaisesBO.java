@@ -1,4 +1,3 @@
-
 package pe.edu.pucp.softpac.bo;
 
 import java.util.ArrayList;

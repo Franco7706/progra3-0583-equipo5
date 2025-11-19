@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pe.edu.pucp.softpac.daoImpl;
 
 import java.sql.SQLException;
@@ -15,10 +11,6 @@ import pe.edu.pucp.softpac.model.KardexCuentasPropiasDTO;
 import pe.edu.pucp.softpac.model.MonedasDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
-/**
- *
- * @author Usuario
- */
 public class KardexCuentasPropiasDAOImpl extends DAOImplBase implements KardexCuentasPropiasDAO{
 
     private KardexCuentasPropiasDTO kardexCuentasPropias;

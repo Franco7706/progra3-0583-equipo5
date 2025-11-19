@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/WebServices/WebService.java to edit this template
- */
 package pe.edu.pucp.softpacws;
 
 import jakarta.jws.WebService;
@@ -13,10 +9,6 @@ import pe.edu.pucp.softpac.model.AcreedoresDTO;
 import pe.edu.pucp.softpac.model.PaisesDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
-/**
- *
- * @author USUARIO
- */
 @WebService(serviceName = "AcreedoresWS")
 public class AcreedoresWS {
 

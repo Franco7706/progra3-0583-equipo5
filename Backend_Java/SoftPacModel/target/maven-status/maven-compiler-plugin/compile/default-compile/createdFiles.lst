@@ -14,6 +14,5 @@ pe\edu\pucp\softpac\model\PropuestasPagoDTO.class
 pe\edu\pucp\softpac\model\ReporteFactPendDTO.class
 pe\edu\pucp\softpac\model\ReportePropPagoDTO.class
 pe\edu\pucp\softpac\model\FacturasDTO.class
-pe\edu\pucp\softpac\model\TiposDeCambioDTO.class
 pe\edu\pucp\softpac\model\CuentasAcreedorDTO.class
 pe\edu\pucp\softpac\model\EliminableDTOBase.class

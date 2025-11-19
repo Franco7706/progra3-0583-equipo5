@@ -1,4 +1,3 @@
-
 package pe.edu.pucp.softpac.model;
 
 import java.util.Date;

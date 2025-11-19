@@ -1,11 +1,9 @@
 package pe.edu.pucp.softpac.bo;
 
-//Los import de las clases que necesito. DAO, DAOImpl y DTO.
 import java.util.ArrayList;
 import pe.edu.pucp.softpac.dao.ReporteFactPendDAO;
 import pe.edu.pucp.softpac.daoImpl.ReporteFactPendDAOImpl;
 import pe.edu.pucp.softpac.model.ReporteFactPendDTO;
-//import pe.edu.pucp.softpac.model.;
 
 public class ReporteFactPendBO {
 

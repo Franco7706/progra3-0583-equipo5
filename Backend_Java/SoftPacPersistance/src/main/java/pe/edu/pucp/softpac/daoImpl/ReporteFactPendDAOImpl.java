@@ -56,9 +56,6 @@ public class ReporteFactPendDAOImpl extends DAOImplBase implements ReporteFactPe
         }
     }
     
-    //SEGUNDO METODO: RECUPERAR LISTA FILTRADA DE FACTURAS AGRUPADAS POR RANGO DE VENCIMIENTO: (ej, 0-30, 31-60, 61-90, +90 días)
-    
-    
     @Override
     public ArrayList<ReporteFactPendDTO> listarPorFiltros(Integer acreedor_id, Integer pais_id, Integer moneda_id) {
         Object parametros = new ReporteFacturasPendientesParametrosBuilder()

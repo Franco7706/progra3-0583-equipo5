@@ -4,7 +4,6 @@ import pe.edu.pucp.softpac.dao.DetallesFacturaDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.model.DetallesFacturaDTO;
 import pe.edu.pucp.softpac.model.FacturasDTO;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;

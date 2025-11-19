@@ -3,10 +3,8 @@ package pe.edu.pucp.softpac.daoImpl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import pe.edu.pucp.softpac.dao.MonedasDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
-import pe.edu.pucp.softpac.model.CuentasAcreedorDTO;
 import pe.edu.pucp.softpac.model.MonedasDTO;
 
 public class MonedasDAOImpl extends DAOImplBase implements MonedasDAO {

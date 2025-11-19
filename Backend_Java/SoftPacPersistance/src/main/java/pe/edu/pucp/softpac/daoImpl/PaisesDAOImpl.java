@@ -3,10 +3,8 @@ package pe.edu.pucp.softpac.daoImpl;
 import java.sql.SQLException;
 import pe.edu.pucp.softpac.dao.PaisesDAO;
 import pe.edu.pucp.softpac.model.PaisesDTO;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 
 public class PaisesDAOImpl extends DAOImplBase implements PaisesDAO {

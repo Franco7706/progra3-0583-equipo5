@@ -1,8 +1,6 @@
 package pe.edu.pucp.softpac.dao;
 
 import pe.edu.pucp.softpac.model.UsuariosDTO;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public interface UsuariosDAO {
@@ -20,7 +18,6 @@ public interface UsuariosDAO {
 
     public Integer eliminarLogico(UsuariosDTO usuario);
     
-    //Nuevo: Para UsuariosDTO ObtenerPorNombreUsuario(string nombreUsuario);
     public UsuariosDTO obtenerPorNombreDeUsuario(String nombreDeUsuario);
     
 }

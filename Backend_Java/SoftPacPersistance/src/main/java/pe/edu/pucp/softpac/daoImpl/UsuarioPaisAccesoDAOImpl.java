@@ -1,10 +1,8 @@
 package pe.edu.pucp.softpac.daoImpl;
 
 import pe.edu.pucp.softpac.dao.UsuarioPaisAccesoDAO;
-import pe.edu.pucp.softpac.dao.UsuariosDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.model.*;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 

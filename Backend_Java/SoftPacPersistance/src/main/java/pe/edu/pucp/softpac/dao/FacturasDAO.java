@@ -1,10 +1,7 @@
 package pe.edu.pucp.softpac.dao;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import pe.edu.pucp.softpac.model.FacturasDTO;
-import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 public interface FacturasDAO {
     public Integer insertar(FacturasDTO factura);

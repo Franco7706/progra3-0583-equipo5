@@ -6,7 +6,6 @@ import pe.edu.pucp.softpac.model.PaisesDTO;
 import pe.edu.pucp.softpac.model.UsuarioPaisAccesoDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
-
 import pe.edu.pucp.softpac.daoImpl.exception.DAODetalleException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -255,7 +254,6 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
         }
     }
 
-    //NUEVO: Implementacion para obtener por nombre.
     @Override
     public UsuariosDTO obtenerPorNombreDeUsuario(String nombreDeUsuario) {
         this.usuario = new UsuariosDTO();
@@ -264,65 +262,27 @@ public class UsuariosDAOImpl extends DAOImplBase implements UsuariosDAO {
         return this.usuario;
     }
 
-    //SQL:
     @Override
     protected String generarSQLCustom2() {
-        //SQL PARA SOLO OBTENER POR EL NOMBRE.
-//        return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION" +
-//                " FROM PA_USUARIOS u " +
-//                "  WHERE u.NOMBRE_DE_USUARIO = ?";
         return "SELECT u.USUARIO_ID, u.CORREO_ELECTRONICO, u.NOMBRE_DE_USUARIO, u.NOMBRE, u.APELLIDOS, u.ACTIVO, u.PASSWORD_HASH, u.SUPERUSUARIO, u.FECHA_ELIMINACION, u.USUARIO_ELIMINACION,"
                 + " p.PAIS_ID, p.NOMBRE, p.CODIGO_ISO, p.CODIGO_TELEFONICO, upa.ACCESO"
                 + " FROM PA_USUARIOS u LEFT JOIN PA_USUARIO_PAIS_ACCESO upa ON u.USUARIO_ID = upa.USUARIO_ID"
                 + " LEFT JOIN PA_PAISES p ON p.PAIS_ID = upa.PAIS_ID  WHERE u.NOMBRE_DE_USUARIO = ?";
     }
 
-    //Valores en el statement.
     @Override
     protected void incluirValorDeParametrosCustom2() throws SQLException {
         this.statement.setString(1, this.usuario.getNombre_de_usuario());
     }
 
-    //Para recuperar el SELECT:
     @Override
     protected void extraerResultSetCustom2() throws SQLException {
         this.extraerResultSetParaObtenerPorId();
-//          usuario = null;
-//          usuario = new UsuariosDTO();
-//          Boolean datosusuario = false;
-//          while(this.resultSet.next()){
-//            if(!datosusuario){
-//                usuario.setUsuario_id(this.resultSet.getInt("USUARIO_ID"));
-//                usuario.setCorreo_electronico(this.resultSet.getString("CORREO_ELECTRONICO"));
-//                usuario.setNombre_de_usuario(this.resultSet.getString("NOMBRE_DE_USUARIO"));
-//                usuario.setNombre(this.resultSet.getString("NOMBRE"));
-//                usuario.setApellidos(this.resultSet.getString("APELLIDOS"));
-//                usuario.setActivo(this.resultSet.getString("ACTIVO").equals("S"));
-//                usuario.setPassword_hash(this.resultSet.getString("PASSWORD_HASH"));
-//                usuario.setSuperusuario(this.resultSet.getString("SUPERUSUARIO").equals("S"));
-//                usuario.setFecha_eliminacion(this.resultSet.getTimestamp("FECHA_ELIMINACION"));
-//                UsuariosDTO usuarioEliminacion = new UsuariosDTO();
-//                usuarioEliminacion.setUsuario_id(this.resultSet.getInt("USUARIO_ELIMINACION"));
-//                usuario.setUsuario_eliminacion(usuarioEliminacion);
-//                datosusuario = true;
-//            }
-//            PaisesDTO pais = new PaisesDTO();
-//            pais.setPais_id(this.resultSet.getInt("PAIS_ID"));
-//            pais.setNombre(this.resultSet.getString("NOMBRE"));
-//            pais.setCodigo_iso(this.resultSet.getString("CODIGO_ISO"));
-//            pais.setCodigo_telefonico(this.resultSet.getString("CODIGO_TELEFONICO"));
-//            UsuarioPaisAccesoDTO acceso = new UsuarioPaisAccesoDTO();
-//            acceso.setAcceso(this.resultSet.getString("ACCESO").equals("S"));
-//            acceso.setPais(pais);
-//            usuario.addUsuario_pais(acceso);
-//          }
-    }
 
-    //////////////////////////////////////////////////////////////////////////
+    }
     
     @Override
     protected String generarSQLParaEliminacionLogica() {
-        // UPDATE PA_USUARIOS SET ACTIVO=?, FECHA_ELIMINACION=?, USUARIO_ELIMINACION=? WHERE USUARIO_ID=?
         return "UPDATE PA_USUARIOS SET ACTIVO='N', FECHA_ELIMINACION=?, USUARIO_ELIMINACION=? WHERE USUARIO_ID=?";
     }
 }

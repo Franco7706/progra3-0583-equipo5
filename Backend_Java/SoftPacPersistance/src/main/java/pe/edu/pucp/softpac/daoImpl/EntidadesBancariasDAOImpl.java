@@ -3,7 +3,6 @@ package pe.edu.pucp.softpac.daoImpl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import pe.edu.pucp.softpac.dao.EntidadesBancariasDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.model.EntidadesBancariasDTO;

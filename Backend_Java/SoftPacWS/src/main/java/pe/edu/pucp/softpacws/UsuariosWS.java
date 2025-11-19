@@ -42,14 +42,12 @@ public class UsuariosWS {
         return usuariosBO.obtenerPorId(usuario_id);
     }
 
-    //                     CAMBIOS
     @WebMethod(operationName = "insertarUsuario")
     public Integer insertarUsuario(@WebParam(name = "nuevoUsuario") UsuariosDTO nuevoUsuario,
             @WebParam(name = "usuarioActual") UsuariosDTO usuarioActual) {
         return usuariosBO.insertarUsuario(nuevoUsuario, usuarioActual);
     }
 
-    //                     CAMBIOS
     @WebMethod(operationName = "modificarAccesoUsuario")
     public Integer modificarAccesoUsuario(
             @WebParam(name = "usuarioId") int usuarioId,
@@ -62,7 +60,6 @@ public class UsuariosWS {
                 usuarioActual, nuevaContrasenha);
     }
 
-    //                     CAMBIOS
     @WebMethod(operationName = "eliminarUsuario")
     public Integer eliminarUsuario(
             @WebParam(name = "usuario") UsuariosDTO usuario,

@@ -6,10 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import pe.edu.pucp.softpac.db.util.Cifrado;
 
 public class DBManagerTest {
 
     public DBManagerTest() {
+    }
+    
+    @org.junit.jupiter.api.Test
+    public void testCifrado() {
+        System.out.println("Cifrado");
+        String cifrado = Cifrado.cifrarMD5("contra");
+        System.out.println(cifrado);
     }
 
     @org.junit.jupiter.api.Test

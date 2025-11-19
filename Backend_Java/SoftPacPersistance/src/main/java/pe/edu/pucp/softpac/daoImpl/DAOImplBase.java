@@ -5,7 +5,6 @@ import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.daoImpl.util.Tipo_Operacion;
 import pe.edu.pucp.softpac.daoImpl.util.Tipo_Query;
 import pe.edu.pucp.softpac.db.DBManager;
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;

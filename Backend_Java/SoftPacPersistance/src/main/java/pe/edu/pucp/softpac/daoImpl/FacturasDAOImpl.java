@@ -181,42 +181,6 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
         }
     }        
 
-//    @Override
-//    protected void extraerResultSetParaListarTodos() throws SQLException {
-//        facturas = new ArrayList<>();
-//        MonedasDTO moneda = null;
-//        AcreedoresDTO acreedor = null;
-//        while (this.resultSet.next()) {
-//            FacturasDTO f = new FacturasDTO();
-//            f.setFactura_id(this.resultSet.getInt(1));
-//            f.setNumero_factura(this.resultSet.getString(2));
-//            f.setFecha_emision(this.resultSet.getTimestamp(3));
-//            f.setFecha_recepcion(this.resultSet.getTimestamp(4));
-//            f.setFecha_limite_pago(this.resultSet.getTimestamp(5));
-//            f.setEstado(this.resultSet.getString(6));
-//            f.setMonto_total(this.resultSet.getBigDecimal(7));
-//            f.setMonto_igv(this.resultSet.getBigDecimal(8));
-//            f.setMonto_restante(this.resultSet.getBigDecimal(9));
-//            f.setRegimen_fiscal(this.resultSet.getString(10));
-//            f.setTasa_iva(this.resultSet.getBigDecimal(11));
-//            f.setOtros_tributos(this.resultSet.getBigDecimal(12));
-//            moneda = new MonedasDTO();
-//            moneda.setMoneda_id(this.resultSet.getInt(13));
-//            acreedor = new AcreedoresDTO();
-//            acreedor.setAcreedor_id(this.resultSet.getInt(14));
-//            f.setMoneda(moneda);
-//            f.setAcreedor(acreedor);
-//            facturas.add(f);
-//        }
-//    }
-
-//    @Override
-//    protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
-//        this.statement.setTimestamp(1,new Timestamp(this.factura.getFecha_eliminacion().getTime()));
-//        this.statement.setInt(2,this.factura.getUsuario_eliminacion().getUsuario_id());
-//        this.statement.setInt(3,this.factura.getFactura_id());
-//    }
-
     @Override
     public Integer insertar(FacturasDTO factura) {
         this.factura = factura;

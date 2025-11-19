@@ -3,7 +3,6 @@ package pe.edu.pucp.softpac.daoImpl;
 import pe.edu.pucp.softpac.dao.DetallesPropuestaDAO;
 import pe.edu.pucp.softpac.daoImpl.util.Columna;
 import pe.edu.pucp.softpac.model.*;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;

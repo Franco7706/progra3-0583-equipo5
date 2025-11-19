@@ -91,7 +91,7 @@ public class UsuariosBO {
         return usuario;
     }
 
-    //                CAMBIOS
+
     public Integer insertarUsuario(UsuariosDTO nuevoUsuario, UsuariosDTO usuarioActual) {
         //1RO INSERTAR USUARIO
         if (nuevoUsuario.getPassword_hash() == null) {
@@ -111,7 +111,7 @@ public class UsuariosBO {
             acceso.setUsuario(nuevoUsuario);
         }
         Integer resultado = usuariosDAO.insertar(nuevoUsuario);
-        //2DO: 
+        //2DO: CORREO
         ArrayList<UsuarioPaisAccesoDTO> accesosConcedidos = new ArrayList<>();
         for(UsuarioPaisAccesoDTO acceso : nuevoUsuario.getUsuario_pais()){
             if(acceso.getAcceso()==Boolean.TRUE) accesosConcedidos.add(acceso);
@@ -126,7 +126,6 @@ public class UsuariosBO {
 
     }
 
-        //                CAMBIOS
     public Integer modificarAccesoUsuario(int usuarioId, String nuevoNombreUsuario,
             Boolean activo, List<Integer> paisesIds, UsuariosDTO usuarioActual,
             String nuevaContrasenha) {
@@ -227,7 +226,6 @@ public class UsuariosBO {
         return usuariosDAO.modificar(usuarioExistente);
     }
 
-        //                CAMBIOS
     public Integer eliminarUsuario(UsuariosDTO usuario, UsuariosDTO usuarioActual) {
 
         usuario.setFecha_eliminacion(new Date());
@@ -244,7 +242,6 @@ public class UsuariosBO {
 
     }
     
-        //                CAMBIOS
     private String obtenerNombrePais(Integer paisId, List<PaisesDTO> paises){
         String nombrePais="Pais Desconocido";
         for(PaisesDTO pais : paises){

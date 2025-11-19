@@ -25,11 +25,9 @@ pe\edu\pucp\softpac\daoImpl\FacturasDAOImpl.class
 pe\edu\pucp\softpac\daoImpl\util\ReporteFacturasPendientesParametros.class
 pe\edu\pucp\softpac\daoImpl\ReporteFactPendDAOImpl.class
 pe\edu\pucp\softpac\dao\MonedasDAO.class
-pe\edu\pucp\softpac\daoImpl\TiposDeCambioDAOImpl.class
 pe\edu\pucp\softpac\daoImpl\util\Tipo_Query.class
 pe\edu\pucp\softpac\daoImpl\util\Tipo_Operacion.class
 pe\edu\pucp\softpac\dao\CuentasAcreedorDAO.class
-pe\edu\pucp\softpac\dao\TiposDeCambioDAO.class
 pe\edu\pucp\softpac\daoImpl\AcreedoresDAOImpl.class
 pe\edu\pucp\softpac\dao\KardexCuentasPropiasDAO.class
 pe\edu\pucp\softpac\daoImpl\DAOImplBase.class

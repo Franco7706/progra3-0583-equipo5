@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pe.edu.pucp.softpac.bo;
 
 import java.time.LocalDateTime;
@@ -13,10 +9,6 @@ import pe.edu.pucp.softpac.daoImpl.ReportePropPagoDAOImpl;
 import pe.edu.pucp.softpac.model.PropuestasPagoDTO;
 import pe.edu.pucp.softpac.model.ReportePropPagoDTO;
 
-/**
- *
- * @author Usuario
- */
 public class ReportePropPagoBO {
     private ReportePropPagoDAO reportePropPagoDAO;
     

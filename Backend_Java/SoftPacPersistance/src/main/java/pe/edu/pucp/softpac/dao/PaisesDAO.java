@@ -1,7 +1,6 @@
 package pe.edu.pucp.softpac.dao;
 
 import pe.edu.pucp.softpac.model.PaisesDTO;
-
 import java.util.ArrayList;
 import java.util.List;
 

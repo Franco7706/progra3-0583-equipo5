@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pe.edu.pucp.softpac.bo;
 
 import java.math.BigDecimal;
@@ -15,10 +11,7 @@ import pe.edu.pucp.softpac.model.CuentasPropiasDTO;
 import pe.edu.pucp.softpac.model.KardexCuentasPropiasDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
-/**
- *
- * @author Usuario
- */
+
 public class KardexCuentasPropiasBO {
     private KardexCuentasPropiasDAO kardexCuentasPropiasDAO;
 

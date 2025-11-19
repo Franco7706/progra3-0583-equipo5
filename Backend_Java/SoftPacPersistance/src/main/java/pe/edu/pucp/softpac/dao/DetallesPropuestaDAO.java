@@ -1,7 +1,6 @@
 package pe.edu.pucp.softpac.dao;
 
 import pe.edu.pucp.softpac.model.DetallesPropuestaDTO;
-import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 public interface DetallesPropuestaDAO {
     public Integer insertar(DetallesPropuestaDTO detallePropuesta);
