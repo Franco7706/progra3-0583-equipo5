@@ -219,7 +219,7 @@ public class EmailUtil {
                 + "Contraseña: %s\n"
                 + "Estado de la Cuenta: %s\n\n"
                 + "%s\n\n"
-                + "Países Asignados:\n"
+                + "Países Nuevos Asignados:\n"
                 + "%s\n\n"
                 + "Países Desasignados:\n"
                 + "%s\n"

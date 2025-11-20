@@ -5,8 +5,6 @@ import pe.edu.pucp.softpac.model.DetallesPropuestaDTO;
 public interface DetallesPropuestaDAO {
     public Integer insertar(DetallesPropuestaDTO detallePropuesta);
 
-    public DetallesPropuestaDTO obtenerPorId(Integer detallePropuestaId);
-
     public Integer modificar(DetallesPropuestaDTO detallePropuesta);
 
     public Integer eliminarPorPropuesta(Integer propuestaId);

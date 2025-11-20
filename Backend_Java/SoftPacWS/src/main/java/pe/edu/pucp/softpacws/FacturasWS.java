@@ -29,14 +29,15 @@ public class FacturasWS {
         timer = new Timer(true); // true = daemon thread
         
         // Ejecutar cada 12 horas (en milisegundos)
-        long seisHoras = 12 * 60 * 60 * 1000;
+        long doceHoras = 12 * 60 * 60 * 1000;
+        long diezMin = 10 * 60 * 1000; // 10 minutos
         
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 facturasBO.vencerFacturas();
             }
-        }, 0, seisHoras); // 0 = empezar inmediatamente
+        }, diezMin, doceHoras); // 10 = empezar a los 10 minutos
         
     }
     

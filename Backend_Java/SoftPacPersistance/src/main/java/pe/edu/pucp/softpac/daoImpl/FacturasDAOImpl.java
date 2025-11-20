@@ -240,7 +240,7 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     protected void incluirValorDeParametrosParaEliminacionLogica() throws SQLException {
         this.statement.setTimestamp(1,new Timestamp(this.factura.getFecha_eliminacion().getTime()));
         this.statement.setInt(2,this.factura.getUsuario_eliminacion().getUsuario_id());
-        this.statement.setString(3, "Eliminado");
+        this.statement.setString(3, "Eliminada");
         this.statement.setInt(4,this.factura.getFactura_id());
     }
 
