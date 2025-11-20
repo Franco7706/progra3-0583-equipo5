@@ -85,7 +85,7 @@ GO
 CREATE TABLE dbo.PA_ACREEDORES (
     ACREEDOR_ID        INT           IDENTITY(1,1) NOT NULL,
     RAZON_SOCIAL       VARCHAR(200)  NOT NULL,
-    RUC                CHAR(11)      NOT NULL,
+    RUC                CHAR(13)      NOT NULL,
     DIRECCION_FISCAL   VARCHAR(200)  NOT NULL,
     CONDICION          VARCHAR(100)  NULL,
     PLAZO_DE_PAGO      INT           NOT NULL,
