@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/3" 
+                  Version="3.3" 
+                  Serie="B" 
+                  Folio="78017" 
+                  Fecha="2025-11-26T09:15:00" 
+                  Total="12300.00" 
+                  Moneda="MXN">
+    
+    <cfdi:Receptor Rfc="TAV150404J01" 
+                   Nombre="Tecnología Avanzada SA de CV" />
+    
+    <cfdi:Impuestos TotalImpuestosTrasladados="1696.55">
+        <cfdi:Traslados>
+            <cfdi:Traslado Impuesto="002" 
+                          TipoFactor="Tasa" 
+                          TasaOCuota="0.160000" 
+                          Importe="1696.55"/>
+        </cfdi:Traslados>
+    </cfdi:Impuestos>
+    
+</cfdi:Comprobante>

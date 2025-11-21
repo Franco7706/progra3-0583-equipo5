@@ -1,0 +1,3 @@
+--Superusuario--
+Usuario: DiegoA
+Contraseña: DiegoA
