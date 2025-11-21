@@ -112,7 +112,7 @@ INSERT INTO PA_USUARIOS
      NOMBRE, APELLIDOS, ACTIVO, PASSWORD_HASH, SUPERUSUARIO,
      FECHA_ELIMINACION, USUARIO_ELIMINACION)
 VALUES
-    ('diego@hotmail.com', 'DiegoA',
+    ('a20233483@pucp.edu.pe', 'DiegoA',
      'Diego', 'Ayala de la Cruz', 'S',
      '$2a$10$Y2Rbizz7ddp.Fd0RP7pmN.aktufJnff/iMFs2AdAXD9tfc3bdAZgC',
      'S', NULL, NULL);
