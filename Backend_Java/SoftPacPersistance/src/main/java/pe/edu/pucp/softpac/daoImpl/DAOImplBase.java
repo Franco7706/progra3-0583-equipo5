@@ -696,7 +696,6 @@ public abstract class DAOImplBase {
         this.conexion = DBManager.getInstance().getConnection();
     }
 
-    //NUEVO/////////////////////////////////////////////////////////////////////
     public List listarTodos() {
         String sql = null;
         Consumer incluirValorDeParametros = null;

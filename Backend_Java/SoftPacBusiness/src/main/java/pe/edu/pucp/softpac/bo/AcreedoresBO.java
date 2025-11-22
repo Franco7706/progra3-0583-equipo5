@@ -91,7 +91,6 @@ public class AcreedoresBO {
             }
         }
 
-        // opcional: ordenar por nombre o fecha de creación
         filtrados.sort(Comparator.comparing(AcreedoresDTO::getRazon_social, String.CASE_INSENSITIVE_ORDER));
         return filtrados;
     }

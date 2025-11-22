@@ -21,7 +21,6 @@ public class CuentasPropiasBO {
             String numero_cuenta, String cci, String activa, Integer entidad_bancaria_id,
             Integer moneda_id){
         
-        // Validaciones
         if (saldo_disponible == null || saldo_disponible.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("El saldo disponible no puede ser nulo o negativo.");
         }
@@ -39,18 +38,16 @@ public class CuentasPropiasBO {
         }
         
         CuentasPropiasDTO cuentasPropiasDTO = new CuentasPropiasDTO();
-        cuentasPropiasDTO.setSaldo_disponible(saldo_disponible); // CORREGIDO: Faltaba esta línea
+        cuentasPropiasDTO.setSaldo_disponible(saldo_disponible);
         cuentasPropiasDTO.setTipo_cuenta(tipo_de_cuenta);
         cuentasPropiasDTO.setNumero_cuenta(numero_cuenta);
         cuentasPropiasDTO.setCci(cci);
         cuentasPropiasDTO.setActiva(activa.equals("S") ? Boolean.TRUE : Boolean.FALSE);
         
-        // Configurar entidad bancaria
         EntidadesBancariasDTO entidadBancaria = new EntidadesBancariasDTO();
         entidadBancaria.setEntidad_bancaria_id(entidad_bancaria_id);
-        cuentasPropiasDTO.setEntidad_bancaria(entidadBancaria); // CORREGIDO: Era setCuenta_bancaria_id
+        cuentasPropiasDTO.setEntidad_bancaria(entidadBancaria);
         
-        // Configurar moneda
         MonedasDTO moneda = new MonedasDTO();
         moneda.setMoneda_id(moneda_id);
         cuentasPropiasDTO.setMoneda(moneda);
@@ -67,7 +64,6 @@ public class CuentasPropiasBO {
             String tipo_de_cuenta, String numero_cuenta, String cci, String activa, 
             Integer entidad_bancaria_id, Integer moneda_id){
         
-        // Validaciones
         if (cuentas_propias_id == null || cuentas_propias_id <= 0) {
             throw new IllegalArgumentException("El ID de la cuenta es obligatorio.");
         }
@@ -83,18 +79,16 @@ public class CuentasPropiasBO {
         
         CuentasPropiasDTO cuentasPropiasDTO = new CuentasPropiasDTO();
         cuentasPropiasDTO.setCuenta_bancaria_id(cuentas_propias_id);
-        cuentasPropiasDTO.setSaldo_disponible(saldo_disponible); // CORREGIDO: Faltaba esta línea
+        cuentasPropiasDTO.setSaldo_disponible(saldo_disponible);
         cuentasPropiasDTO.setTipo_cuenta(tipo_de_cuenta);
         cuentasPropiasDTO.setNumero_cuenta(numero_cuenta);
         cuentasPropiasDTO.setCci(cci);
         cuentasPropiasDTO.setActiva(activa.equals("S") ? Boolean.TRUE : Boolean.FALSE);
         
-        // Configurar entidad bancaria
         EntidadesBancariasDTO entidadBancaria = new EntidadesBancariasDTO();
         entidadBancaria.setEntidad_bancaria_id(entidad_bancaria_id);
-        cuentasPropiasDTO.setEntidad_bancaria(entidadBancaria); // CORREGIDO: Era setCuenta_bancaria_id
+        cuentasPropiasDTO.setEntidad_bancaria(entidadBancaria);
         
-        // Configurar moneda
         MonedasDTO moneda = new MonedasDTO();
         moneda.setMoneda_id(moneda_id);
         cuentasPropiasDTO.setMoneda(moneda);
@@ -161,7 +155,6 @@ public class CuentasPropiasBO {
         return this.cuentasPropiasDAO.obtenerPorId(cuentas_propias_id);
     }
     
-    // Método adicional para validar saldo suficiente (RF011)
     public boolean tieneSaldoSuficiente(Integer cuentas_propias_id, BigDecimal montoRequerido){
         CuentasPropiasDTO cuenta = obtenerPorId(cuentas_propias_id);
         if (cuenta == null || cuenta.getSaldo_disponible() == null) {

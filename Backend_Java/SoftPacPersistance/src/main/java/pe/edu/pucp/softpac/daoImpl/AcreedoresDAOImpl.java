@@ -75,7 +75,7 @@ public class AcreedoresDAOImpl extends DAOImplBase implements AcreedoresDAO {
 
     @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException {
-        PaisesDTO pais=null;
+        PaisesDTO pais;
         this.acreedor=null;
         if(this.resultSet.next()){
             this.acreedor=new AcreedoresDTO();
@@ -97,22 +97,22 @@ public class AcreedoresDAOImpl extends DAOImplBase implements AcreedoresDAO {
 
     @Override
     protected void extraerResultSetParaListarTodos() throws SQLException {
-        PaisesDTO pais=null;
-        AcreedoresDTO a=null;
+        PaisesDTO pais;
+        AcreedoresDTO acreedorActual;
         this.acreedores=new ArrayList<>();
         while(this.resultSet.next()){
-            a=new AcreedoresDTO();
-            a.setAcreedor_id(this.resultSet.getInt(1));
-            a.setRazon_social(this.resultSet.getString(2));
-            a.setRuc(this.resultSet.getString(3));
-            a.setDireccion_fiscal(this.resultSet.getString(4));
-            a.setCondicion(this.resultSet.getString(5));
-            a.setPlazo_de_pago(this.resultSet.getInt(6));
-            a.setActivo(this.resultSet.getString(7).equalsIgnoreCase("S"));
+            acreedorActual=new AcreedoresDTO();
+            acreedorActual.setAcreedor_id(this.resultSet.getInt(1));
+            acreedorActual.setRazon_social(this.resultSet.getString(2));
+            acreedorActual.setRuc(this.resultSet.getString(3));
+            acreedorActual.setDireccion_fiscal(this.resultSet.getString(4));
+            acreedorActual.setCondicion(this.resultSet.getString(5));
+            acreedorActual.setPlazo_de_pago(this.resultSet.getInt(6));
+            acreedorActual.setActivo(this.resultSet.getString(7).equalsIgnoreCase("S"));
             pais=new PaisesDTO();
             pais.setPais_id(this.resultSet.getInt(8));
-            a.setPais(pais);
-            acreedores.add(a);
+            acreedorActual.setPais(pais);
+            acreedores.add(acreedorActual);
         }
     }
 

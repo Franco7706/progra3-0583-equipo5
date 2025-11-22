@@ -93,8 +93,8 @@ public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropias
     }
     
     private void llenarCuentaPropia() throws SQLException{
-        MonedasDTO moneda = null;
-        EntidadesBancariasDTO entidadBancaria = null;
+        MonedasDTO moneda;
+        EntidadesBancariasDTO entidadBancaria;
         this.cuentaPropia = new CuentasPropiasDTO();
         this.cuentaPropia.setCuenta_bancaria_id(this.resultSet.getInt(1));
         this.cuentaPropia.setSaldo_disponible(this.resultSet.getBigDecimal(2));
@@ -134,8 +134,8 @@ public class CuentasPropiasDAOImpl extends DAOImplBase implements CuentasPropias
     @Override
     protected void extraerResultSetParaListarTodos() throws SQLException {
         cuentasPropias = new ArrayList<>();
-        MonedasDTO moneda = null;
-        EntidadesBancariasDTO entidadBancaria = null;
+        MonedasDTO moneda;
+        EntidadesBancariasDTO entidadBancaria;
         while (this.resultSet.next()) {
             CuentasPropiasDTO cuenta = new CuentasPropiasDTO();
             cuenta.setCuenta_bancaria_id(this.resultSet.getInt(1));

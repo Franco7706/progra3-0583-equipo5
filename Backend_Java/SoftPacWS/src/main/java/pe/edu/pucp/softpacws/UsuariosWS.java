@@ -6,7 +6,6 @@ import jakarta.jws.WebParam;
 import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.softpac.bo.UsuariosBO;
-import pe.edu.pucp.softpac.model.UsuarioPaisAccesoDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 @WebService(serviceName = "UsuariosWS")

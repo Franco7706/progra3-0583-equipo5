@@ -3,11 +3,8 @@ package pe.edu.pucp.softpacws;
 import jakarta.jws.WebService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
-import jakarta.xml.ws.WebServiceException;
 import java.util.ArrayList;
-import java.util.List;
 import pe.edu.pucp.softpac.bo.PaisesBO;
-import pe.edu.pucp.softpac.model.MonedasDTO;
 import pe.edu.pucp.softpac.model.PaisesDTO;
 
 

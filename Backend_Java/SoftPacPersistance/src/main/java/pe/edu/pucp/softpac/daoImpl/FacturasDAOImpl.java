@@ -129,10 +129,10 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
 
     @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException {
-        DetallesFacturaDTO detalleFactura = null;
-        MonedasDTO moneda = null;
-        AcreedoresDTO acreedor = null;
-        PaisesDTO pais = null;
+        DetallesFacturaDTO detalleFactura;
+        MonedasDTO moneda;
+        AcreedoresDTO acreedor;
+        PaisesDTO pais;
         this.factura = null;
         int i=0;
         while (this.resultSet.next()) {
@@ -294,9 +294,9 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     @Override
     protected void extraerResultSetParaListarTodos() throws SQLException {
         facturas = new ArrayList<>();
-        MonedasDTO moneda = null;
-        AcreedoresDTO acreedor = null;
-        PaisesDTO pais = null;
+        MonedasDTO moneda;
+        AcreedoresDTO acreedor;
+        PaisesDTO pais;
         while (this.resultSet.next()) {
             FacturasDTO f = new FacturasDTO();
             f.setFactura_id(this.resultSet.getInt(1));
@@ -345,9 +345,9 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     @Override
     protected void extraerResultSetCustom1() throws SQLException {
         facturas = new ArrayList<>();
-        MonedasDTO moneda = null;
-        AcreedoresDTO acreedor = null;
-        PaisesDTO pais = null;
+        MonedasDTO moneda;
+        AcreedoresDTO acreedor;
+        PaisesDTO pais;
         while (this.resultSet.next()) {
             FacturasDTO f = new FacturasDTO();
             f.setFactura_id(this.resultSet.getInt(1));

@@ -84,7 +84,7 @@ public class EntidadesBancariasDAOImpl extends DAOImplBase implements EntidadesB
     @Override
     protected void extraerResultSetParaListarTodos() throws SQLException {
         entidadesBancarias = new ArrayList<>();
-        PaisesDTO pais = null;
+        PaisesDTO pais;
         while(this.resultSet.next()){
             EntidadesBancariasDTO e=new EntidadesBancariasDTO();
             e.setEntidad_bancaria_id(this.resultSet.getInt(1));

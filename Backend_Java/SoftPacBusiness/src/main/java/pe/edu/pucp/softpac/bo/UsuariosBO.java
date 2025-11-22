@@ -173,13 +173,10 @@ public class UsuariosBO {
             String hashedPassword = PasswordUtil.hashPassword(nuevaContrasenha);
             usuario.setPassword_hash(hashedPassword);
         }
-                
-        //        FIN ACTUALIZACION
-        
+                        
         Integer resultado = usuariosDAO.modificar(usuario);
         
-        if(resultado > 0) {
-            // --- FILTRAR SOLO LOS CAMBIOS DE ACCESO ---
+        if(resultado > 0) { // Enviar correo de accesos cambiados
             List<UsuarioPaisAccesoDTO> soloAccesosCambiados = new ArrayList<>();
             
             for (UsuarioPaisAccesoDTO upa : usuario.getUsuario_pais()) {
@@ -187,13 +184,11 @@ public class UsuariosBO {
                 Boolean accesoAnterior = accesosAnteriores.getOrDefault(paisId, false);
                 Boolean accesoNuevo = upa.getAcceso() != null ? upa.getAcceso() : false;
                 
-                // Solo incluir si hubo un CAMBIO en el acceso
                 if (!accesoAnterior.equals(accesoNuevo)) {
                     soloAccesosCambiados.add(upa);
                 }
             }
             
-            // Reemplazar temporalmente la lista completa con solo los cambios
             usuario.setUsuario_pais((ArrayList<UsuarioPaisAccesoDTO>) soloAccesosCambiados);
             usuario.setPassword_hash(guardaContrasenhaOriginal);
             

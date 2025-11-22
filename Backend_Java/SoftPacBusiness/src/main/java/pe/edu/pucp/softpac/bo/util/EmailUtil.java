@@ -2,8 +2,6 @@ package pe.edu.pucp.softpac.bo.util;
 
 import java.util.stream.Collectors;
 import pe.edu.pucp.softpac.email.model.EmailConCCDTO;
-import pe.edu.pucp.softpac.email.model.EmailDTO;
-import pe.edu.pucp.softpac.email.model.RespuestaDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 public class EmailUtil {
@@ -32,30 +30,14 @@ public class EmailUtil {
                 asunto = this.crearAsuntoModificar();
                 contenido = this.armarCorreoModificar(usuario);
                 break;
-            case TipoOperacionUsuario.ELIMINAR:
-                asunto = this.crearAsuntoEliminar();
-                contenido = this.armarCorreoEliminar(usuario);
-                break;
-
         }
         emailDTO.setAsunto(asunto);
         emailDTO.setContenido(contenido);
 
         emailCliente.enviarCorreoConCCAsync(emailDTO);
         return "SUCCESS";
-        //Envio coreo
-//        RespuestaDTO respuesta = emailCliente.enviarCorreoConCC(emailDTO); 
-//        
-//        if (respuesta.isSuccess()) {
-//            return "SUCCESS: " + respuesta.getMensaje();
-//        } else {
-//            return "ERROR: " + respuesta.getMensaje();
-//        }
     }
 
-    // ===============================================
-    // MÉTODOS DE CONTENIDO Y ASUNTO
-    // ===============================================
     /**
      * Genera el asunto formal del correo de notificación de cuenta.
      */
@@ -66,13 +48,9 @@ public class EmailUtil {
     /**
      * Genera el contenido del correo en formato HTML, incluyendo las
      * credenciales.
-     *
-     * @param usuario El DTO del nuevo usuario, con la contraseña original.
-     * @return String con el contenido HTML.
      */
     private String armarCorreoInsertar(UsuariosDTO usuario) {
 
-        // --- 1. SANITIZACIÓN DE ARGUMENTOS ---
         // Asegurar que nombre y apellidos no sean null antes de concatenar
         String nombre = (usuario.getNombre() != null) ? usuario.getNombre() : "";
         String apellidos = (usuario.getApellidos() != null) ? usuario.getApellidos() : "";
@@ -102,7 +80,6 @@ public class EmailUtil {
                     .collect(Collectors.joining(", "));
         }
 
-        // --- 2. GENERACIÓN DEL CONTENIDO DE TEXTO PLANO ---
         // Usamos String.format para construir el cuerpo del correo en texto plano
         String contenidoPlano = String.format(
                 "Estimado(a) %s,\n\n"
@@ -135,9 +112,6 @@ public class EmailUtil {
         return contenidoPlano;
     }
 
-    // ===============================================
-// MÉTODOS DE MODIFICACIÓN DE ACCESO (MODIFICARACCESO)
-// ===============================================
     /**
      * Genera el asunto formal del correo de notificación de modificación de
      * acceso.
@@ -150,11 +124,8 @@ public class EmailUtil {
      * Genera el contenido del correo de texto plano para la modificación de
      * acceso.
      *
-     * @param usuario El DTO del usuario cuyos accesos fueron modificados.
-     * @return String con el contenido de texto plano.
      */
     private String armarCorreoModificar(UsuariosDTO usuario) {
-        // --- 1. SANITIZACIÓN DE ARGUMENTOS ---
         // Asegurar que nombre y apellidos no sean null antes de concatenar
         String nombre = (usuario.getNombre() != null) ? usuario.getNombre() : "";
         String apellidos = (usuario.getApellidos() != null) ? usuario.getApellidos() : "";
@@ -173,7 +144,6 @@ public class EmailUtil {
                 ? "Su cuenta está actualmente activa."
                 : "Su cuenta ha sido **DESACTIVADA**. Si cree que es un error, contacte a su superusuario.";
 
-        // --- LÓGICA DE PAÍSES: SEPARAR POR ESTADO DE ACCESO ---
         String paisesAsignados = "";
         String paisesDesasignados = "";
 
@@ -208,7 +178,6 @@ public class EmailUtil {
             paisesDesasignados = "Ninguno";
         }
 
-        // --- 2. GENERACIÓN DEL CONTENIDO DE TEXTO PLANO ---
         String contenidoPlano = String.format(
                 "Estimado(a) %s,\n\n"
                 + "Le informamos que su perfil de usuario en el Sistema de Pago a Acreedores ha sido modificado.\n\n"
@@ -239,69 +208,9 @@ public class EmailUtil {
         return contenidoPlano;
     }
 
-// ===============================================
-// MÉTODOS DE ELIMINACIÓN LÓGICA (ELIMINAR)
-// ===============================================
-    /**
-     * Genera el asunto formal del correo de notificación de eliminación de
-     * cuenta.
-     */
-    private String crearAsuntoEliminar() {
-        return "AVISO IMPORTANTE: Su Cuenta de Acceso ha sido Eliminada (Desactivada)";
-    }
-
-    /**
-     * Genera el contenido del correo de texto plano para la eliminación lógica.
-     *
-     * @param usuario El DTO del usuario eliminado (lógicamente).
-     * @return String con el contenido de texto plano.
-     */
-    private String armarCorreoEliminar(UsuariosDTO usuario) {
-
-        // --- 1. SANITIZACIÓN DE ARGUMENTOS ---
-        String nombre = (usuario.getNombre() != null) ? usuario.getNombre() : "";
-        String apellidos = (usuario.getApellidos() != null) ? usuario.getApellidos() : "";
-        String nombreCompleto = (nombre + " " + apellidos).trim();
-        if (nombreCompleto.isEmpty()) {
-            nombreCompleto = "Usuario";
-        }
-
-        // --- 2. GENERACIÓN DEL CONTENIDO DE TEXTO PLANO ---
-        String contenidoPlano = String.format(
-                "Estimado(a) %s,\n\n"
-                + "Le notificamos que su cuenta de usuario con el nombre '%s' en el Sistema de Pago a Acreedores ha sido **eliminada** del sistema por un superusuario.\n\n"
-                + "Esto significa que ya no podrá iniciar sesión en la aplicación.\n\n"
-                + "-------------------------------------------------------------\n"
-                + "Detalles de la Cuenta:\n"
-                + "Nombre de Usuario: %s\n"
-                + "Correo Electrónico: %s\n"
-                + "Estado: Eliminado (Inactivo)\n"
-                + "-------------------------------------------------------------\n\n"
-                + "Si tiene alguna pregunta o considera que esto es un error, por favor, póngase en contacto con el administrador de su empresa.\n\n"
-                + "Atentamente,\n"
-                + "El equipo de SoftPac.\n\n"
-                + "Este es un correo automático. Por favor, no responda a este mensaje.",
-                nombreCompleto,
-                usuario.getNombre_de_usuario() != null ? usuario.getNombre_de_usuario() : "N/A",
-                usuario.getNombre_de_usuario() != null ? usuario.getNombre_de_usuario() : "N/A",
-                usuario.getCorreo_electronico() != null ? usuario.getCorreo_electronico() : "N/A"
-        );
-
-        return contenidoPlano;
-    }
-
-    // ===============================================
-// NUEVO: MÉTODO PARA PROPUESTAS DE PAGO
-// ===============================================
     /**
      * Envía correo de notificación relacionado con propuestas de pago.
      *
-     * @param propuesta La propuesta afectada
-     * @param usuarioReceptor Usuario que recibirá el correo (creador de la
-     * propuesta)
-     * @param usuarioActual Usuario que realizó la acción (administrador)
-     * @param operacion Tipo de operación realizada
-     * @return Estado del envío
      */
     public String enviarCorreoPropuesta(pe.edu.pucp.softpac.model.PropuestasPagoDTO propuesta,
             UsuariosDTO usuarioReceptor,
@@ -332,9 +241,6 @@ public class EmailUtil {
         return "SUCCESS";
     }
 
-// ===============================================
-// MÉTODOS PARA RECHAZO DE PROPUESTA
-// ===============================================
     /**
      * Genera el asunto del correo de rechazo de propuesta.
      */
@@ -344,17 +250,11 @@ public class EmailUtil {
 
     /**
      * Genera el contenido del correo para rechazo de propuesta.
-     *
-     * @param propuesta La propuesta rechazada
-     * @param usuarioReceptor Usuario creador de la propuesta
-     * @param usuarioActual Usuario administrador que rechazó
-     * @return Contenido del correo en texto plano
      */
     private String armarCorreoRechazarPropuesta(pe.edu.pucp.softpac.model.PropuestasPagoDTO propuesta,
             UsuariosDTO usuarioReceptor,
             UsuariosDTO usuarioActual) {
 
-        // --- SANITIZACIÓN DE DATOS ---
         String nombreReceptor = (usuarioReceptor.getNombre() != null) ? usuarioReceptor.getNombre() : "";
         String apellidosReceptor = (usuarioReceptor.getApellidos() != null) ? usuarioReceptor.getApellidos() : "";
         String nombreCompletoReceptor = (nombreReceptor + " " + apellidosReceptor).trim();
@@ -390,7 +290,6 @@ public class EmailUtil {
 
         String fechaRechazo = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date());
 
-        // --- GENERACIÓN DEL CONTENIDO ---
         String contenidoPlano = String.format(
                 "Estimado(a) %s,\n\n"
                 + "Le informamos que su propuesta de pago ha sido RECHAZADA por el administrador del sistema.\n\n"

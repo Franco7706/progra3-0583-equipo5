@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import pe.edu.pucp.softpac.dao.CuentasAcreedorDAO;
 import pe.edu.pucp.softpac.dao.DetallesPropuestaDAO;
 import pe.edu.pucp.softpac.dao.PropuestasPagoDAO;
 import pe.edu.pucp.softpac.daoImpl.exception.DAODetalleException;
@@ -302,11 +301,11 @@ public class PropuestasPagoDAOImpl extends DAOImplBase implements PropuestasPago
 
     @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException {
-        DetallesPropuestaDTO detallePropuesta = null;
-        EntidadesBancariasDTO entidadBancaria = null;
-        PaisesDTO pais = null;
-        UsuariosDTO usuarioCreacion = null;
-        UsuariosDTO usuarioModificacion = null;
+        DetallesPropuestaDTO detallePropuesta;
+        EntidadesBancariasDTO entidadBancaria;
+        PaisesDTO pais;
+        UsuariosDTO usuarioCreacion;
+        UsuariosDTO usuarioModificacion;
         this.propuestaPago = null;
         int i = 0;
 

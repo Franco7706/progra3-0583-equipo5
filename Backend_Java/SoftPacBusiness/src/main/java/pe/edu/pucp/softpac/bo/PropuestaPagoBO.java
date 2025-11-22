@@ -59,10 +59,8 @@ public class PropuestaPagoBO {
             }
         }
 
-        //Ordenamos por las fechas más recientes
         propuestasUltimas.sort(Comparator.comparing(PropuestasPagoDTO::getFecha_hora_creacion).reversed());
 
-        // Limitar cantidad
         if (propuestasUltimas.size() > cantidad) {
             return new ArrayList<>(propuestasUltimas.subList(0, cantidad));
         }
@@ -190,10 +188,8 @@ public class PropuestaPagoBO {
         }
 
         // 3️ Agrupar los pagos por moneda
-        //var pagosPorMoneda = propuestaPagoParcial.getDetalles_propuesta().stream().collect(Collectors.groupingBy(d -> d.getFactura().getMoneda().getCodigo_iso()));
         Map<Integer, List<DetallesPropuestaDTO>> pagosPorMoneda = propuestaPagoParcial.getDetalles_propuesta().stream()
                 .collect(Collectors.groupingBy(
-                        // d => d.Factura.Moneda.CodigoIso
                         d -> d.getFactura().getMoneda().getMoneda_id()
                 ));
 
@@ -217,8 +213,7 @@ public class PropuestaPagoBO {
 
             for (DetallesPropuestaDTO pago : pagosOrdenados) {
 
-                // 4. Equivalente a: var cuenta = cuentasMoneda.FirstOrDefault(c => c.SaldoDisponible >= pago.MontoPago);
-                // Busca la primera cuenta que pueda cubrir el monto del pago
+                // 4. Busca la primera cuenta que pueda cubrir el monto del pago
                 CuentasPropiasDTO cuentaAsignada = cuentasMoneda.stream().filter(c -> c.getSaldo_disponible().compareTo(pago.getMonto_pago()) >= 0).findFirst().orElse(null);
 
                 // 5. Asignación y actualización del saldo
@@ -240,7 +235,6 @@ public class PropuestaPagoBO {
 
     public Integer confirmarEnvioPropuesta(int propuestaId, UsuariosDTO usuario) {
         FacturasDAO facturasDAO = new FacturasDAOImpl();
-        CuentasPropiasDAO cuentasPropiasDAO = new CuentasPropiasDAOImpl();
 
         class AgrupadoCuenta {
 
@@ -323,14 +317,6 @@ public class PropuestaPagoBO {
         return 1;
     }
 
-    /**
-     * Rechaza una propuesta cambiando su estado a "Pendiente" y envía
-     * notificación por correo.
-     *
-     * @param propuestaId ID de la propuesta a rechazar
-     * @param usuarioAdmin Usuario administrador que rechaza la propuesta
-     * @return 1 si fue exitoso, 0 si hubo error
-     */
     public Integer rechazarPropuesta(Integer propuestaId, UsuariosDTO usuarioAdmin) {
         try {
             // Obtener la propuesta

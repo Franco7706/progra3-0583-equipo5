@@ -1,12 +1,10 @@
 package pe.edu.pucp.softpac.bo;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import pe.edu.pucp.softpac.dao.ReportePropPagoDAO;
 import pe.edu.pucp.softpac.daoImpl.ReportePropPagoDAOImpl;
-import pe.edu.pucp.softpac.model.PropuestasPagoDTO;
 import pe.edu.pucp.softpac.model.ReportePropPagoDTO;
 
 public class ReportePropPagoBO {

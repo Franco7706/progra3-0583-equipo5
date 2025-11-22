@@ -62,8 +62,8 @@ public abstract class DBManager {
                 config.setMaximumPoolSize(10);              
                 config.setMinimumIdle(3);
                 config.setConnectionTimeout(30000);
-                config.setIdleTimeout(300000);              // 5 minutos
-                config.setMaxLifetime(1800000);             // 30 minutos
+                config.setIdleTimeout(300000);
+                config.setMaxLifetime(1800000);
                 config.setLeakDetectionThreshold(30000);    
                 config.setValidationTimeout(5000);
 

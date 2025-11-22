@@ -99,7 +99,6 @@ public class ServicioEmail {
         props.put("mail.smtp.timeout", emailConfig.getProperty("email.smtp.timeout", "10000"));
         props.put("mail.smtp.writetimeout", emailConfig.getProperty("email.smtp.writetimeout", "10000"));
 
-        // Debug (opcional - quítalo en producción)
         props.put("mail.debug", "true");
 
         final String usuario = emailConfig.getProperty("email.smtp.usuario");
@@ -124,49 +123,6 @@ public class ServicioEmail {
         Transport.send(mensaje);
     }
 
-    public void enviarCorreo(String[] destinatarios, String asunto, String contenido) 
-            throws MessagingException {
-        Message mensaje = new MimeMessage(session);
-        mensaje.setFrom(new InternetAddress(remitente));
-        
-        InternetAddress[] direcciones = new InternetAddress[destinatarios.length];
-        for (int i = 0; i < destinatarios.length; i++) {
-            direcciones[i] = new InternetAddress(destinatarios[i]);
-        }
-        mensaje.setRecipients(Message.RecipientType.TO, direcciones);
-        mensaje.setSubject(asunto);
-        mensaje.setText(contenido);
-        
-        Transport.send(mensaje);
-    }
-
-    public void enviarCorreoHTML(String destinatario, String asunto, String contenidoHTML) 
-            throws MessagingException {
-        Message mensaje = new MimeMessage(session);
-        mensaje.setFrom(new InternetAddress(remitente));
-        mensaje.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
-        mensaje.setSubject(asunto);
-        mensaje.setContent(contenidoHTML, "text/html; charset=utf-8");
-        
-        Transport.send(mensaje);
-    }
-
-    public void enviarCorreoHTML(String[] destinatarios, String asunto, String contenidoHTML) 
-            throws MessagingException {
-        Message mensaje = new MimeMessage(session);
-        mensaje.setFrom(new InternetAddress(remitente));
-        
-        InternetAddress[] direcciones = new InternetAddress[destinatarios.length];
-        for (int i = 0; i < destinatarios.length; i++) {
-            direcciones[i] = new InternetAddress(destinatarios[i]);
-        }
-        mensaje.setRecipients(Message.RecipientType.TO, direcciones);
-        mensaje.setSubject(asunto);
-        mensaje.setContent(contenidoHTML, "text/html; charset=utf-8");
-        
-        Transport.send(mensaje);
-    }
-
     public void enviarCorreoConCC(String destinatario, String[] cc, 
                                   String asunto, String contenido) 
             throws MessagingException {
@@ -184,56 +140,6 @@ public class ServicioEmail {
         
         mensaje.setSubject(asunto);
         mensaje.setText(contenido);
-        
-        Transport.send(mensaje);
-    }
-
-    public void enviarCorreoConBCC(String destinatario, String[] bcc, 
-                                   String asunto, String contenido) 
-            throws MessagingException {
-        Message mensaje = new MimeMessage(session);
-        mensaje.setFrom(new InternetAddress(remitente));
-        mensaje.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
-        
-        if (bcc != null && bcc.length > 0) {
-            InternetAddress[] direccionesBCC = new InternetAddress[bcc.length];
-            for (int i = 0; i < bcc.length; i++) {
-                direccionesBCC[i] = new InternetAddress(bcc[i]);
-            }
-            mensaje.setRecipients(Message.RecipientType.BCC, direccionesBCC);
-        }
-        
-        mensaje.setSubject(asunto);
-        mensaje.setText(contenido);
-        
-        Transport.send(mensaje);
-    }
-
-    public void enviarCorreoHTMLCompleto(String destinatario, String[] cc, String[] bcc,
-                                         String asunto, String contenidoHTML) 
-            throws MessagingException {
-        Message mensaje = new MimeMessage(session);
-        mensaje.setFrom(new InternetAddress(remitente));
-        mensaje.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
-        
-        if (cc != null && cc.length > 0) {
-            InternetAddress[] direccionesCC = new InternetAddress[cc.length];
-            for (int i = 0; i < cc.length; i++) {
-                direccionesCC[i] = new InternetAddress(cc[i]);
-            }
-            mensaje.setRecipients(Message.RecipientType.CC, direccionesCC);
-        }
-        
-        if (bcc != null && bcc.length > 0) {
-            InternetAddress[] direccionesBCC = new InternetAddress[bcc.length];
-            for (int i = 0; i < bcc.length; i++) {
-                direccionesBCC[i] = new InternetAddress(bcc[i]);
-            }
-            mensaje.setRecipients(Message.RecipientType.BCC, direccionesBCC);
-        }
-        
-        mensaje.setSubject(asunto);
-        mensaje.setContent(contenidoHTML, "text/html; charset=utf-8");
         
         Transport.send(mensaje);
     }

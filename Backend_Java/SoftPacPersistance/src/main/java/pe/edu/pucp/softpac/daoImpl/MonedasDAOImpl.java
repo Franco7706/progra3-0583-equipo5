@@ -15,12 +15,12 @@ public class MonedasDAOImpl extends DAOImplBase implements MonedasDAO {
     public MonedasDAOImpl() {
         super("PA_MONEDAS");
         this.moneda = null;
-        this.retornarLlavePrimaria = true; // MONEDA_ID es auto_increment
+        this.retornarLlavePrimaria = true;
     }
 
     @Override
     protected void configurarListaDeColumnas() {
-        this.listaColumnas.add(new Columna("MONEDA_ID", true, true)); // PK, auto_increment
+        this.listaColumnas.add(new Columna("MONEDA_ID", true, true));
         this.listaColumnas.add(new Columna("NOMBRE", false, false));
         this.listaColumnas.add(new Columna("CODIGO_ISO", false, false));
         this.listaColumnas.add(new Columna("SIMBOLO", false, false));

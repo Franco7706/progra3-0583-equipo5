@@ -65,7 +65,7 @@ public class DetallesFacturaDAOImpl extends DAOImplBase implements DetallesFactu
     @Override
     protected void extraerResultSetParaObtenerPorId() throws SQLException{
         this.detalleFactura=null;
-        FacturasDTO factura=null;
+        FacturasDTO factura;
         if(this.resultSet.next()){
             this.detalleFactura=new DetallesFacturaDTO();
             this.detalleFactura.setDetalle_factura_id(this.resultSet.getInt(1));

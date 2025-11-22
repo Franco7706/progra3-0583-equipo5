@@ -124,12 +124,11 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
     @Override
     protected void extraerResultSetParaListarTodos() throws SQLException {
         cuentasAcreedores = new ArrayList<>();
-        MonedasDTO moneda = null;
-        EntidadesBancariasDTO entidadBancaria = null;
-        AcreedoresDTO acreedor = null;
+        MonedasDTO moneda;
+        EntidadesBancariasDTO entidadBancaria;
+        AcreedoresDTO acreedor;
         while(this.resultSet.next()){
             CuentasAcreedorDTO cuenta = new CuentasAcreedorDTO();
-            cuenta = new CuentasAcreedorDTO();
             cuenta.setCuenta_bancaria_id(this.resultSet.getInt(1));
             cuenta.setTipo_cuenta(this.resultSet.getString(2));
             cuenta.setNumero_cuenta(this.resultSet.getString(3));
@@ -198,6 +197,7 @@ public class CuentasAcreedorDAOImpl extends DAOImplBase implements CuentasAcreed
         return super.eliminarLogico();
     }
     
+    @Override
     public ArrayList<CuentasAcreedorDTO> obtenerPorAcreedor(Integer acreedor_id){
         this.cuentaAcreedor = new CuentasAcreedorDTO();
         this.cuentaAcreedor.setCuenta_bancaria_id(acreedor_id);

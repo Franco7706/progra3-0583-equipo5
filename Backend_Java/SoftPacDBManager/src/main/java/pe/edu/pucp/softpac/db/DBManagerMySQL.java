@@ -4,7 +4,6 @@ package pe.edu.pucp.softpac.db;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-import pe.edu.pucp.softpac.db.util.MotorDeBaseDeDatos;
 
 public class DBManagerMySQL extends DBManager {
     
@@ -47,9 +46,4 @@ public class DBManagerMySQL extends DBManager {
             System.err.println("Error al leer archivo de propiedades MySQL - " + ex);
         }
     }
-    
-//     @Override
-//    public String retornarSQLParaUltimoAutoGenerado() {
-//        return "select @@last_insert_id as id";
-//    }
 }

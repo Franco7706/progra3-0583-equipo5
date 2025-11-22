@@ -3,7 +3,6 @@ package pe.edu.pucp.softpacws;
 import jakarta.jws.WebService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import pe.edu.pucp.softpac.bo.PropuestaPagoBO;
 import pe.edu.pucp.softpac.model.DetallesPropuestaDTO;

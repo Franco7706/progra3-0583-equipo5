@@ -4,7 +4,6 @@ package pe.edu.pucp.softpac.db;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-import static pe.edu.pucp.softpac.db.DBManager.ARCHIVO_CONFIGURACION;
 
 public class DBManagerMSSQL extends DBManager{
     
@@ -45,11 +44,4 @@ public class DBManagerMSSQL extends DBManager{
             System.err.println("Error al leer archivo de propiedades MSSQL - " + ex);
         }
     }
-    
-    
-//    @Override
-//    public String retornarSQLParaUltimoAutoGenerado() {
-//        return "select @@IDENTITY as id";
-//    }
-    
 }

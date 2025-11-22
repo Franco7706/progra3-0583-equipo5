@@ -6,7 +6,6 @@ import jakarta.jws.WebParam;
 import java.util.ArrayList;
 import pe.edu.pucp.softpac.bo.AcreedoresBO;
 import pe.edu.pucp.softpac.model.AcreedoresDTO;
-import pe.edu.pucp.softpac.model.PaisesDTO;
 import pe.edu.pucp.softpac.model.UsuariosDTO;
 
 @WebService(serviceName = "AcreedoresWS")
