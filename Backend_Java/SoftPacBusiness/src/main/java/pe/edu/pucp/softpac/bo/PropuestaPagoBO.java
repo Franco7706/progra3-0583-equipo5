@@ -155,6 +155,9 @@ public class PropuestaPagoBO {
                 continue;
             }
             ArrayList<CuentasAcreedorDTO> cuentasAcreedor = cuentasAcreedorBO.obtenerPorAcreedor(factura.getAcreedor().getAcreedor_id());
+            if(cuentasAcreedor==null){
+                return new PropuestasPagoDTO();
+            }
             for (CuentasAcreedorDTO cuenta : cuentasAcreedor) {
                 if (cuenta.getEntidad_bancaria().getPais().getPais_id() == propuestaParcial.getEntidad_bancaria().getPais().getPais_id()) {
                     DetallesPropuestaDTO detalle = new DetallesPropuestaDTO();
