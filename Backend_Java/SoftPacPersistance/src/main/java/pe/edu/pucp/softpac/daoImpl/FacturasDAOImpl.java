@@ -195,11 +195,7 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
         return this.factura;
     }
 
-    @Override
-    public List<FacturasDTO> listarTodos() {
-        super.listarTodosQuery();
-        return facturas;
-    }
+
 
     @Override
     public Integer modificar(FacturasDTO factura) {
@@ -283,48 +279,9 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
         }
     }
     
-    @Override
-    protected String generarSQLParaListarTodos(){
-        return "SELECT f.FACTURA_ID, f.NUMERO_FACTURA, f.FECHA_EMISION, f.FECHA_RECEPCION, f.FECHA_LIMITE_PAGO,\n" +
-            "f.ESTADO, f.MONTO_TOTAL, f.MONTO_IGV, f.MONTO_RESTANTE, f.REGIMEN_FISCAL, f.TASA_IVA, f.OTROS_TRIBUTOS, f.MONEDA_ID,\n" +
-            "f.ACREEDOR_ID, p.PAIS_ID as PAIS_ID, a.RAZON_SOCIAL, p.NOMBRE\n" +
-            "FROM PA_FACTURAS f JOIN PA_ACREEDORES a ON f.ACREEDOR_ID = a.ACREEDOR_ID JOIN PA_PAISES p ON p.PAIS_ID = a.PAIS_ID";
-    }
+
     
-    @Override
-    protected void extraerResultSetParaListarTodos() throws SQLException {
-        facturas = new ArrayList<>();
-        MonedasDTO moneda;
-        AcreedoresDTO acreedor;
-        PaisesDTO pais;
-        while (this.resultSet.next()) {
-            FacturasDTO f = new FacturasDTO();
-            f.setFactura_id(this.resultSet.getInt(1));
-            f.setNumero_factura(this.resultSet.getString(2));
-            f.setFecha_emision(this.resultSet.getTimestamp(3));
-            f.setFecha_recepcion(this.resultSet.getTimestamp(4));
-            f.setFecha_limite_pago(this.resultSet.getTimestamp(5));
-            f.setEstado(this.resultSet.getString(6));
-            f.setMonto_total(this.resultSet.getBigDecimal(7));
-            f.setMonto_igv(this.resultSet.getBigDecimal(8));
-            f.setMonto_restante(this.resultSet.getBigDecimal(9));
-            f.setRegimen_fiscal(this.resultSet.getString(10));
-            f.setTasa_iva(this.resultSet.getBigDecimal(11));
-            f.setOtros_tributos(this.resultSet.getBigDecimal(12));
-            moneda = new MonedasDTO();
-            moneda.setMoneda_id(this.resultSet.getInt(13));
-            acreedor = new AcreedoresDTO();
-            acreedor.setAcreedor_id(this.resultSet.getInt(14));
-            pais = new PaisesDTO();
-            pais.setPais_id(this.resultSet.getInt(15));
-            acreedor.setPais(pais);
-            acreedor.setRazon_social(this.resultSet.getString(16));
-            pais.setNombre(this.resultSet.getString(17));
-            f.setMoneda(moneda);
-            f.setAcreedor(acreedor);
-            facturas.add(f);
-        }
-    }
+
     
     
     @Override
@@ -332,8 +289,8 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
         return "SELECT f.FACTURA_ID, f.NUMERO_FACTURA, f.FECHA_EMISION, f.FECHA_RECEPCION, f.FECHA_LIMITE_PAGO,\n" +
             "f.ESTADO, f.MONTO_TOTAL, f.MONTO_IGV, f.MONTO_RESTANTE, f.REGIMEN_FISCAL, f.TASA_IVA, f.OTROS_TRIBUTOS, f.MONEDA_ID, m.CODIGO_ISO, \n" +
             "f.ACREEDOR_ID, a.RAZON_SOCIAL, p.pais_id as PAIS_ID \n" +
-            "FROM softpacbd.PA_FACTURAS f join softpacbd.PA_ACREEDORES a on f.ACREEDOR_ID = a.ACREEDOR_ID join softpacbd.PA_PAISES p on p.PAIS_ID = a.PAIS_ID"
-                + " join softpacbd.PA_MONEDAS m on f.MONEDA_ID = m.MONEDA_ID";
+            "FROM PA_FACTURAS f join PA_ACREEDORES a on f.ACREEDOR_ID = a.ACREEDOR_ID join PA_PAISES p on p.PAIS_ID = a.PAIS_ID"
+                + " join PA_MONEDAS m on f.MONEDA_ID = m.MONEDA_ID";
     }
     
     @Override
@@ -382,5 +339,72 @@ public class FacturasDAOImpl extends DAOImplBase implements FacturasDAO {
     protected void incluirValorDeParametrosCustom1() throws SQLException {
         
     }
+    
+    /////
+    
+    @Override
+    public List<FacturasDTO> listarTodos() {
+        
+        super.queryCustom2();
+        return facturas;
+    }
+    
+    @Override
+    protected String generarSQLCustom2(){
+        return "SELECT f.FACTURA_ID, f.NUMERO_FACTURA, f.FECHA_EMISION, f.FECHA_RECEPCION, f.FECHA_LIMITE_PAGO,\n" +
+        "f.ESTADO, f.MONTO_TOTAL, f.MONTO_IGV, f.MONTO_RESTANTE, f.REGIMEN_FISCAL, f.TASA_IVA, f.OTROS_TRIBUTOS, f.MONEDA_ID, m.CODIGO_ISO,\n" +
+        "f.ACREEDOR_ID, a.RAZON_SOCIAL, p.PAIS_ID as PAIS_ID, p.NOMBRE\n" +
+        "FROM PA_FACTURAS f JOIN PA_ACREEDORES a ON f.ACREEDOR_ID = a.ACREEDOR_ID JOIN PA_PAISES p ON p.PAIS_ID = a.PAIS_ID " +
+        "JOIN PA_MONEDAS m ON f.MONEDA_ID = m.MONEDA_ID\n" +
+        "WHERE f.ESTADO = 'Pendiente' OR f.FECHA_RECEPCION >= ?";
+    }
+    
+    @Override
+    protected void extraerResultSetCustom2() throws SQLException {
+        facturas = new ArrayList<>();
+        MonedasDTO moneda;
+        AcreedoresDTO acreedor;
+        PaisesDTO pais;
+        while (this.resultSet.next()) {
+            FacturasDTO f = new FacturasDTO();
+            f.setFactura_id(this.resultSet.getInt(1));
+            f.setNumero_factura(this.resultSet.getString(2));
+            f.setFecha_emision(this.resultSet.getTimestamp(3));
+            f.setFecha_recepcion(this.resultSet.getTimestamp(4));
+            f.setFecha_limite_pago(this.resultSet.getTimestamp(5));
+            f.setEstado(this.resultSet.getString(6));
+            f.setMonto_total(this.resultSet.getBigDecimal(7));
+            f.setMonto_igv(this.resultSet.getBigDecimal(8));
+            f.setMonto_restante(this.resultSet.getBigDecimal(9));
+            f.setRegimen_fiscal(this.resultSet.getString(10));
+            f.setTasa_iva(this.resultSet.getBigDecimal(11));
+            f.setOtros_tributos(this.resultSet.getBigDecimal(12));
+            moneda = new MonedasDTO();
+            moneda.setMoneda_id(this.resultSet.getInt(13));
+            moneda.setCodigo_iso(this.resultSet.getString(14));
+            acreedor = new AcreedoresDTO();
+            acreedor.setAcreedor_id(this.resultSet.getInt(15));
+            acreedor.setRazon_social(this.resultSet.getString(16));
+            pais = new PaisesDTO();
+            pais.setPais_id(this.resultSet.getInt(17));
+            pais.setNombre(this.resultSet.getString(18));
+            acreedor.setPais(pais);
+            f.setMoneda(moneda);
+            f.setAcreedor(acreedor);
+            facturas.add(f);
+        }
+    }
+    
+       
+    @Override
+    protected void incluirValorDeParametrosCustom2() throws SQLException {
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        cal.add(java.util.Calendar.MONTH, -6);
+        java.sql.Timestamp fechaSeisMesesAtras = new java.sql.Timestamp(cal.getTimeInMillis());
+
+        this.statement.setTimestamp(1, fechaSeisMesesAtras);
+    }
+    
+
     
 }
